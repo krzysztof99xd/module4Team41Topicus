@@ -125,18 +125,16 @@
           var xhr = new XMLHttpRequest();
           xhr.onreadystatechange = function(){
             if(this.readyState == 4 && this.status ==200 ){
-              txt += JSON.parse(this.reponseText)
+              txt += JSON.parse(this.responseText);
+              document.getElementById("demo").innerHTML = txt +"Hello there";
             }
-            document.getElementById("demo").innerHTML = txt +"Hello there";
           };
-          xhr.open('GET', 'http://localhost:8080/Module4Team41Topicus/rest/files', true);
+          xhr.open('GET', 'http://localhost:8080/Module4Team41Topicus_war_exploded/rest/files', true);
           xhr.send();
         }
-
       }
-
+      return;
     }
-
   };
 
 </script>
