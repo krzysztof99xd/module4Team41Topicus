@@ -40,6 +40,7 @@ public class LendariesResources extends HttpServlet {
         LendaryModel lendaryModel = new LendaryModel(id, name);
         if (lendaryModel != null) {
             lendaryModel.setName(name);
+            lendaryModel.setName("esssa");
         }
         LendaryDAO.getModel().put(id, lendaryModel);
         response.sendRedirect("../index.html");
