@@ -1,0 +1,389 @@
+*{
+    scroll-behavior: smooth;
+    font-family: Arial, Helvetica, sans-serif;
+}
+body {
+
+    background-color: #000000;
+}
+
+h1{
+    font-size: 63pt;
+    text-shadow: 2px 1px #000000;
+    color:#FFFFFF;
+    padding-top: 0;
+    text-align: center;
+    margin-bottom: 0px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
+}
+h2{
+
+    margin-bottom: 10px;
+    text-align: center;
+    font-size: 30pt;
+    text-shadow: 2px 1px #000000;
+    color:#FFFFFF;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+h3{
+    font-size: 25pt;
+}
+h4{
+    font-size: 15pt;
+}
+img{
+    width: 100%;
+}
+
+
+
+
+
+
+
+/* header logo,nav*/
+.container {
+    width: 60%;
+    margin: 0 auto;
+}
+
+/*logo*/
+.logo {
+    color: #ffffff;
+    padding: 2em;
+    text-align: center;
+    justify-content: space-evenly;
+}
+
+/*nav*/
+.container{
+    position: sticky;
+    top: 0;
+    z-index: 1;
+
+}
+nav ul {
+    margin: 0em 2em 0 2em;
+    padding: 1.3em;
+    display: flex;
+    justify-items: space-evenly;
+    flex-wrap: wrap;
+    list-style: none;
+    background-color: #000000;
+    opacity: 0.8;
+    border-radius: 20px;
+    box-shadow: #AAAAAA 0 -1px 0 0;
+
+
+}
+
+nav li {
+    display: inline-block;
+    margin: auto;
+    padding-top: auto;
+}
+
+nav a {
+    color: #dfdfdf;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+
+nav a:hover {
+    color: #2699fb;
+}
+
+/* background video*/
+@media screen and (min-width: 950px){
+    #backgroundvideo {
+        position: absolute;
+        width: 100%;
+        top: -49%;
+        z-index: -1;
+        clip: rect(auto,auto,35.6em,auto);
+        margin-left: -0.7%;
+
+    }
+}
+@media screen and (max-width: 950px){
+    #backgroundvideo {
+        position: fixed;
+        height: auto;
+        top: 0;
+        z-index: -1;
+    }
+}
+
+
+
+/*headers*/
+.contentheader{
+    color: #ffffff;
+    font-size:15pt ;
+    margin:  auto 8%;
+}
+
+
+
+
+
+
+
+/*Sport*/
+.nameclub{
+    font-weight: bold;
+
+}
+.articlesport {
+    color: #444444;
+    font-size: 12pt;
+    padding: 2em;}
+
+
+
+
+
+/*grid part*/
+
+
+.sec{
+    grid-template-columns:auto ;
+    grid-gap: 10px;
+    padding: 10px;
+    display: grid;
+    padding-top: 57px;
+}
+@media screen and (min-width: 750px){
+    article{
+        display: grid;
+    }
+}
+article {
+    width:auto;
+    font-size: 12pt;
+    padding: 2em;
+    border-radius: 10px;
+    height: 100%;
+    width: 80%;
+    margin: auto;
+    background-color: #f5f5f5;
+    opacity: 0.8;
+
+}
+
+.title{
+    grid-column: 1 / 5;
+    grid-row: 1;
+}
+
+.im1{
+    grid-column: 1 / 2;
+    grid-row: 2;
+}
+.p1{
+    margin-left: 30px;
+    grid-column: 2 / 5;
+    grid-row: 2;
+}
+.p2{
+    grid-column: 1 / 4;
+    grid-row: 3;
+}
+.im2{
+    grid-column: 4 / 5;
+    grid-row: 3;
+}
+.p3{
+    grid-column: 1 / 5;
+    grid-row: 4;
+}
+footer p {
+    color: #FFFFFF;
+    margin:  auto 8%;
+    margin-top: 7%;
+}
+/*  table*/
+
+
+tr{
+    width: auto;
+
+}
+
+.tp{
+    width: 100px;
+
+}
+tr:nth-child(odd){background-color: #AAAAAA;}
+tr:nth-child(even){background-color: #e2e2e2;}
+th {
+    border-radius: 5px;
+    text-align: left;
+    background-color: #000000;
+    color: white;
+    padding: 12px 10px 12px 10px;
+}
+td:not(.no) {
+    padding: 0 10px 0 10px;
+    border-radius: 10px;
+}
+
+@media screen and (max-width: 600px){
+    .lin{
+        visibility: hidden;
+        width: 0%;
+        position: fixed;
+        z-index: -2;
+    }
+}
+
+/*footer*/
+.foo {
+
+    background: #707070;
+    padding-bottom: 20px;
+    bottom: 0;
+    width: 100%;
+    margin-top: 20%;
+
+}
+.foo p{
+    padding-top: 2%;
+}
+
+#co{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 300px;
+    border: 3px solid  #2699fb;
+    z-index: 2;
+    background-color: #374cc2;
+}
+#co p{
+    padding-left: 20px;
+}
+
+
+/*contact*/
+form{
+    padding: 0 60px 0 60px;
+}
+fieldset{
+    padding: 30px 40px 30px 40px;
+    background-color: #e7e7e7;
+    border-radius: 6px;
+}
+input[type=text]{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc ;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: #FFFFFF;
+    z-index: 2;
+}
+#message{
+    padding-bottom: 60px;
+}
+input{
+    opacity: 1;
+}
+button[type=submit] {
+    width: 100%;
+    background-color: #444444;
+    color: #FFFFFF;
+    padding: 14px 20px;
+    margin: 14px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 20px;
+    text-shadow: 1px 1px #000000;
+
+}
+button[type=submit]:hover {
+    background-color: #707070;
+}
+
+/*hamburger*/
+
+@media screen and (min-width: 800px){
+    .dropdown{
+        visibility: hidden;
+    }
+}
+@media screen and (max-width: 800px){
+    *{
+        width: auto;
+    }
+
+    ul{
+        visibility: hidden;
+    }
+
+
+    .dropdown {
+        position: sticky;
+        display: block;
+        background-color: #000000;
+        z-index: 1;
+        top: 0;
+        right: 0;
+        border: 1px solid #9c9c9c;
+        opacity: 0.8;
+        width: 40%;
+        margin-left: 28%;
+        border-radius: 5%;
+
+    }
+    .str:hover{
+        background-color: rgb(131, 131, 131);
+        border-radius: 5%;
+    }
+    .str{
+        width: 39%;
+        height: 5px;
+        background-color: rgb(255, 255, 255);
+        margin: 6px 0;
+        border-radius: 5%;
+    }
+    .conta{
+        padding:10px 20px 12px 22px ;
+        margin-left: 29%;
+        border-radius: 5%;
+    }
+
+    .menu{
+        display: none;
+        /*position: auto;*/
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        z-index: 1;
+        border-radius: 5%;
+    }
+
+    .menu a {
+        color: black;
+        background: rgb(190, 190, 190);
+        padding: 12px 0px 12px 20px;
+        text-decoration: none;
+        display: block;
+
+    }
+
+    .menu a:hover {
+        color: rgb(255, 255, 255);
+        background-color: #000000;
+
+    }
+
+    .dropdown:hover .menu {
+        display: block;
+        border-radius: 5%;
+    }
+
+}
