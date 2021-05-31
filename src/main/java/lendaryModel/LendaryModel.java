@@ -10,15 +10,26 @@ import java.io.IOException;
 public class LendaryModel {
     private String id;
     private String name;
+    private String field;
 
 
-    public LendaryModel(String id, String name) throws IOException {
+    public LendaryModel(String id, String name, String field) throws IOException {
         this.id = id;
         this.name = name;
+        this.field = field;
     }
+
 
     public String getId() {
         return id;
+    }
+
+    public String getField() {
+        return field;
+    }
+
+    public void setField(String field) {
+        this.field = field;
     }
 
     public void setId(String id) {
