@@ -9,8 +9,20 @@
     <servlet>
         <servlet-name>javax.ws.rs.core.Application</servlet-name>
     </servlet>
+
+    <servlet>
+    <servlet-name>UploadServlet</servlet-name>
+    <servlet-class>UploadServlet</servlet-class>
+    </servlet>
+
     <servlet-mapping>
         <servlet-name>javax.ws.rs.core.Application</servlet-name>
         <url-pattern>/rest/*</url-pattern>
     </servlet-mapping>
+
+    <servlet-mapping>
+    <servlet-name>UploadServlet</servlet-name>
+    <url-pattern>/upload</url-pattern>
+    </servlet-mapping>
+
 </web-app>

@@ -36,19 +36,20 @@ public class LendaryDAO extends HttpServlet{
         LendaryModel file1 = null;
 
 //        File file = new File("C:/Users/48504/Desktop/mt940-npp-sample-file.940");
-        File file = new File(".../mt940-npp-sample-file.940");
-        MT940 mt = new MT940(file);
-        String text = "start";
-        if(mt.getField20().getValue() != null){
-            text += mt.getField20().getValue();
-        }
-        try {
-            file1 = new LendaryModel("1","firstMT940file",  text);
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.print("it didnt work");
-        }
-        fileProvider.put("1", file1);
+
+//        File file = new File("http://localhost:8080/Module4Team41Topicus_war_exploded/upload");
+//        MT940 mt = new MT940(file);
+//        String text = "start";
+//        if(mt.getField20().getValue() != null){
+//            text += mt.getField20().getValue();
+//        }
+//        try {
+//            file1 = new LendaryModel("1","firstMT940file",  text);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//            System.out.print("it didnt work");
+//        }
+//        fileProvider.put("1", file1);
     }
     public static Map<String, LendaryModel> getModel() {
         return fileProvider;
