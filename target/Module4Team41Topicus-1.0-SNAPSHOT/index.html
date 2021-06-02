@@ -11,14 +11,14 @@
 </head>
 
 <body>
-<form action="../ModuleTeam41_war_exploded/rest/files" method="POST">
-  <label for ="id">ID</label>
-  <input name="id" id = "id" />
-  <br/>
-  <label for="summary">Summary</label>
-  <input name="summary" id = "summary" />
-  <input type="submit" value="Submit" />
-</form>
+<!--<form action="../ModuleTeam41_war_exploded/rest/files" method="POST">-->
+<!--  <label for ="id">ID</label>-->
+<!--  <input name="id" id = "id" />-->
+<!--  <br/>-->
+<!--  <label for="summary">Summary</label>-->
+<!--  <input name="summary" id = "summary" />-->
+<!--  <input type="submit" value="Submit" />-->
+<!--</form>-->
 
 <section class="container">
   <!--  branch 'master' of https://git.snt.utwente.nl/s2617722/topicusbanktransactionsm4team41.git -->
@@ -28,9 +28,13 @@
     <ul style="align-items: center;">
       <li>
 
-        <input onchange="myFunction()" type="file" id="upload" hidden/>
-        <label for="upload" >UPLOAD</label>
-
+<!--        <input onchange="myFunction()" type="file" id="upload" hidden/>-->
+<!--        <label for="upload" >UPLOAD</label>-->
+        <form action="upload" method="post" enctype="multipart/form-data">
+          <input type="text" name="description" />
+          <input type="file" name="file" />
+          <input type="submit" onclick="myFunction()"/>
+        </form>
       </li>
       <li><a href="#history">History</a></li>
       <!-- <li><a href="#sportcontent">Analytics</a></li> -->
@@ -51,8 +55,12 @@
   </aside>
 
   <section class="menu">
-    <!--     <input type="file" id="upload" hidden/>-->
-    <label for="upload" >UPLOAD</label>
+    <form action="upload" method="post" enctype="multipart/form-data">
+      <input type="file" name="file" />
+      <input type="submit" />
+    </form>
+<!--    &lt;!&ndash;     <input type="file" id="upload" hidden/>&ndash;&gt;-->
+<!--    <label for="upload" >UPLOAD</label>-->
     <a href="#history">History</a>
 
   </section>
