@@ -34,6 +34,35 @@ public class ConnectionHandler {
         }
         return null;
     }
+
+    //    public static void insertMethod(double amount, String IBAN_no, double final_balance, double closing_balance,
+//                    String final_date, String closing_date, String currency, char debit_or_credit_mark) {
+//
+//        try {
+//            //Connection connection = DriverManager.getConnection(url, dbName, password);
+////            Connection connection = DriverManager.getConnection("jdbc:postgresql://bronto.ewi.utwente.nl/"+dbname + "?currentSchema=database_project", dbname, password);
+//            /* Statement statement = connection.createStatement(); */
+//
+//            // st.executeUpdate("INSERT INTO Customers " +
+//            //    "VALUES (1001, 'Simpson', 'Mr.', 'Springfield', 2001)");
+//
+//            String query = "INSERT INTO database_project.balance " + "VALUES (" + "'" + IBAN_no + "'" + ", " + final_balance
+//                    + ", " + closing_balance + ", " + "'" + final_date + "'" + ", " + "'" + closing_date + "'" + ", " + "'" + currency + "'" + ", " + "'"
+//                    + debit_or_credit_mark + "'" + ", "  + amount + ")";
+//
+//            PreparedStatement st = connection.prepareStatement(query);
+//            ResultSet resultset = st.executeQuery();
+//            connection.close();
+//           // return insertMethod;
+//        } catch (SQLException sqle) {
+//            System.err.println("Error connecting: " + sqle);
+//        }
+//       //return null;
+//    }
+
+
+
+
     public static void main(String[] args) throws SQLException {
         EstablishConnection();
         ResultSet finish = ExecutingQueries();
