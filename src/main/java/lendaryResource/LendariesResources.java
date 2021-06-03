@@ -1,25 +1,17 @@
 package lendaryResource;
 
-import com.prowidesoftware.swift.model.mt.mt9xx.MT940;
 import lendaryDAO.LendaryDAO;
-import lendaryModel.LendaryModel;
+import lendaryModel.Transaction;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.UriInfo;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,19 +48,19 @@ public class LendariesResources extends HttpServlet {
                                 @FormParam("field") String field,
                                 @Context HttpServletResponse response)
             throws ServletException, IOException {
-        LendaryModel lendaryModel = new LendaryModel(id, name, field);
+        Transaction transaction = new Transaction(id, name, field);
         System.out.println("Post");
-        if (lendaryModel != null) {
-            lendaryModel.setName(name);
+        if (transaction != null) {
+            transaction.setName(name);
         }
-        LendaryDAO.getModel().put(id, lendaryModel);
+        LendaryDAO.getModel().put(id, transaction);
         response.sendRedirect("../index.html");
     }
 //    @POST
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<LendaryModel> getLendaryBrowser() {
-        List<LendaryModel> files = new ArrayList<LendaryModel>();
+    public List<Transaction> getLendaryBrowser() {
+        List<Transaction> files = new ArrayList<Transaction>();
         files.addAll(LendaryDAO.getModel().values());
         System.out.println("GET");
         return files;

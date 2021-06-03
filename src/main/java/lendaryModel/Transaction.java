@@ -7,13 +7,13 @@ import java.io.File;
 import java.io.IOException;
 
 @XmlRootElement
-public class LendaryModel {
+public class Transaction {
     private String id;
     private String name;
     private String field;
 
 
-    public LendaryModel(String id, String name, String field) throws IOException {
+    public Transaction(String id, String name, String field) throws IOException {
         this.id = id;
         this.name = name;
         this.field = field;
