@@ -11,18 +11,35 @@ public class analitics {
 	
 	
 	public int maxAmount() {
-		
-		return 10;
+		int amount = 0;
+		for(int i = 0; i < b.getTransactions().size() ; i++) {
+			if(b.getTransactions().get(i).getAmount() > amount) {
+				amount = b.getTransactions().get(i).getAmount();
+			}
+		}
+		return amount;
 	}
 	
 	public int minAmount() {
-		
-		return 1;
+		int amount = b.getTransactions().get(0).getAmount();
+		for(int i = 1; i > b.getTransactions().size() ; i++) {
+			if(b.getTransactions().get(i).getAmount() < amount) {
+				amount = b.getTransactions().get(i).getAmount();
+			}
+		}
+		return amount;
 	}
 	
 	public int avrageAmount() {
 		
-		return 5;
+		int amount = 0;
+		for(int i = 0; i < b.getTransactions().size() ; i++) {
+			
+				amount += b.getTransactions().get(i).getAmount();
+			
+		}
+		amount = amount/b.getTransactions().size();
+		return amount;
 	}
 	
 	public int[] balancelist() {

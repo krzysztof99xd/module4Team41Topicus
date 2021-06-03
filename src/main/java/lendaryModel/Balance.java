@@ -6,11 +6,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 import java.io.File;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 
 @XmlRootElement
 public class Balance {
 	
-	private Transaction t;
+	private List<Transaction> transactions;
 	
     private String IBAN_no;
     private int final_balance;
@@ -169,17 +170,20 @@ public class Balance {
 
 
 	/**
-	 * @return the t
+	 * @return the transactions
 	 */
-	public Transaction getT() {
-		return t;
+	public List<Transaction> getTransactions() {
+		return transactions;
 	}
 
 
 	/**
-	 * @param t the t to set
+	 * @param transactions the transactions to set
 	 */
-	public void setT(Transaction t) {
-		this.t = t;
+	public void setTransactions(List<Transaction> transactions) {
+		this.transactions = transactions;
 	}
+
+
+
 }
