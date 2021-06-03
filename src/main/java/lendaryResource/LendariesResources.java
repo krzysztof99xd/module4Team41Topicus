@@ -1,8 +1,9 @@
 package lendaryResource;
 
+
 import com.prowidesoftware.swift.model.mt.mt9xx.MT940;
 import lendaryDAO.LendaryDAO;
-import lendaryModel.LendaryModel;
+import lendaryModel.Balance;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -56,19 +57,19 @@ public class LendariesResources extends HttpServlet {
                                 @FormParam("field") String field,
                                 @Context HttpServletResponse response)
             throws ServletException, IOException {
-        LendaryModel lendaryModel = new LendaryModel(id, name, field);
+        Balance balance = new Balance(id, name, field);
         System.out.println("Post");
-        if (lendaryModel != null) {
-            lendaryModel.setName(name);
+        if (balance != null) {
+            balance.setIBAN_no(name);
         }
-        LendaryDAO.getModel().put(id, lendaryModel);
+        LendaryDAO.getModel().put(id, balance);
         response.sendRedirect("../index.html");
     }
 //    @POST
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<LendaryModel> getLendaryBrowser() {
-        List<LendaryModel> files = new ArrayList<LendaryModel>();
+    public List<Balance> getLendaryBrowser() {
+        List<Balance> files = new ArrayList<Balance>();
         files.addAll(LendaryDAO.getModel().values());
         System.out.println("GET");
         return files;

@@ -17,7 +17,7 @@ import java.util.Scanner;
 @WebServlet(name ="file", urlPatterns = "/files")
 public class LendaryDAO extends HttpServlet{
 
-    private static Map<String, LendaryModel> fileProvider = new HashMap<String, LendaryModel>();
+    private static Map<String, Balance> fileProvider = new HashMap<String, Balance>();
 
 //    public LendaryDAO(Part filePart) throws ServletException, IOException {
 ////         filePart = request.getPart("file");
@@ -33,7 +33,7 @@ public class LendaryDAO extends HttpServlet{
 //
 //    }
     public LendaryDAO() throws IOException {
-        LendaryModel file1 = null;
+        Balance file1 = null;
 
 //        File file = new File("C:/Users/48504/Desktop/mt940-npp-sample-file.940");
 
@@ -51,7 +51,7 @@ public class LendaryDAO extends HttpServlet{
 //        }
 //        fileProvider.put("1", file1);
     }
-    public static Map<String, LendaryModel> getModel() {
+    public static Map<String, Balance> getModel() {
         return fileProvider;
     }
 
