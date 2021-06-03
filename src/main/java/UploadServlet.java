@@ -2,7 +2,7 @@ import com.prowidesoftware.swift.model.MtSwiftMessage;
 import com.prowidesoftware.swift.model.mt.mt9xx.MT940;
 import database.ConnectionHandler;
 import lendaryDAO.LendaryDAO;
-import lendaryModel.LendaryModel;
+import lendaryModel.Balance;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
