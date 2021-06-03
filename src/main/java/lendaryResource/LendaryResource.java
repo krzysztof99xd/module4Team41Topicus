@@ -1,6 +1,6 @@
 package lendaryResource;
 import lendaryDAO.LendaryDAO;
-import lendaryModel.Transaction;
+import lendaryModel.Balance;
 
 
 import javax.servlet.http.HttpServlet;
@@ -27,18 +27,18 @@ public class LendaryResource extends HttpServlet {
     }
     @GET
     @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_JSON})
-    public Transaction getLendaryModel(){
-        Transaction transaction = LendaryDAO.getModel().get(id);
-        if(transaction == null){
+    public Balance getLendaryModel(){
+        Balance balance = LendaryDAO.getModel().get(id);
+        if(balance == null){
             throw new RuntimeException("Get: File with " +id +" does not exist");
         }
-        return transaction;
+        return balance;
     }
 
     @DELETE
     public void deletelendaryModel() {
-        Transaction transaction = LendaryDAO.getModel().remove(id);
-        if (transaction == null) {
+        Balance balance = LendaryDAO.getModel().remove(id);
+        if (balance == null) {
             throw  new RuntimeException("Delete: Bike with " + id + "not found");
         }
     }
