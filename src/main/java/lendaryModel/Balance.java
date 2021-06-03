@@ -9,6 +9,9 @@ import java.util.Date;
 
 @XmlRootElement
 public class Balance {
+	
+	private Transaction t;
+	
     private String IBAN_no;
     private int final_balance;
     private int closing_balance;
@@ -19,20 +22,28 @@ public class Balance {
     private int amount;
     
     
+    
     private String name;
     private String field;
-
-
     public Balance(String IBAN_no, String name, String field) throws IOException {
         this.IBAN_no = IBAN_no;
         this.name = name;
         this.field = field;
     }
-
-
-
-
-
+    
+    
+    public Balance(String IBAN_no, int final_balance, int closing_balance ,
+    		Date final_date, Date closing_date, String currency, char debit_or_credit_mark ,int amount) {
+    	
+    	this.IBAN_no = IBAN_no;
+    	this.final_balance = final_balance;
+    	this.closing_balance = closing_balance;
+		this.final_date = final_date;
+        this.closing_date = closing_date;
+        this.currency = currency;
+        this.debit_or_credit_mark = debit_or_credit_mark;
+        this.amount = amount;
+    }
 
 
 	public String getIBAN_no() {
@@ -154,5 +165,21 @@ public class Balance {
 	 */
 	public void setAmount(int amount) {
 		this.amount = amount;
+	}
+
+
+	/**
+	 * @return the t
+	 */
+	public Transaction getT() {
+		return t;
+	}
+
+
+	/**
+	 * @param t the t to set
+	 */
+	public void setT(Transaction t) {
+		this.t = t;
 	}
 }

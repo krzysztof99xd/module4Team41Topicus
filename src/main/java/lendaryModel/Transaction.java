@@ -11,7 +11,9 @@ public class Transaction {
 	
 	
 	public Transaction(Date valueDate, Date enteryDate, int amount) {
-		// TODO Auto-generated constructor stub
+		this.valueDate = valueDate;
+		this.enteryDate = enteryDate;
+		this.amount = amount;
 	}
 
 
