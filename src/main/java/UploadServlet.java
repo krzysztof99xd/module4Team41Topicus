@@ -3,6 +3,7 @@ import com.prowidesoftware.swift.model.mt.mt9xx.MT940;
 import database.ConnectionHandler;
 import lendaryDAO.LendaryDAO;
 import lendaryModel.Balance;
+import lendaryModel.Parser;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -25,32 +26,35 @@ public class UploadServlet extends HttpServlet {
 
     MT940 mt940;
     ConnectionHandler connectionHandler;
+    Parser parser;
     public UploadServlet() throws IOException, SQLException {
-
+        connectionHandler = new ConnectionHandler();
+        parser = new Parser();
     }
 
 
     // ...
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Part filePart =  request.getPart("file"); // Retrieves <input type="file" name="file">
-        String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
-        InputStream inputStream = null;
-        String text = null;
+        Balance balance = new Balance();
         if (filePart != null) {
-            long fileSize = filePart.getSize();
-            String fileContent = filePart.getContentType();
             mt940 = new MT940(filePart.getInputStream());
             if (mt940 != null) {
-                    text = mt940.getField20().getValue();
-                }
-                try {
-                    connectionHandler = new ConnectionHandler();
-                    connectionHandler.insertMethod(2, text, 10, 23, "2019-11-02", "2019-11-04", "ssddd", 'D');
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
-                }
+                balance.setAccountID(mt940.getField25().getValue());
+                balance.setTransaction_number(mt940.getField20().getValue());
+                balance.setSequence_number(mt940.getField28C().getValue());
+                balance = parser.parseField60F(mt940.getField60F().getValue(), balance);
+                balance = parser.parseField62F(mt940.getField62F().getValue(), balance);
+                balance = parser.parseField64(mt940.getField64().getValue(), balance);
+                connectionHandler.insertBalance(balance);
             }
+
         }
+    }
+
+    //        String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
+//        InputStream inputStream = null;
+    //                    connectionHandler.insertMethod(2, text, 10, 23, "2019-11-02", "2019-11-04", "ssddd", 'D');
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

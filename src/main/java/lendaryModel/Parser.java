@@ -23,15 +23,13 @@ public class Parser {
 
 
         balance.setStatement_date(getDate(field60F.substring(1,7)));
-        balance.setFirst_balance(new Money(field60F.substring(7, 10),Double.parseDouble( field60F.substring(10)), field60F.substring(0).charAt(0)));
+        balance.setFirst_balance(new Money(field60F.substring(7, 10),Float.parseFloat( field60F.substring(10)), field60F.substring(0).charAt(0)));
 
         return balance;
     }
 
     public Transaction parseField61(String field61, Transaction transaction){
         int index = 0;
-        List<String> result = new ArrayList<>();
-
         String value_date = field61.substring(0,6);
         String year  = value_date.substring(0,2);
 
@@ -41,7 +39,7 @@ public class Parser {
 
         transaction.setValueDate(getDate(field61.substring(0,6)));
         transaction.setEntry_date(getDate(year + field61.substring(6,10)));
-        transaction.setAmount(new Money(null,Double.parseDouble(field61.substring(11, 16)), field61.substring(10,11).charAt(0)));
+        transaction.setAmount(new Money(null,Float.parseFloat(field61.substring(11, 16)), field61.substring(10,11).charAt(0)));
 
         if(field61.contains("//")) {
             index = field61.indexOf("//")+2;
@@ -62,7 +60,7 @@ public class Parser {
 //        String currency = field62F.substring(7,10);
 //        String booked_amount = field62F.substring(10);
 
-        balance.setBooked_balance(new Money(field62F.substring(7,10), Double.parseDouble(field62F.substring(10)), field62F.substring(0,1).charAt(0)));
+        balance.setBooked_balance(new Money(field62F.substring(7,10), Float.parseFloat(field62F.substring(10)), field62F.substring(0,1).charAt(0)));
         return  balance;
     }
 
@@ -74,7 +72,7 @@ public class Parser {
 //        String currency = field64.substring(7,10);
 //        String available_amount = field64.substring(10);
 
-        balance.setFinal_balance(new Money(field64.substring(7,10), Double.parseDouble(field64.substring(10)),field64.substring(0,1).charAt(0)));
+        balance.setFinal_balance(new Money(field64.substring(7,10), Float.parseFloat(field64.substring(10)),field64.substring(0,1).charAt(0)));
         balance.setClosing_date(getDate(field64.substring(1,7)));
 
         return  balance;

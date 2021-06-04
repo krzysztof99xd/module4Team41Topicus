@@ -2,11 +2,11 @@ package lendaryModel;
 
 public class Money {
     private String currency;
-    private double amount;
+    private float amount;
     private int money_id;
     private char debit_or_credit;
 
-    public Money(String currency,  double amount, char debit_or_credit) {
+    public Money(String currency, float amount, char debit_or_credit) {
         this.currency = currency;
         this.amount = amount;
         this.debit_or_credit = debit_or_credit;
@@ -20,11 +20,11 @@ public class Money {
         return money_id;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(float amount) {
         this.amount = amount;
     }
 
-    public double getAmount() {
+    public float getAmount() {
         return amount;
     }
 
