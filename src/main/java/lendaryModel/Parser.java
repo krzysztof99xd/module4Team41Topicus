@@ -23,7 +23,7 @@ public class Parser {
 
 
         balance.setStatement_date(getDate(field60F.substring(1,7)));
-        balance.setFirst_balance(new Money(field60F.substring(7, 10),Float.parseFloat( field60F.substring(10)), field60F.substring(0).charAt(0)));
+        balance.setFirst_balance(new Money(field60F.substring(7, 10), getFloat((field60F).substring(10)), field60F.substring(0).charAt(0)));
 
         return balance;
     }
@@ -39,7 +39,7 @@ public class Parser {
 
         transaction.setValueDate(getDate(field61.substring(0,6)));
         transaction.setEntry_date(getDate(year + field61.substring(6,10)));
-        transaction.setAmount(new Money(null,Float.parseFloat(field61.substring(11, 16)), field61.substring(10,11).charAt(0)));
+        transaction.setAmount(new Money(null,getFloat(field61.substring(11, 16)), field61.substring(10,11).charAt(0)));
 
         if(field61.contains("//")) {
             index = field61.indexOf("//")+2;
@@ -60,7 +60,7 @@ public class Parser {
 //        String currency = field62F.substring(7,10);
 //        String booked_amount = field62F.substring(10);
 
-        balance.setBooked_balance(new Money(field62F.substring(7,10), Float.parseFloat(field62F.substring(10)), field62F.substring(0,1).charAt(0)));
+        balance.setBooked_balance(new Money(field62F.substring(7,10), getFloat(field62F.substring(10)), field62F.substring(0,1).charAt(0)));
         return  balance;
     }
 
@@ -72,7 +72,7 @@ public class Parser {
 //        String currency = field64.substring(7,10);
 //        String available_amount = field64.substring(10);
 
-        balance.setFinal_balance(new Money(field64.substring(7,10), Float.parseFloat(field64.substring(10)),field64.substring(0,1).charAt(0)));
+        balance.setFinal_balance(new Money(field64.substring(7,10), getFloat(field64.substring(10)),field64.substring(0,1).charAt(0)));
         balance.setClosing_date(getDate(field64.substring(1,7)));
 
         return  balance;
@@ -82,5 +82,17 @@ public class Parser {
         String month = date.substring(2,4);
         String day = date.substring(4,6);
         return Date.valueOf(year+ "-" + month + "-" + day);
+    }
+    public Float getFloat(String s){
+        String s2 ="";
+        for(int i = 0; i< s.length(); i++){
+            if(s.charAt(i) == ','){
+                s2 +='.';
+            }
+            else{
+                s2 += s.charAt(i);
+            }
+        }
+        return Float.parseFloat(s2+'F');
     }
 }

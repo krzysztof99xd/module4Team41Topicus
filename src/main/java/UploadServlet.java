@@ -33,7 +33,7 @@ public class UploadServlet extends HttpServlet {
     }
 
 
-    // ...
+    // add transactions please!
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Part filePart =  request.getPart("file"); // Retrieves <input type="file" name="file">
         Balance balance = new Balance();

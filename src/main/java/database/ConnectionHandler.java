@@ -80,10 +80,12 @@ public class ConnectionHandler {
         }
        //return null;
     }
+
+    //We still didnt finish inserting into balnce, please come back to me
     public void insertBalance(Balance balance){
         try {
             String query = "INSERT INTO money (money_id, currency, debit_credit)\n" +
-                    "VALUES(1, 'EUR', 'D');\n" +
+                    "VALUES(2, 'EUR', 'D');\n" +
                     "INSERT INTO balance (account_identification,  sequence_number) \n" +
                     "VALUES('"+balance.getAccountID()+"','" +balance.getSequence_number() +"')";
 
