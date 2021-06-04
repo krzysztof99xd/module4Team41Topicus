@@ -35,14 +35,13 @@ public class UploadServlet extends HttpServlet {
         Part filePart =  request.getPart("file"); // Retrieves <input type="file" name="file">
         String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // MSIE fix.
         InputStream inputStream = null;
+        String text = null;
         if (filePart != null) {
             long fileSize = filePart.getSize();
             String fileContent = filePart.getContentType();
             mt940 = new MT940(filePart.getInputStream());
             if (mt940 != null) {
-                String text = "start";
-                if (mt940.getField20().getValue() != null) {
-                    text += mt940.getField20().getValue();
+                    text = mt940.getField20().getValue();
                 }
                 try {
                     connectionHandler = new ConnectionHandler();
@@ -52,7 +51,7 @@ public class UploadServlet extends HttpServlet {
                 }
             }
         }
-    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 

@@ -79,6 +79,7 @@ public class ConnectionHandler {
        //return null;
     }
 
+
     public static void main(String[] args) throws SQLException {
         ConnectionHandler connectionHandler = new ConnectionHandler();
 //        connectionHandler.insertMethod(2, "djhfhj", 10, 23, "2019-11-02", "2019-11-04", "ssddd", 'D');

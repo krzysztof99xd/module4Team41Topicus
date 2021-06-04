@@ -1,26 +1,18 @@
 package lendaryResource;
 
 
-import com.prowidesoftware.swift.model.mt.mt9xx.MT940;
 import lendaryDAO.LendaryDAO;
 import lendaryModel.Balance;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.UriInfo;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -57,12 +49,12 @@ public class LendariesResources extends HttpServlet {
                                 @FormParam("field") String field,
                                 @Context HttpServletResponse response)
             throws ServletException, IOException {
-        Balance balance = new Balance(id, name, field);
-        System.out.println("Post");
-        if (balance != null) {
-            balance.setIBAN_no(name);
-        }
-        LendaryDAO.getModel().put(id, balance);
+//        Balance balance = new Balance(id, name, field);
+//        System.out.println("Post");
+//        if (balance != null) {
+//            balance.setAcounyID(name);
+//        }
+//        LendaryDAO.getModel().put(id, balance);
         response.sendRedirect("../index.html");
     }
 //    @POST
