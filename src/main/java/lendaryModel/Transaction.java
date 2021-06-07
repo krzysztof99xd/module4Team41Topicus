@@ -1,44 +1,83 @@
 package lendaryModel;
 
-import com.prowidesoftware.swift.model.mt.mt9xx.MT940;
+import java.util.Date;
 
-import javax.xml.bind.annotation.XmlRootElement;
-import java.io.File;
-import java.io.IOException;
-
-@XmlRootElement
 public class Transaction {
-    private String id;
-    private String name;
-    private String field;
 
 
-    public Transaction(String id, String name, String field) throws IOException {
-        this.id = id;
-        this.name = name;
-        this.field = field;
+    private Date valueDate;
+    private String statement_number;
+    private String transaction_number;
+//    private char debit_or_credit;
+    private String customer_reference;
+    private Date entry_date;
+    private Money amount;
+
+
+    public Transaction(Date valueDate, String statement_number, String transaction_number,
+                       String customer_reference,Date entry_date, Money amount ) {
+        this.valueDate = valueDate;
+        this.statement_number = statement_number;
+        this.transaction_number = transaction_number;
+//        this.debit_or_credit = debit_or_credit;
+        this.customer_reference = customer_reference;
+        this.entry_date = entry_date;
+        this.amount = amount;
     }
 
-
-    public String getId() {
-        return id;
+    public Date getValueDate() {
+        return valueDate;
     }
 
-    public String getField() {
-        return field;
+    public void setValueDate(Date valueDate) {
+        this.valueDate = valueDate;
     }
 
-    public void setField(String field) {
-        this.field = field;
+    public String getStatement_number() {
+        return statement_number;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setStatement_number(String statement_number) {
+        this.statement_number = statement_number;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getTransaction_number() {
+        return transaction_number;
     }
 
-    public String getName() {return name;}
+    public void setTransaction_number(String transaction_number) {
+        this.transaction_number = transaction_number;
+    }
+
+//    public char getDebit_or_credit() {
+//        return debit_or_credit;
+//    }
+
+//    public void setDebit_or_credit(char debit_or_credit) {
+//        this.debit_or_credit = debit_or_credit;
+//    }
+
+    public String getCustomer_reference() {
+        return customer_reference;
+    }
+
+    public void setCustomer_reference(String customer_reference) {
+        this.customer_reference = customer_reference;
+    }
+
+    public Date getEntry_date() {
+        return entry_date;
+    }
+
+    public void setEntry_date(Date entry_date) {
+        this.entry_date = entry_date;
+    }
+
+    public Money getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Money amount) {
+        this.amount = amount;
+    }
 }

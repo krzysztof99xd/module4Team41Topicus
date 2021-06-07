@@ -1,5 +1,7 @@
 package database;
 
+import lendaryModel.Balance;
+
 import java.sql.*;
 
 public class ConnectionHandler {
@@ -78,6 +80,29 @@ public class ConnectionHandler {
         }
        //return null;
     }
+
+    //We still didnt finish inserting into balnce, please come back to me
+    public void insertBalance(Balance balance){
+        try {
+            String query = "INSERT INTO money (money_id, currency, debit_credit)\n" +
+                    "VALUES(2, 'EUR', 'D');\n" +
+                    "INSERT INTO balance (account_identification,  sequence_number) \n" +
+                    "VALUES('"+balance.getAccountID()+"','" +balance.getSequence_number() +"')";
+
+//            INSERT INTO balance (account_identification, transaction_number, sequence_number, first_amount, statement_date, first_amount, statement_date, final_date, booked_funds)
+//            VALUES();
+
+//            "SELECT DISTINCT p.name " + "FROM person p " + "INNER JOIN writes w ON w.pid = p.pid " +
+//            "INNER JOIN movie m ON m.mid = w.mid " + "INNER JOIN acts a ON a.mid = m.mid " + "INNER JOIN person r ON r.pid = a.pid " + "WHERE r.name = ?";
+            PreparedStatement st = connection.prepareStatement(query);
+            ResultSet resultset = st.executeQuery();
+            connection.close();
+        } catch (SQLException sqle) {
+            System.err.println("Error connecting: " + sqle);
+        }
+
+    }
+
 
     public static void main(String[] args) throws SQLException {
         ConnectionHandler connectionHandler = new ConnectionHandler();

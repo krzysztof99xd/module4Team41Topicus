@@ -2,10 +2,6 @@ package lendaryModel;
 
 import javax.xml.bind.annotation.XmlRootElement;
 
-import com.prowidesoftware.swift.model.mt.mt9xx.MT940;
-
-import javax.xml.bind.annotation.XmlRootElement;
-import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
@@ -15,178 +11,104 @@ public class Balance {
 	
 	private List<Transaction> transactions;
 	
-    private String IBAN_no;
-    private int final_balance;
-    private int closing_balance;
-    private Date final_date;
-    private Date closing_date;	
-    private String currency;
-    private char debit_or_credit_mark;
-    private int amount;
+    private String accountID;
+    private String transaction_number;
+	private String sequence_number;
+    private Money first_balance;
+    private Money final_balance;
+    private Date statement_date;
+    private Date closing_date;
+    private Money booked_balance;
+    
+
+    public Balance(){
+
+	}
     
     
-    
-    private String name;
-    private String field;
-    public Balance(String IBAN_no, String name, String field) throws IOException {
-        this.IBAN_no = IBAN_no;
-        this.name = name;
-        this.field = field;
-    }
-    
-    
-    public Balance(String IBAN_no, int final_balance, int closing_balance ,
-    		Date final_date, Date closing_date, String currency, char debit_or_credit_mark ,int amount) {
+    public Balance(String accountID, String transaction_number,String sequence_number, Money final_balance, Money first_balance,
+				   Date statement_date, Date closing_date,  Money booked_balance) {
     	
-    	this.IBAN_no = IBAN_no;
-    	this.final_balance = final_balance;
-    	this.closing_balance = closing_balance;
-		this.final_date = final_date;
+    	this.accountID = accountID;
+    	this.transaction_number = transaction_number;
+    	this.sequence_number = sequence_number;
+		this.first_balance = first_balance;
+        this.final_balance = final_balance;
+        this.statement_date = statement_date;
         this.closing_date = closing_date;
-        this.currency = currency;
-        this.debit_or_credit_mark = debit_or_credit_mark;
-        this.amount = amount;
+        this.booked_balance = booked_balance;
     }
 
-
-	public String getIBAN_no() {
-		return IBAN_no;
+	public String getAccountID() {
+		return accountID;
 	}
 
-
-	public void setIBAN_no(String iBAN_no) {
-		IBAN_no = iBAN_no;
+	public void setAccountID(String accountID) {
+		this.accountID = accountID;
 	}
 
-
-	/**
-	 * @return the closing_balance
-	 */
-	public int getClosing_balance() {
-		return closing_balance;
+	public String getTransaction_number() {
+		return transaction_number;
 	}
 
-
-	/**
-	 * @param closing_balance the closing_balance to set
-	 */
-	public void setClosing_balance(int closing_balance) {
-		this.closing_balance = closing_balance;
+	public void setTransaction_number(String transaction_number) {
+		this.transaction_number = transaction_number;
 	}
 
+	public String getSequence_number() {
+		return sequence_number;
+	}
 
-	/**
-	 * @return the final_balance
-	 */
-	public int getFinal_balance() {
+	public void setSequence_number(String sequence_number) {
+		this.sequence_number = sequence_number;
+	}
+
+	public Money getFirst_balance() {
+		return first_balance;
+	}
+
+	public void setFirst_balance(Money first_balance) {
+		this.first_balance = first_balance;
+	}
+
+	public Money getFinal_balance() {
 		return final_balance;
 	}
 
-
-	/**
-	 * @param final_balance the final_balance to set
-	 */
-	public void setFinal_balance(int final_balance) {
+	public void setFinal_balance(Money final_balance) {
 		this.final_balance = final_balance;
 	}
 
+	public Date getStatement_date() {
+		return statement_date;
+	}
 
-	/**
-	 * @return the closing_date
-	 */
+	public void setStatement_date(Date statement_date) {
+		this.statement_date = statement_date;
+	}
+
 	public Date getClosing_date() {
 		return closing_date;
 	}
 
-
-	/**
-	 * @param closing_date the closing_date to set
-	 */
 	public void setClosing_date(Date closing_date) {
 		this.closing_date = closing_date;
 	}
 
-
-	/**
-	 * @return the final_date
-	 */
-	public Date getFinal_date() {
-		return final_date;
+	public Money getBooked_balance() {
+		return booked_balance;
 	}
 
-
-	/**
-	 * @param final_date the final_date to set
-	 */
-	public void setFinal_date(Date final_date) {
-		this.final_date = final_date;
+	public void setBooked_balance(Money booked_balance) {
+		this.booked_balance = booked_balance;
 	}
 
-
-	/**
-	 * @return the currency
-	 */
-	public String getCurrency() {
-		return currency;
-	}
-
-
-	/**
-	 * @param currency the currency to set
-	 */
-	public void setCurrency(String currency) {
-		this.currency = currency;
-	}
-
-
-	/**
-	 * @return the debit_or_credit_mark
-	 */
-	public char getDebit_or_credit_mark() {
-		return debit_or_credit_mark;
-	}
-
-
-	/**
-	 * @param debit_or_credit_mark the debit_or_credit_mark to set
-	 */
-	public void setDebit_or_credit_mark(char debit_or_credit_mark) {
-		this.debit_or_credit_mark = debit_or_credit_mark;
-	}
-
-
-	/**
-	 * @return the amount
-	 */
-	public int getAmount() {
-		return amount;
-	}
-
-
-	/**
-	 * @param amount the amount to set
-	 */
-	public void setAmount(int amount) {
-		this.amount = amount;
-	}
-
-
-	/**
-	 * @return the transactions
-	 */
 	public List<Transaction> getTransactions() {
 		return transactions;
 	}
 
-
-	/**
-	 * @param transactions the transactions to set
-	 */
-	public void setTransactions(List<Transaction> transactions) {
-		this.transactions = transactions;
+	public void addTransaction(Transaction t) {
+		 transactions.add(t);
 	}
-
-
-
 
 }
