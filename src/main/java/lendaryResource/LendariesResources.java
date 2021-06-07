@@ -68,11 +68,12 @@ public class LendariesResources extends HttpServlet {
 //    @POST
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Balance> getLendaryBrowser() {
-        List<Balance> files = new ArrayList<Balance>();
-        files.addAll(LendaryDAO.getModel().values());
-        System.out.println("GET");
-        return files;
+    public String getLendaryBrowser() {
+//        List<Balance> files = new ArrayList<Balance>();
+//        files.addAll(LendaryDAO.getModel().values());
+//        System.out.println("GET");
+    	String xml = "cc";
+        return xml;
     }
 
     @Path("{fileid}")

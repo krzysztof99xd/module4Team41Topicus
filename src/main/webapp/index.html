@@ -34,6 +34,7 @@
           <input type="text" name="description" />
           <input type="file" name="file" />
           <input type="submit" onclick="myFunction()"/>
+          
         </form>
       </li>
       <li><a href="#history">History</a></li>
@@ -136,11 +137,11 @@
               var xhr = new XMLHttpRequest();
               xhr.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
-                  txt += JSON.parse(this.responseText)
+                  txt += this.responseText;
                 }
                 document.getElementById("demo").innerHTML = txt + "Hello there";
               };
-              xhr.open('GET', 'http://localhost:8080/Module4Team41Topicus/rest/files', true);
+              xhr.open('GET', 'http://localhost:8080/Module4Team41Topicus/upload', true);
               xhr.send();
             }
         //     document.getElementById("demo").innerHTML = txt + "Hello Post";

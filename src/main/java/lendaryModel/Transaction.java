@@ -1,44 +1,68 @@
 package lendaryModel;
 
-import com.prowidesoftware.swift.model.mt.mt9xx.MT940;
+import java.util.Date;
 
-import javax.xml.bind.annotation.XmlRootElement;
-import java.io.File;
-import java.io.IOException;
-
-@XmlRootElement
 public class Transaction {
-    private String id;
-    private String name;
-    private String field;
 
-
-    public Transaction(String id, String name, String field) throws IOException {
-        this.id = id;
-        this.name = name;
-        this.field = field;
+    
+    private Date valueDate;
+    private Date enteryDate;
+    private int amount;
+    
+    
+    public Transaction(Date valueDate, Date enteryDate, int amount) {
+        this.valueDate = valueDate;
+        this.enteryDate = enteryDate;
+        this.amount = amount;
     }
 
 
-    public String getId() {
-        return id;
+    /**
+     * @return the valueDate
+     */
+    public Date getValueDate() {
+        return valueDate;
     }
 
-    public String getField() {
-        return field;
+
+    /**
+     * @param valueDate the valueDate to set
+     */
+    public void setValueDate(Date valueDate) {
+        this.valueDate = valueDate;
     }
 
-    public void setField(String field) {
-        this.field = field;
+
+    /**
+     * @return the amount
+     */
+    public int getAmount() {
+        return amount;
     }
 
-    public void setId(String id) {
-        this.id = id;
+
+    /**
+     * @param amount the amount to set
+     */
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
-    public void setName(String name) {
-        this.name = name;
+
+    /**
+     * @return the enteryDate
+     */
+    public Date getEnteryDate() {
+        return enteryDate;
     }
 
-    public String getName() {return name;}
+
+    /**
+     * @param enteryDate the enteryDate to set
+     */
+    public void setEnteryDate(Date enteryDate) {
+        this.enteryDate = enteryDate;
+    }
+    
+
 }
