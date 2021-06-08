@@ -1,6 +1,7 @@
 package lendaryResource;
 
 
+import database.ConnectionHandler;
 import lendaryDAO.LendaryDAO;
 import lendaryModel.Balance;
 
@@ -13,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Request;
 import javax.ws.rs.core.UriInfo;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,8 +27,9 @@ public class LendariesResources extends HttpServlet {
     Request request;
 
     LendaryDAO dao = new LendaryDAO();
+    ConnectionHandler con = new ConnectionHandler();
 
-    public LendariesResources() throws IOException {
+    public LendariesResources() throws IOException, SQLException {
     }
 
 //
@@ -61,9 +64,7 @@ public class LendariesResources extends HttpServlet {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Balance> getLendaryBrowser() {
-        List<Balance> files = new ArrayList<Balance>();
-        files.addAll(LendaryDAO.getModel().values());
-        System.out.println("GET");
+        List<Balance> files = con.getBalances();
         return files;
     }
 

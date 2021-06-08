@@ -1,9 +1,11 @@
 package database;
 
 import lendaryModel.Balance;
+import lendaryModel.Money;
 import lendaryModel.Transaction;
 
 import java.sql.*;
+import java.util.*;
 
 public class ConnectionHandler {
     private final String host;
@@ -82,7 +84,6 @@ public class ConnectionHandler {
        //return null;
     }
 
-    //We still didnt finish inserting into balnce, please come back to me
     public void insertBalance(Balance balance){
         try {
             String query = "INSERT INTO money (money_id, amount, currency, debit_credit)\n" +
@@ -93,7 +94,6 @@ public class ConnectionHandler {
                     "VALUES('"+balance.getAccountID()+"','" +balance.getTransaction_number() + "','" +balance.getSequence_number() + "','" + balance.getStatement_date() + "','" + balance.getClosing_date() + "','" + balance.getAccountID() + "f_a" + "','" + balance.getAccountID() + "c_a"  + "','"  + balance.getAccountID() + "b_f');";
 
             PreparedStatement st = connection.prepareStatement(query);
-            ResultSet resultset = st.executeQuery();
             connection.close();
         } catch (SQLException sqle) {
             System.err.println("Error connecting: " + sqle);
@@ -114,13 +114,35 @@ public class ConnectionHandler {
                     "VALUES ('"+account_id+"','"+t.getValueDate()+"','"+t.getEntry_date()+"','"+t.getCustomer_reference()+"','"+account_id + str +"');";
 
             PreparedStatement st = connection.prepareStatement(query);
-            ResultSet resultset = st.executeQuery();
             connection.close();
         }catch (SQLException sqle) {
                 System.err.println("Error connecting: " + sqle);
         }
     }
-
+    public List<Balance> getBalances(){
+            List<Balance> result = new ArrayList<>();
+              try{
+                  String query = "SELECT account_id , statement_date, final_date,  m1.amount as sb ,m1.currency as sc,  m2.amount as fb, m1.currency as fc\n" +
+                          "FROM balance b, money m1, money m2\n" +
+                          "WHERE b.first_amount = m1.money_id\n" +
+                          "AND b.final_amount = m2.money_id";
+                  PreparedStatement st = connection.prepareStatement(query);
+                  ResultSet rs = st.executeQuery();
+                 while(rs.next()){
+                    Balance balance = new Balance();
+                    balance.setAccountID(rs.getString("account_id"));
+                    balance.setStatement_date(rs.getDate("statement_date"));
+                    balance.setClosing_date(rs.getDate("final_date"));
+                    balance.setFirst_balance(new Money(rs.getString("sc"), rs.getFloat("sb"), 'c'));
+                    balance.setFinal_balance(new Money(rs.getString("fc"), rs.getFloat("fb"), 'c'));
+                    result.add(balance);
+                  }
+                  connection.close();
+              }catch (SQLException sqle){
+                  System.err.println("Error connecting: " + sqle);
+              }
+        return  result;
+    }
 
     public static void main(String[] args) throws SQLException {
         ConnectionHandler connectionHandler = new ConnectionHandler();
