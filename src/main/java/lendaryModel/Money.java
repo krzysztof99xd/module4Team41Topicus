@@ -4,7 +4,7 @@ public class Money {
     private String currency;
     private float amount;
     private int money_id;
-    private char debit_or_credit;
+    private char debit_or_credit ;
 
     public Money(String currency, float amount, char debit_or_credit) {
         this.currency = currency;

@@ -1,8 +1,11 @@
 package database;
 
 import lendaryModel.Balance;
+import lendaryModel.Money;
+import lendaryModel.Transaction;
 
 import java.sql.*;
+import java.util.*;
 
 public class ConnectionHandler {
     private final String host;
@@ -81,32 +84,68 @@ public class ConnectionHandler {
        //return null;
     }
 
-    //We still didnt finish inserting into balnce, please come back to me
     public void insertBalance(Balance balance){
         try {
-            String query = "INSERT INTO money (money_id, currency, debit_credit)\n" +
-                    "VALUES(2, 'EUR', 'D');\n" +
-                    "INSERT INTO balance (account_identification,  sequence_number) \n" +
-                    "VALUES('"+balance.getAccountID()+"','" +balance.getSequence_number() +"')";
+            String query = "INSERT INTO money (money_id, amount, currency, debit_credit)\n" +
+                    "VALUES  ('"+ balance.getAccountID() + "f_a"+"','"+balance.getFirst_balance().getAmount() + "','"+balance.getFirst_balance().getCurrency()+"','"+balance.getFirst_balance().getDebit_or_credit()+"'),\n" +
+                    "('"+ balance.getAccountID() + "c_a"+"','"+balance.getFinal_balance().getAmount() + "','"+balance.getFinal_balance().getCurrency()+"','"+balance.getFinal_balance().getDebit_or_credit()+"'),\n" +
+                    "('"+ balance.getAccountID() + "b_f"+"','"+balance.getBooked_balance().getAmount() + "','"+balance.getBooked_balance().getCurrency()+"','"+balance.getBooked_balance().getDebit_or_credit()+"');" +
+                    "INSERT INTO balance (account_id,  transaction_number, sequence_number, statement_date, final_date, first_amount, final_amount, booked_funds) \n" +
+                    "VALUES('"+balance.getAccountID()+"','" +balance.getTransaction_number() + "','" +balance.getSequence_number() + "','" + balance.getStatement_date() + "','" + balance.getClosing_date() + "','" + balance.getAccountID() + "f_a" + "','" + balance.getAccountID() + "c_a"  + "','"  + balance.getAccountID() + "b_f');";
 
-//            INSERT INTO balance (account_identification, transaction_number, sequence_number, first_amount, statement_date, first_amount, statement_date, final_date, booked_funds)
-//            VALUES();
-
-//            "SELECT DISTINCT p.name " + "FROM person p " + "INNER JOIN writes w ON w.pid = p.pid " +
-//            "INNER JOIN movie m ON m.mid = w.mid " + "INNER JOIN acts a ON a.mid = m.mid " + "INNER JOIN person r ON r.pid = a.pid " + "WHERE r.name = ?";
             PreparedStatement st = connection.prepareStatement(query);
-            ResultSet resultset = st.executeQuery();
             connection.close();
         } catch (SQLException sqle) {
             System.err.println("Error connecting: " + sqle);
         }
+        int i = 0;
+        for(Transaction t : balance.getTransactions()){
+            i++;
+            insertTransaction(t, balance.getAccountID(), i);
+        }
 
     }
+    public void insertTransaction(Transaction t, String account_id, int i){
+        try {
+            String str = "t_a" + i;
+            String query = "INSERT INTO money (money_id, amount, currency, debit_credit) " +
+                    "VALUES ('"+ account_id + str +"','"+t.getAmount().getAmount() + "','"+t.getAmount().getCurrency()+"','"+t.getAmount().getDebit_or_credit()+"');" +
+                    "INSERT INTO transaction (account_id, value_date, entry_date, customer_reference, transaction_amount)\n" +
+                    "VALUES ('"+account_id+"','"+t.getValueDate()+"','"+t.getEntry_date()+"','"+t.getCustomer_reference()+"','"+account_id + str +"');";
 
+            PreparedStatement st = connection.prepareStatement(query);
+            connection.close();
+        }catch (SQLException sqle) {
+                System.err.println("Error connecting: " + sqle);
+        }
+    }
+    public List<Balance> getBalances(){
+            List<Balance> result = new ArrayList<>();
+              try{
+                  String query = "SELECT account_id , statement_date, final_date,  m1.amount as sb ,m1.currency as sc,  m2.amount as fb, m1.currency as fc\n" +
+                          "FROM balance b, money m1, money m2\n" +
+                          "WHERE b.first_amount = m1.money_id\n" +
+                          "AND b.final_amount = m2.money_id";
+                  PreparedStatement st = connection.prepareStatement(query);
+                  ResultSet rs = st.executeQuery();
+                 while(rs.next()){
+                    Balance balance = new Balance();
+                    balance.setAccountID(rs.getString("account_id"));
+                    balance.setStatement_date(rs.getDate("statement_date"));
+                    balance.setClosing_date(rs.getDate("final_date"));
+                    balance.setFirst_balance(new Money(rs.getString("sc"), rs.getFloat("sb"), 'c'));
+                    balance.setFinal_balance(new Money(rs.getString("fc"), rs.getFloat("fb"), 'c'));
+                    result.add(balance);
+                  }
+                  connection.close();
+              }catch (SQLException sqle){
+                  System.err.println("Error connecting: " + sqle);
+              }
+        return  result;
+    }
 
     public static void main(String[] args) throws SQLException {
         ConnectionHandler connectionHandler = new ConnectionHandler();
-//        connectionHandler.insertMethod(2, "djhfhj", 10, 23, "2019-11-02", "2019-11-04", "ssddd", 'D');
         ResultSet finish = connectionHandler.ExecutingQueries();
         while (finish.next()) {
             System.out.println(finish.getString(1));

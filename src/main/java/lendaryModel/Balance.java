@@ -3,13 +3,14 @@ package lendaryModel;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @XmlRootElement
 public class Balance {
 	
-	private List<Transaction> transactions;
+	private List<Transaction> transactions = new ArrayList<Transaction>();
 	
     private String accountID;
     private String transaction_number;
@@ -24,8 +25,7 @@ public class Balance {
     public Balance(){
 
 	}
-    
-    
+
     public Balance(String accountID, String transaction_number,String sequence_number, Money final_balance, Money first_balance,
 				   Date statement_date, Date closing_date,  Money booked_balance) {
     	

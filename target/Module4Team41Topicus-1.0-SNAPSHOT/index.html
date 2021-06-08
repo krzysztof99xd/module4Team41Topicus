@@ -45,6 +45,7 @@
 </section>
 
 
+
 <!-- hamburger-->
 
 <section class="dropdown">
@@ -73,9 +74,10 @@
 <section class="sec" id="sportcontent">
 
   <header class="contentheader">
-    <h3 id = "demo">History</h3>
+    <h3 id = "demo">Hisdvbfbry</h3>
   </header>
-
+  <button onclick="myFunction()"> click me please
+  </button>
 
   <div id = "search">
     <input type="text" placeholder="Search.." name="search2">
@@ -117,32 +119,25 @@
 
 <script>
   function myFunction(){
-    var x = document.getElementById("upload");
     var txt = "";
-    if ('files' in x) {
-      if (x.files.length == 0) {
-        txt = "Select one or more files.";
-      }
-
-      else {
-        for (var i = 0; i < x.files.length; i++) {
-          txt += "<br><strong>" + (i + 1) + ". file</strong><br>";
-          var file = x.files[i];
-          var formData = new FormData();
-          formData.append('file', file);
-          var postxhr = new XMLHttpRequest();
+    var myObj;
+          // var postxhr = new XMLHttpRequest();
           // postxhr.onreadystatechange = function () {
           //   if (this.readyState == 4 && this.status == 204) {
               var xhr = new XMLHttpRequest();
               xhr.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
-                  txt += JSON.parse(this.responseText)
+                  myObj = JSON.parse(this.responseText);
+                  for(x in myObj){
+                    txt = "<p>" + myObj[x].accountID + "</p>";
+                  }
+                  document.getElementById("demo").innerHTML = txt + "Hello there";
                 }
-                document.getElementById("demo").innerHTML = txt + "Hello there";
+                document.getElementById("demo").innerHTML = txt + "Hello 2";
               };
-              xhr.open('GET', 'http://localhost:8080/Module4Team41Topicus/rest/files', true);
+              xhr.open('GET', 'http://localhost:8080/Module4Team41Topicus_war_exploded/rest/files', true);
               xhr.send();
-            }
+          return;
         //     document.getElementById("demo").innerHTML = txt + "Hello Post";
         //   };
         //   postxhr.open('POST', 'http://localhost:8080/Module4Team41Topicus_war_exploded/rest/files', true);
@@ -150,10 +145,6 @@
         //   postxhr.send(formData);
         //
         // }
-
-        }
-      }
-
   };
 
 </script>

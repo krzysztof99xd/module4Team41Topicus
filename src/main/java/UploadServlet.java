@@ -1,9 +1,11 @@
 import com.prowidesoftware.swift.model.MtSwiftMessage;
+import com.prowidesoftware.swift.model.field.Field61;
 import com.prowidesoftware.swift.model.mt.mt9xx.MT940;
 import database.ConnectionHandler;
 import lendaryDAO.LendaryDAO;
 import lendaryModel.Balance;
 import lendaryModel.Parser;
+import lendaryModel.Transaction;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -46,6 +48,11 @@ public class UploadServlet extends HttpServlet {
                 balance = parser.parseField60F(mt940.getField60F().getValue(), balance);
                 balance = parser.parseField62F(mt940.getField62F().getValue(), balance);
                 balance = parser.parseField64(mt940.getField64().getValue(), balance);
+                for(Field61 f61 : mt940.getField61()){
+                    Transaction transaction = new Transaction();
+                    transaction = parser.parseField61(f61.getValue(), transaction);
+                    balance.addTransaction(transaction);
+                }
                 connectionHandler.insertBalance(balance);
             }
 

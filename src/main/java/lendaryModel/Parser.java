@@ -33,9 +33,9 @@ public class Parser {
         String value_date = field61.substring(0,6);
         String year  = value_date.substring(0,2);
 
-        String entry_date = field61.substring(6,10);
-        char debit_credit  = field61.substring(10,11).charAt(0);
-        String amount = field61.substring(11, 16);
+//        String entry_date = field61.substring(6,10);
+//        char debit_credit  = field61.substring(10,11).charAt(0);
+//        String amount = field61.substring(11, 16);
 
         transaction.setValueDate(getDate(field61.substring(0,6)));
         transaction.setEntry_date(getDate(year + field61.substring(6,10)));
