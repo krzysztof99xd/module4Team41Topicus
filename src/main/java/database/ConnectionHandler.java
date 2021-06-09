@@ -40,49 +40,7 @@ public class ConnectionHandler {
     public String getPassword() {
         return password;
     }
-    //    public void EstablishConnection() {
-//        try {
-//            Class.forName("org.postgresql.Driver");
-//
-//        } catch (ClassNotFoundException cnfe) {
-//            System.err.println("Error loading driver: " + cnfe);
-//        }
 
-
-
-    public ResultSet ExecutingQueries() {
-
-        try {
-            /* Statement statement = connection.createStatement(); */
-
-            String query = "SELECT * " + "FROM database_project.balance; ";
-            PreparedStatement st = connection.prepareStatement(query);
-            ResultSet resultset = st.executeQuery();
-            connection.close();
-            return resultset;
-        } catch (SQLException sqle) {
-            System.err.println("Error connecting: " + sqle);
-        }
-        return null;
-    }
-
-        public void insertMethod(double amount, String IBAN_no, double final_balance, double closing_balance,
-                    String final_date, String closing_date, String currency, char debit_or_credit_mark) {
-
-        try {
-            String query = "INSERT INTO database_project.balance " + "VALUES (" + "'" + IBAN_no + "'" + ", " + final_balance
-                    + ", " + closing_balance + ", " + "'" + final_date + "'" + ", " + "'" + closing_date + "'" + ", " + "'" + currency + "'" + ", " + "'"
-                    + debit_or_credit_mark + "'" + ", "  + amount + ")";
-
-            PreparedStatement st = connection.prepareStatement(query);
-            ResultSet resultset = st.executeQuery();
-            connection.close();
-           // return insertMethod;
-        } catch (SQLException sqle) {
-            System.err.println("Error connecting: " + sqle);
-        }
-       //return null;
-    }
 
     public void insertBalance(Balance balance){
         try {
@@ -94,17 +52,18 @@ public class ConnectionHandler {
                     "VALUES('"+balance.getAccountID()+"','" +balance.getTransaction_number() + "','" +balance.getSequence_number() + "','" + balance.getStatement_date() + "','" + balance.getClosing_date() + "','" + balance.getAccountID() + "f_a" + "','" + balance.getAccountID() + "c_a"  + "','"  + balance.getAccountID() + "b_f');";
 
             PreparedStatement st = connection.prepareStatement(query);
+            int i = 0;
+            for(Transaction t : balance.getTransactions()){
+                i++;
+                insertTransaction(t, balance.getAccountID(), i);
+            }
             connection.close();
         } catch (SQLException sqle) {
             System.err.println("Error connecting: " + sqle);
         }
-        int i = 0;
-        for(Transaction t : balance.getTransactions()){
-            i++;
-            insertTransaction(t, balance.getAccountID(), i);
-        }
-
     }
+
+
     public void insertTransaction(Transaction t, String account_id, int i){
         try {
             String str = "t_a" + i;
@@ -116,9 +75,10 @@ public class ConnectionHandler {
             PreparedStatement st = connection.prepareStatement(query);
             connection.close();
         }catch (SQLException sqle) {
-                System.err.println("Error connecting: " + sqle);
+            System.err.println("Error connecting: " + sqle);
         }
     }
+
     public List<Balance> getBalances(){
             List<Balance> result = new ArrayList<>();
               try{
@@ -144,11 +104,9 @@ public class ConnectionHandler {
         return  result;
     }
 
+
     public static void main(String[] args) throws SQLException {
-        ConnectionHandler connectionHandler = new ConnectionHandler();
-        ResultSet finish = connectionHandler.ExecutingQueries();
-        while (finish.next()) {
-            System.out.println(finish.getString(1));
-        }
+       // ConnectionHandler connectionHandler = new ConnectionHandler();
+
     }
 }
