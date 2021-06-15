@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html onload="myFunction()">
 
 <head>
     <meta charset="utf-8">
@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="assets/css/Navigation-with-Search.css">
 </head>
 
-<body id="page-top">
+<body id="page-top" onload="myFunction()">
     <div id="wrapper">
         <div class="d-flex flex-column" id="content-wrapper">
             <div id="content">
@@ -45,9 +45,9 @@
                     <div class="card shadow">
                         <div class="card-header py-3">
 
-                            <form action="./upload"  method="post" enctype="multipart/form-data">
+                            <form action="./upload" target = "_blank"  method="POST" enctype="multipart/form-data">
                                 <input class="btn btn-primary active" type="file" name="file" style="margin: 0px;padding: 7px 26px;border-width: 1px;transform: rotate(0deg)";/>
-                                <input class="btn btn-primary active text-center d-inline-block" type="submit" id ="but_submit" onclick="myFunction()"  style="margin-right: 0px;margin-left: 21px;width: 106.6px";/>
+                                <input class="btn btn-primary active text-center d-inline-block" type="submit" id ="but_submit" onclick="delay()" onload="delay()" style="margin-right: 0px;margin-left: 21px;width: 106.6px";/>
                             </form>
 
 <!--                            <button class="btn btn-primary active" type="submit" style="margin: 0px;padding: 7px 26px;border-width: 1px;transform: rotate(0deg);">  <input type="file"  action="upload" method="post" enctype="multipart/form-data" name="file"/> </button><button class="btn btn-primary active text-center d-inline-block" type="submit" onclick="myFunction()" style="margin-right: 0px;margin-left: 21px;width: 106.6px;"> <input type="submit"/>.</button> <select style="margin-left: 117px;width: 398.4px;">-->
@@ -125,7 +125,7 @@
     <script src="assets/js/bs-init.js"></script>
     <script src="assets/js/theme.js"></script>
     <script>
-        window.onload = function myFunction(){
+        function myFunction(){
             var txt = "";
             var myObj;
             // var postxhr = new XMLHttpRequest();
@@ -152,32 +152,12 @@
             return;
         };
 
-        // $(document).ready(function(){
-        //     $("#but_submit").click(function(){
-        //         var fd = new FormData();
-        //         var files = $('#file')[0].files;
-        //         // Check file selected or not
-        //         if(files.length > 0 ){
-        //             fd.append('file',files[0]);
-        //             $.ajax({
-        //                 url: 'index.html',
-        //                 type: 'post',
-        //                 data: fd,
-        //                 contentType: false,
-        //                 processData: false,
-        //                 success: function(response){
-        //                     if(response != 0){
-        //                         alert('file uploaded');
-        //                     }else{
-        //                         alert('file not uploaded');
-        //                     }
-        //                 },
-        //             });
-        //         }else{
-        //             alert("Please select a file.");
-        //         }
-        //     });
-        // });
+        function delay(){
+            ///
+            setTimeout(() => {  myFunction(); }, 2000);
+            
+        }
+      
     </script>
 </body>
 

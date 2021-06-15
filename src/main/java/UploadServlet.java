@@ -70,6 +70,24 @@ public class UploadServlet extends HttpServlet {
                     balance.addTransaction(transaction);
                 }
                 connectionHandler.insertBalance(balance);
+                response.setContentType("text/html");
+                PrintWriter out = response.getWriter();
+
+                 out.println(
+                "<HTML     onload='lll()'>\n" +
+                "<HEAD  onload='lll()'><TITLE></TITLE>" +
+                "</HEAD>\n" +
+                "<BODY onload='lll()'>\n" +
+
+                " <script> " +
+                         " function lll(){ " +
+                           "  window.close(); " +
+                             "}"+
+                         "</script>"+
+
+                "</BODY></HTML>");
+
+
             }
         }
     }
