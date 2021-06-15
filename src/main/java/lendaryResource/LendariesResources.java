@@ -51,15 +51,7 @@ public class LendariesResources extends HttpServlet {
                                 @FormParam("field") String field,
                                 @Context HttpServletResponse response)
             throws ServletException, IOException {
-//        Balance balance = new Balance(id, name, field);
-//        System.out.println("Post");
-//        if (balance != null) {
-//            balance.setAcounyID(name);
-//        }
-//        LendaryDAO.getModel().put(id, balance);
-        response.sendRedirect("src/main/webapp/assets/inde22222.html");
     }
-//    @POST
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Balance> getLendaryBrowser() {

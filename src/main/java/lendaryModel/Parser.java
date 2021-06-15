@@ -12,15 +12,13 @@ public class Parser {
     //field25 =  account_identification
     //field28C Sequence_number
 
-
-    public Balance parseField60F(String field60F, Balance balance){
+    public Balance parseField60(String field60F, Balance balance){
         //opening balance
 
 //        char debit_or_credit_mark= field60F.substring(0).charAt(0);
 //        String statement_date = field60F.substring(1,7);
 //        String currency = field60F.substring(7, 10);
 //        String amount  = field60F.substring(10);
-
 
         balance.setStatement_date(getDate(field60F.substring(1,7)));
         balance.setFirst_balance(new Money(field60F.substring(7, 10), getFloat((field60F).substring(10)), field60F.substring(0).charAt(0)));
@@ -35,11 +33,17 @@ public class Parser {
 
 //        String entry_date = field61.substring(6,10);
 //        char debit_credit  = field61.substring(10,11).charAt(0);
-//        String amount = field61.substring(11, 16);
 
+        String init_amount = field61.substring(11, 16);
+        String final_amount = "";
+        for(int i =0; i<init_amount.length(); i++){
+            if(Character.isDigit(init_amount.charAt(i)) || init_amount.charAt(i) == ','){
+                final_amount += init_amount.charAt(i);
+            }
+        }
         transaction.setValueDate(getDate(field61.substring(0,6)));
         transaction.setEntry_date(getDate(year + field61.substring(6,10)));
-        transaction.setAmount(new Money(null,getFloat(field61.substring(11, 16)), field61.substring(10,11).charAt(0)));
+        transaction.setAmount(new Money(null,getFloat(final_amount), field61.substring(10,11).charAt(0)));
 
         if(field61.contains("//")) {
             index = field61.indexOf("//")+2;

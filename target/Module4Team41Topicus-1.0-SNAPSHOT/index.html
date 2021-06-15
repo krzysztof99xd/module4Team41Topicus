@@ -19,7 +19,7 @@
         <div class="d-flex flex-column" id="content-wrapper">
             <div id="content">
                 <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
-                    <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button><img style="background: url(&quot;https://cdn.bootstrapstudio.io/placeholders/1400x800.png&quot;);width: 69px;" src="assets/img/facebook_profile_image.png">
+                    <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button><img style="background: url(https://cdn.bootstrapstudio.io/placeholders/1400x800.png&quot;);width: 69px;" src="assets/img/facebook_profile_image.png">
                         <nav class="navbar navbar-light navbar-expand-md navigation-clean-search" style="width: 528.5px;height: 71px;">
                             <div class="container"><a class="navbar-brand" href="https://topicus.nl/">Topicus</a><a class="btn btn-primary" role="button" style="width: 140.4px;margin: 0px;padding: 7px 12px;" href="index.html">History</a><a class="btn btn-primary" role="button" style="width: 140.4px;" href="table.html">Dashboard</a>
                                 <div class="btn-group" role="group"></div><button class="navbar-toggler" data-bs-toggle="collapse"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
@@ -45,9 +45,9 @@
                     <div class="card shadow">
                         <div class="card-header py-3">
 
-                            <form action="upload"    method="post" enctype="multipart/form-data">
-                                <input class="btn btn-primary active" type="file" name="file" style="margin: 0px;padding: 7px 26px;border-width: 1px;transform: rotate(0deg);"/>
-                                <input class="btn btn-primary active text-center d-inline-block" type="submit" onclick="myFunction()"  style="margin-right: 0px;margin-left: 21px;width: 106.6px;"/>
+                            <form action="./upload"  method="post" enctype="multipart/form-data">
+                                <input class="btn btn-primary active" type="file" name="file" style="margin: 0px;padding: 7px 26px;border-width: 1px;transform: rotate(0deg)";/>
+                                <input class="btn btn-primary active text-center d-inline-block" type="submit" id ="but_submit" onclick="myFunction()"  style="margin-right: 0px;margin-left: 21px;width: 106.6px";/>
                             </form>
 
 <!--                            <button class="btn btn-primary active" type="submit" style="margin: 0px;padding: 7px 26px;border-width: 1px;transform: rotate(0deg);">  <input type="file"  action="upload" method="post" enctype="multipart/form-data" name="file"/> </button><button class="btn btn-primary active text-center d-inline-block" type="submit" onclick="myFunction()" style="margin-right: 0px;margin-left: 21px;width: 106.6px;"> <input type="submit"/>.</button> <select style="margin-left: 117px;width: 398.4px;">-->
@@ -143,19 +143,41 @@
                             + "<td>" + myObj[x].final_balance.amount + " " +  myObj[x].final_balance.currency +"</td>"
                             + "<td>" + myObj[x].closing_date + "</td>"
                             + "</tr>";
-
-
                     }
-
                 }
-                document.getElementById("tcont").innerHTML = txt + "Hello 2";
+                document.getElementById("tcont").innerHTML = txt;
             };
             xhr.open('GET', 'http://localhost:8080/Module4Team41Topicus_war_exploded/rest/files', true);
             xhr.send();
             return;
-
         };
 
+        // $(document).ready(function(){
+        //     $("#but_submit").click(function(){
+        //         var fd = new FormData();
+        //         var files = $('#file')[0].files;
+        //         // Check file selected or not
+        //         if(files.length > 0 ){
+        //             fd.append('file',files[0]);
+        //             $.ajax({
+        //                 url: 'index.html',
+        //                 type: 'post',
+        //                 data: fd,
+        //                 contentType: false,
+        //                 processData: false,
+        //                 success: function(response){
+        //                     if(response != 0){
+        //                         alert('file uploaded');
+        //                     }else{
+        //                         alert('file not uploaded');
+        //                     }
+        //                 },
+        //             });
+        //         }else{
+        //             alert("Please select a file.");
+        //         }
+        //     });
+        // });
     </script>
 </body>
 

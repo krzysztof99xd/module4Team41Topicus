@@ -20,7 +20,6 @@ public class Transaction {
     public Transaction(Date valueDate, String statement_number, String account_id,
                        String customer_reference,Date entry_date, Money amount ) {
         this.valueDate = valueDate;
-//        this.statement_number = statement_number;
         this.account_id= account_id;
         this.customer_reference = customer_reference;
         this.entry_date = entry_date;
@@ -35,14 +34,6 @@ public class Transaction {
         this.valueDate = valueDate;
     }
 
-//    public String getStatement_number() {
-//        return statement_number;
-//    }
-//
-//    public void setStatement_number(String statement_number) {
-//        this.statement_number = statement_number;
-//    }
-
     public String getAccount_id() {
         return account_id;
     }
@@ -51,13 +42,6 @@ public class Transaction {
         this.account_id = account_id;
     }
 
-//    public char getDebit_or_credit() {
-//        return debit_or_credit;
-//    }
-
-//    public void setDebit_or_credit(char debit_or_credit) {
-//        this.debit_or_credit = debit_or_credit;
-//    }
 
     public String getCustomer_reference() {
         return customer_reference;
