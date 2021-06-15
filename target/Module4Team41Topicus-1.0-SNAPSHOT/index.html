@@ -1,155 +1,184 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-  <meta charset="utf-8" />
-  <meta name="author" content="team2">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="shortcut icon" type="image/png" href="img/logo.png">
-  <link rel="stylesheet" type="text/css" href="css/stylesheet.css" />
-  <title>Lendary</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Table - Brand</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/fonts/fontawesome5-overrides.min.css">
+    <link rel="stylesheet" href="assets/css/Navigation-Clean.css">
+    <link rel="stylesheet" href="assets/css/Navigation-with-Search.css">
 </head>
 
-<body>
-<!--<form action="../ModuleTeam41_war_exploded/rest/files" method="POST">-->
-<!--  <label for ="id">ID</label>-->
-<!--  <input name="id" id = "id" />-->
-<!--  <br/>-->
-<!--  <label for="summary">Summary</label>-->
-<!--  <input name="summary" id = "summary" />-->
-<!--  <input type="submit" value="Submit" />-->
-<!--</form>-->
+<body id="page-top">
+    <div id="wrapper">
+        <div class="d-flex flex-column" id="content-wrapper">
+            <div id="content">
+                <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
+                    <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button><img style="background: url(https://cdn.bootstrapstudio.io/placeholders/1400x800.png&quot;);width: 69px;" src="assets/img/facebook_profile_image.png">
+                        <nav class="navbar navbar-light navbar-expand-md navigation-clean-search" style="width: 528.5px;height: 71px;">
+                            <div class="container"><a class="navbar-brand" href="https://topicus.nl/">Topicus</a><a class="btn btn-primary" role="button" style="width: 140.4px;margin: 0px;padding: 7px 12px;" href="index.html">History</a><a class="btn btn-primary" role="button" style="width: 140.4px;" href="table.html">Dashboard</a>
+                                <div class="btn-group" role="group"></div><button class="navbar-toggler" data-bs-toggle="collapse"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+                            </div>
+                        </nav>
+                        <form class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
+                            <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Search for ..."><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
+                        </form>
+                        <ul class="navbar-nav flex-nowrap ms-auto">
+                            <li class="nav-item dropdown d-sm-none no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><i class="fas fa-search"></i></a>
+                                <div class="dropdown-menu dropdown-menu-end p-3 animated--grow-in" aria-labelledby="searchDropdown">
+                                    <form class="me-auto navbar-search w-100">
+                                        <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Search for ...">
+                                            <div class="input-group-append"><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+                <div class="container-fluid">
+                    <div class="card shadow">
+                        <div class="card-header py-3">
 
-<section class="container">
-  <!--  branch 'master' of https://git.snt.utwente.nl/s2617722/topicusbanktransactionsm4team41.git -->
-  <nav>
-    <img class="tp" src="img/logo.png" id="logopic" alt="logo" title="Hwarang Dragon Schalkwijk">
+                            <form action="./upload"  method="post" enctype="multipart/form-data">
+                                <input class="btn btn-primary active" type="file" name="file" style="margin: 0px;padding: 7px 26px;border-width: 1px;transform: rotate(0deg)";/>
+                                <input class="btn btn-primary active text-center d-inline-block" type="submit" id ="but_submit" onclick="myFunction()"  style="margin-right: 0px;margin-left: 21px;width: 106.6px";/>
+                            </form>
 
-    <ul style="align-items: center;">
-      <li>
-
-<!--        <input onchange="myFunction()" type="file" id="upload" hidden/>-->
-<!--        <label for="upload" >UPLOAD</label>-->
-        <form action="upload" method="post" enctype="multipart/form-data">
-          <input type="text" name="description" />
-          <input type="file" name="file" />
-          <input type="submit" onclick="myFunction()"/>
-        </form>
-      </li>
-      <li><a href="#history">History</a></li>
-      <!-- <li><a href="#sportcontent">Analytics</a></li> -->
-      <!-- <li><a href="#referralcontent">Referral</a></li>
-      <li><a href="#contactcontent">Contact</a></li> -->
-    </ul>
-  </nav>
-</section>
-
-
-
-<!-- hamburger-->
-
-<section class="dropdown">
-  <aside class="conta">
-    <aside class="str"></aside>
-    <aside class="str"></aside>
-    <aside class="str"></aside><a class="drop"></a>
-  </aside>
-
-  <section class="menu">
-    <form action="upload" method="post" enctype="multipart/form-data">
-      <input type="file" name="file" />
-      <input type="submit" />
-    </form>
-<!--    &lt;!&ndash;     <input type="file" id="upload" hidden/>&ndash;&gt;-->
-<!--    <label for="upload" >UPLOAD</label>-->
-    <a href="#history">History</a>
-
-  </section>
-</section>
-
-
-<!--                               sport                 -->
-
-
-<section class="sec" id="sportcontent">
-
-  <header class="contentheader">
-    <h3 id = "demo">Hisdvbfbry</h3>
-  </header>
-  <button onclick="myFunction()"> click me please
-  </button>
-
-  <div id = "search">
-    <input type="text" placeholder="Search.." name="search2">
-  </div>
-  <article>
-
-    <table id="s3">
-      <tr>
-        <th>IBAN</th>
-        <th>Upload date</th>
-        <th class="lin">start balance</th>
-        <th>final balance</th>
-      </tr>
-
-      <tr>
-        <td>Hwarang Dragon Schalkwijk</td>
-        <td>Hwarang Dragon Schalkwijk is a sports club in Haarlem near the center.
-          They have a program for adults and childeren for taekwondo andzillian jiu jitsu.</td>
-        <td class="lin"><a href="https://www.taekwon.nl/" title="Go to page">Visit Their Webpage here</a></td>
-        <td class="no"><a href="https://www.taekwon.nl/"><img class="tp" src="img/taek.png" alt="Hwarang Dragon Schalkwijk" title="Hwarang Dragon Schalkwijk"></a></td>
-      </tr>
-      <tr>
-        <td>Hwarang Dragon Heemstede</td>
-        <td>Hwarang Dragon Heemstede is a sports club in Heemstede. They have a program for adults
-          and children for taekwondo andzillian jiu jitsu.</td>
-        <td class="lin"><a href="https://www.taekwon.nl/" title="Go to page">Visit Their Webpage here</a></td>
-        <td class="no"><a href="https://www.taekwon.nl/"><img class="tp" src="img/02.png" alt="Hwarang Dragon Heemstede" title="Hwarang Dragon Heemstede"></a></td>
-      </tr>
-
-    </table>
-
-
-  </article>
-  <footer>
-    <p><small>&copy; Copyright </small></p>
-  </footer>
-
-</section>
-
-<script>
-  function myFunction(){
-    var txt = "";
-    var myObj;
-          // var postxhr = new XMLHttpRequest();
-          // postxhr.onreadystatechange = function () {
-          //   if (this.readyState == 4 && this.status == 204) {
-              var xhr = new XMLHttpRequest();
-              xhr.onreadystatechange = function () {
+<!--                            <button class="btn btn-primary active" type="submit" style="margin: 0px;padding: 7px 26px;border-width: 1px;transform: rotate(0deg);">  <input type="file"  action="upload" method="post" enctype="multipart/form-data" name="file"/> </button><button class="btn btn-primary active text-center d-inline-block" type="submit" onclick="myFunction()" style="margin-right: 0px;margin-left: 21px;width: 106.6px;"> <input type="submit"/>.</button> <select style="margin-left: 117px;width: 398.4px;">-->
+                                <optgroup label="Querries">
+                                    <option value="12" selected="">Querry 1</option>
+                                    <option value="13">Querry 2</option>
+                                    <option value="14">Querry 3</option>
+                                </optgroup>
+                            </select></div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 text-nowrap">
+                                    <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"><label class="form-label">Show&nbsp;<select class="d-inline-block form-select form-select-sm">
+                                                <option value="10" selected="">10</option>
+                                                <option value="25">25</option>
+                                                <option value="50">50</option>
+                                                <option value="100">100</option>
+                                            </select>&nbsp;</label></div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="text-md-end dataTables_filter" id="dataTable_filter"><label class="form-label"><input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search"></label></div>
+                                </div>
+                            </div>
+                            <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
+                                <table class="table my-0" id="dataTable2">
+                                    <thead>
+                                    <tr>
+                                        <th>Account id</th>
+                                        <th>initial amount</th>
+                                        <th>initial Date</th>
+                                        <th>final amount</th>
+                                        <th>final Date</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id = "tcont">
+                                    <tr>
+                                        <td>Airi Satou</td>
+                                        <td>NL34 ABN0 1267 2147</td>
+                                        <td>02.06.2021</td>
+                                        <td>$11111111</td>
+                                        <td>$162,700</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 align-self-center">
+                                    <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Showing 1 to 10 of 27</p>
+                                </div>
+                                <div class="col-md-6">
+                                    <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
+                                        <ul class="pagination">
+                                            <li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+                                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                            <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer class="bg-white sticky-footer">
+                <div class="container my-auto">
+                    <div class="text-center my-auto copyright"><span>Copyright © Brand 2021</span></div>
+                </div>
+            </footer>
+        </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+    </div>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/chart.min.js"></script>
+    <script src="assets/js/bs-init.js"></script>
+    <script src="assets/js/theme.js"></script>
+    <script>
+        window.onload = function myFunction(){
+            var txt = "";
+            var myObj;
+            // var postxhr = new XMLHttpRequest();
+            // postxhr.onreadystatechange = function () {
+            //   if (this.readyState == 4 && this.status == 204) {
+            var xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
-                  myObj = JSON.parse(this.responseText);
-                  for(x in myObj){
-                    txt = "<p>" + myObj[x].accountID + "</p>";
-                  }
-                  document.getElementById("demo").innerHTML = txt + "Hello there";
+                    myObj = JSON.parse(this.responseText);
+                    for(x in myObj){
+                        txt += "<tr>"
+                            + "<td>" + myObj[x].accountID + "</td>"
+                            + "<td>" + myObj[x].first_balance.amount + " " +  myObj[x].first_balance.currency + "</td>"
+                            + "<td>" + myObj[x].statement_date + "</td>"
+                            + "<td>" + myObj[x].final_balance.amount + " " +  myObj[x].final_balance.currency +"</td>"
+                            + "<td>" + myObj[x].closing_date + "</td>"
+                            + "</tr>";
+                    }
                 }
-                document.getElementById("demo").innerHTML = txt + "Hello 2";
-              };
-              xhr.open('GET', 'http://localhost:8080/Module4Team41Topicus_war_exploded/rest/files', true);
-              xhr.send();
-          return;
-        //     document.getElementById("demo").innerHTML = txt + "Hello Post";
-        //   };
-        //   postxhr.open('POST', 'http://localhost:8080/Module4Team41Topicus_war_exploded/rest/files', true);
-        //   postxhr.setRequestHeader("Content-type", "application/json");
-        //   postxhr.send(formData);
-        //
-        // }
-  };
+                document.getElementById("tcont").innerHTML = txt;
+            };
+            xhr.open('GET', 'http://localhost:8080/Module4Team41Topicus_war_exploded/rest/files', true);
+            xhr.send();
+            return;
+        };
 
-</script>
-
-
+        // $(document).ready(function(){
+        //     $("#but_submit").click(function(){
+        //         var fd = new FormData();
+        //         var files = $('#file')[0].files;
+        //         // Check file selected or not
+        //         if(files.length > 0 ){
+        //             fd.append('file',files[0]);
+        //             $.ajax({
+        //                 url: 'index.html',
+        //                 type: 'post',
+        //                 data: fd,
+        //                 contentType: false,
+        //                 processData: false,
+        //                 success: function(response){
+        //                     if(response != 0){
+        //                         alert('file uploaded');
+        //                     }else{
+        //                         alert('file not uploaded');
+        //                     }
+        //                 },
+        //             });
+        //         }else{
+        //             alert("Please select a file.");
+        //         }
+        //     });
+        // });
+    </script>
 </body>
 
 </html>

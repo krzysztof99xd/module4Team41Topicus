@@ -15,7 +15,6 @@ import javax.ws.rs.core.Request;
 import javax.ws.rs.core.UriInfo;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 @Path("/files")
@@ -41,7 +40,7 @@ public class LendariesResources extends HttpServlet {
 //        Part file = request.getPart("file");
 //        System.out.println("Post with stuff from the internet");
 //        LendaryDAO lendaryDAO = new LendaryDAO(file);
-//        response.sendRedirect("../index.html");
+//        response.sendRedirect("../inde22222.html");
 //    }
 
     @POST
@@ -52,15 +51,7 @@ public class LendariesResources extends HttpServlet {
                                 @FormParam("field") String field,
                                 @Context HttpServletResponse response)
             throws ServletException, IOException {
-//        Balance balance = new Balance(id, name, field);
-//        System.out.println("Post");
-//        if (balance != null) {
-//            balance.setAcounyID(name);
-//        }
-//        LendaryDAO.getModel().put(id, balance);
-        response.sendRedirect("../index.html");
     }
-//    @POST
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Balance> getLendaryBrowser() {
