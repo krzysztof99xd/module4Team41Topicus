@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html onload="displayAnalysis()">
 
 <head>
     <meta charset="utf-8">
@@ -51,8 +51,8 @@
                             <div class="card-body">
                                 <div class="row align-items-center no-gutters">
                                     <div class="col me-2">
-                                        <div class="fw-bold text-xs mb-1"><span class="text-capitalize">Earnings (last 6 months Avg.)</span></div>
-                                        <div class="text-dark fw-bold h5 mb-0"><span style="color: var(--bs-green);">+$40,000</span></div>
+                                        <div class="fw-bold text-xs mb-1"><span  class="text-capitalize">Earnings (last 6 months Avg.)</span></div>
+                                        <div class="text-dark fw-bold h5 mb-0"><span id = "analysisID" style="color: var(--bs-green);">+$40,000</span></div>
                                     </div>
                                     <div class="col-auto"><i class="far fa-money-bill-alt fa-2x text-gray-300"></i></div>
                                 </div>
@@ -272,6 +272,27 @@
 <script src="assets/js/chart.min.js"></script>
 <script src="assets/js/bs-init.js"></script>
 <script src="assets/js/theme.js"></script>
+<script>
+    window.onload = function displayAnalysis(){
+        var txt = "", x;
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function(){
+            if(this.readyState == 4 && this.status == 200){
+                myObj =  JSON.parse(this.responseText);
+                    txt= myObj.accountID;
+                document.getElementById("analysisID").innerHTML = txt ;
+            }
+            document.getElementById("analysisID").innerHTML = txt ;
+        };
+        xmlhttp.open("GET", 'http://localhost:8080/Module4Team41Topicus_war_exploded/rest/analytics', true);
+        xmlhttp.send();
+        return;
+    };
+
+
+</script>
+<!--"acountid":"\"NL34RABO0327101691EUR\""-->
+
 </body>
 
 </html>

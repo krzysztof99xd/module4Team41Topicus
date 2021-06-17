@@ -1,5 +1,6 @@
 package database;
 
+import lendaryModel.Analytics;
 import lendaryModel.Balance;
 import lendaryModel.Money;
 import lendaryModel.Transaction;
@@ -113,6 +114,40 @@ public class ConnectionHandler {
     }
 
 
+    
+    public Analytics analysis(String accountID){
+    	Analytics t = new Analytics(accountID);
+        try {
+            String query = "SELECT b.statement_date	AS sd, t.value_date	AS vd, b1.amount AS firstA, b2.amount AS finalA, t1.amount AS t1a, t1.debit_credit AS t1dc\n" +
+                    "FROM balance b, money b1, money b2, money t1, transaction t\n" +
+                    "WHERE b.first_amount = b1.money_id\n" +
+                    "AND b.final_amount = b2.money_id\n" +
+                    "AND b.account_id = t.account_id\n" +
+                    "AND t.transaction_amount = t1.money_id\n" +
+                    "AND b.account_id = '"+ accountID +"';";
+            System.out.println(query);
+            connection = getConnection();
+            PreparedStatement st = connection.prepareStatement(query);
+            ResultSet rs = st.executeQuery();
+        
+            int count = 0;
+            while(rs.next()){      
+            	if(count == 0) {
+            		 t.setfirst(rs.getFloat("firstA"),rs.getDate("sd"));
+                     count++;
+            	}
+                t.AddAmount(rs.getFloat("t1a"),rs.getString("t1dc"),rs.getDate("vd"));
+            }
+            t.setfinal();
+            connection.close();
+        }catch (SQLException sqle){
+            System.err.println("Error connecting: " + sqle);
+        }
+        return t;
+    }
+    
+    
+    
     public static void main(String[] args) throws SQLException {
 
     }

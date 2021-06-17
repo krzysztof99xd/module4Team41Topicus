@@ -25,23 +25,6 @@ public class LendaryResource extends HttpServlet {
         this.request = request;
         this.id = id;
     }
-    @GET
-    @Produces({MediaType.APPLICATION_JSON, MediaType.APPLICATION_JSON})
-    public Balance getLendaryModel(){
-        Balance balance = LendaryDAO.getModel().get(id);
-        if(balance == null){
-            throw new RuntimeException("Get: File with " +id +" does not exist");
-        }
-        return balance;
-    }
-
-    @DELETE
-    public void deletelendaryModel() {
-        Balance balance = LendaryDAO.getModel().remove(id);
-        if (balance == null) {
-            throw  new RuntimeException("Delete: Bike with " + id + "not found");
-        }
-    }
 
 
 }

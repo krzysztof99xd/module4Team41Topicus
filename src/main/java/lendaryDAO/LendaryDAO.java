@@ -14,17 +14,26 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
-@MultipartConfig
-@WebServlet(name ="file", urlPatterns = "/files")
-public class LendaryDAO extends HttpServlet{
 
-    private static Map<String, Balance> fileProvider = new HashMap<String, Balance>();
+public enum LendaryDAO{
+    instance;
 
-    public LendaryDAO() throws IOException {
-        Balance file1 = null;
-    }
-    public static Map<String, Balance> getModel() {
-        return fileProvider;
+    private static Analytics analytics;
+    private static String accountID;
+
+    public static void setAccountID(String accountID) {
+        LendaryDAO.accountID = accountID;
     }
 
+    public static Analytics getAnalytics() {
+        return analytics;
+    }
+
+    public static void setAnalytics(Analytics analytics) {
+        LendaryDAO.analytics = analytics;
+    }
+
+    public static String getAccountID() {
+        return accountID;
+    }
 }

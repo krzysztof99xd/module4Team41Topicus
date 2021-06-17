@@ -15,13 +15,14 @@
 </head>
 
 <body id="page-top" onload="myFunction()">
+
     <div id="wrapper">
         <div class="d-flex flex-column" id="content-wrapper">
             <div id="content">
                 <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
                     <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button><img style="background: url(https://cdn.bootstrapstudio.io/placeholders/1400x800.png&quot;);width: 69px;" src="assets/img/facebook_profile_image.png">
                         <nav class="navbar navbar-light navbar-expand-md navigation-clean-search" style="width: 528.5px;height: 71px;">
-                            <div class="container"><a class="navbar-brand" href="https://topicus.nl/">Topicus</a><a class="btn btn-primary" role="button" style="width: 140.4px;margin: 0px;padding: 7px 12px;" href="index.html">History</a><a class="btn btn-primary" role="button" style="width: 140.4px;" href="table.html">Dashboard</a>
+                            <div class="container"><a class="navbar-brand" href="https://topicus.nl/">Topicus</a><a class="btn btn-primary" role="button" style="width: 140.4px;margin: 0px;padding: 7px 12px;" href="index.html">History</a><a class="btn btn-primary" role="button" style="width: 140.4px;" href="table.html">Analytics</a>
                                 <div class="btn-group" role="group"></div><button class="navbar-toggler" data-bs-toggle="collapse"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
                             </div>
                         </nav>
@@ -51,11 +52,7 @@
                             </form>
 
 <!--                            <button class="btn btn-primary active" type="submit" style="margin: 0px;padding: 7px 26px;border-width: 1px;transform: rotate(0deg);">  <input type="file"  action="upload" method="post" enctype="multipart/form-data" name="file"/> </button><button class="btn btn-primary active text-center d-inline-block" type="submit" onclick="myFunction()" style="margin-right: 0px;margin-left: 21px;width: 106.6px;"> <input type="submit"/>.</button> <select style="margin-left: 117px;width: 398.4px;">-->
-                                <optgroup label="Querries">
-                                    <option value="12" selected="">Querry 1</option>
-                                    <option value="13">Querry 2</option>
-                                    <option value="14">Querry 3</option>
-                                </optgroup>
+
                             </select></div>
                         <div class="card-body">
                             <div class="row">
@@ -128,20 +125,19 @@
         function myFunction(){
             var txt = "";
             var myObj;
-            // var postxhr = new XMLHttpRequest();
-            // postxhr.onreadystatechange = function () {
-            //   if (this.readyState == 4 && this.status == 204) {
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     myObj = JSON.parse(this.responseText);
                     for(x in myObj){
-                        txt += "<tr>"
+                        var acc = myObj[x].accountID;
+                        txt +=  "<tr>"
                             + "<td>" + myObj[x].accountID + "</td>"
                             + "<td>" + myObj[x].first_balance.amount + " " +  myObj[x].first_balance.currency + "</td>"
                             + "<td>" + myObj[x].statement_date + "</td>"
                             + "<td>" + myObj[x].final_balance.amount + " " +  myObj[x].final_balance.currency +"</td>"
                             + "<td>" + myObj[x].closing_date + "</td>"
+                            + "<td><a class='btn btn-primary' role='button' onclick = 'addToAnalysis(\""+ acc +"\")' style='width: 90.4px;' href='table.html'>Analyse</a></td>"
                             + "</tr>";
                     }
                 }
@@ -155,7 +151,18 @@
         function delay(){
             setTimeout(() => {  myFunction(); }, 2000);
         }
-      
+
+        function addToAnalysis(account){
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function(){
+                if(this.readyState == 4 && this.status == 200){
+                }
+            }
+            xmlhttp.open("POST", 'http://localhost:8080/Module4Team41Topicus_war_exploded/rest/analytics', true);
+            xmlhttp.setRequestHeader("Content-type", "application/json");
+            xmlhttp.send(JSON.stringify(account));
+        };
+
     </script>
 </body>
 

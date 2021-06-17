@@ -18,40 +18,17 @@ import java.sql.SQLException;
 import java.util.List;
 
 @Path("/files")
-//@WebServlet("/file")
 public class LendariesResources extends HttpServlet {
     @Context
     UriInfo uriInfo;
     @Context
     Request request;
 
-    LendaryDAO dao = new LendaryDAO();
     ConnectionHandler con = new ConnectionHandler();
 
     public LendariesResources() throws IOException, SQLException {
     }
 
-//
-//    @POST
-//    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-//    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-//    public void newLendaryModel(@Context HttpServletResponse response, HttpServletRequest request)
-//            throws ServletException, IOException {
-//        Part file = request.getPart("file");
-//        System.out.println("Post with stuff from the internet");
-//        LendaryDAO lendaryDAO = new LendaryDAO(file);
-//        response.sendRedirect("../inde22222.html");
-//    }
-
-    @POST
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public void newLendaryModel(@FormParam("id") String id,
-                                @FormParam("name") String name,
-                                @FormParam("field") String field,
-                                @Context HttpServletResponse response)
-            throws ServletException, IOException {
-    }
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Balance> getLendaryBrowser() {
@@ -59,9 +36,5 @@ public class LendariesResources extends HttpServlet {
         return files;
     }
 
-    @Path("{fileid}")
-    public  LendaryResource getLendary(@PathParam("fileid") String id){
-        return new LendaryResource(uriInfo, request, id, dao);
-    }
 }
 
