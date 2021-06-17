@@ -70,6 +70,24 @@ public class UploadServlet extends HttpServlet {
                     balance.addTransaction(transaction);
                 }
                 connectionHandler.insertBalance(balance);
+                response.setContentType("text/html");
+                PrintWriter out = response.getWriter();
+
+                 out.println(
+                "<HTML     onload='lll()'>\n" +
+                "<HEAD  onload='lll()'><TITLE></TITLE>" +
+                "</HEAD>\n" +
+                "<BODY onload='lll()'>\n" +
+
+                " <script> " +
+                         " function lll(){ " +
+                           "  window.close(); " +
+                             "}"+
+                         "</script>"+
+
+                "</BODY></HTML>");
+
+
             }
         }
     }
@@ -79,29 +97,8 @@ public class UploadServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        response.setContentType("text/html");
-//        String correctness = "";
-//        PrintWriter out = response.getWriter();
-//        if (is_correct){
-//            correctness = "Congratulations, file has been uploaded correctly, please click the button below to come back to the table";
-//        }else {
-//            correctness = "Unfortunately, the file which you uploaded is not in MT940 format, try again, please click the button below to come back to the table";
-//        }
-//        String docType =
-//                "<!DOCTYPE HTML>\n";
-//        String title = "Uploaded file";
-//        out.println(docType +
-//                "<HTML>\n" +
-//                "<HEAD><TITLE>" + title + "</TITLE>" +
-//                "</HEAD>\n" +
-//                "<BODY BGCOLOR=\"#FDF5E6\">\n" +
-//                "<H1>" + title + "</H1>\n" +
-//                correctness +
-//                "</BODY></HTML>");
-        response.setContentType("text/html");
-        PrintWriter out = response.getWriter();
-        out.println("<h1>" + "Loooowy" + "</h1>");
-        out.println("<p>" + "Hello friends" + "</p>");
-
     }
 }
+
+
+
