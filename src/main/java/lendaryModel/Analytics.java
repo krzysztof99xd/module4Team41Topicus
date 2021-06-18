@@ -27,6 +27,7 @@ public class Analytics {
 	}
 
 
+	//test javadocs
 	public void AddAmount(float amount, String debitCredit, Date date) {
 
 		float previous = amounts.get(amounts.size() - 1);
