@@ -6,6 +6,7 @@ import lendaryModel.Money;
 import lendaryModel.Transaction;
 
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class ConnectionHandler {
@@ -44,13 +45,15 @@ public class ConnectionHandler {
     }
 
     public void insertBalance(Balance balance){
+    	
+    	
         try {
             String query = "INSERT INTO money (money_id, amount, currency, debit_credit)\n" +
                     "VALUES  ('"+ balance.getAccountID() + "f_a"+"','"+balance.getFirst_balance().getAmount() + "','"+balance.getFirst_balance().getCurrency()+"','"+balance.getFirst_balance().getDebit_or_credit()+"'),\n" +
-                    "('"+ balance.getAccountID() + "c_a"+"','"+balance.getFinal_balance().getAmount() + "','"+balance.getFinal_balance().getCurrency()+"','"+balance.getFinal_balance().getDebit_or_credit()+"'),\n" +
+                    "('"+ balance.getAccountID() + "c_a"+"','"+balance.getFinal_balance().getAmount() + "','"+balance.getFinal_balance().getCurrency()+"','"+balance.getFinal_balance().getDebit_or_credit()+"'),\n" +   
                     "('"+ balance.getAccountID() + "b_f"+"','"+balance.getBooked_balance().getAmount() + "','"+balance.getBooked_balance().getCurrency()+"','"+balance.getBooked_balance().getDebit_or_credit()+"');\n" +
-                    "INSERT INTO balance (account_id,  transaction_number, sequence_number, statement_date, final_date, first_amount, final_amount, booked_funds) \n" +
-                    "VALUES('"+balance.getAccountID()+"','" +balance.getTransaction_number() + "','" +balance.getSequence_number() + "','" + balance.getStatement_date() + "','" + balance.getClosing_date() + "','" + balance.getAccountID() + "f_a" + "','" + balance.getAccountID() + "c_a"  + "','"  + balance.getAccountID() + "b_f');";
+                    "INSERT INTO balance (account_id,  transaction_number, sequence_number, statement_date, final_date, first_amount, final_amount, booked_funds, upload_time) \n" +
+                    "VALUES('"+balance.getAccountID()+"','" +balance.getTransaction_number() + "','" +balance.getSequence_number() + "','" + balance.getStatement_date() + "','" + balance.getClosing_date() + "','" + balance.getAccountID() + "f_a" + "','" + balance.getAccountID() + "c_a"  + "','"  + balance.getAccountID() + "b_f','" + LocalDateTime.now() + "');"; //(new LocalDateTime()).now()
             System.out.print("\n"+query);
             connection = getConnection();
             Statement st = connection.createStatement();
@@ -92,7 +95,7 @@ public class ConnectionHandler {
                     "FROM balance b, money m1, money m2\n" +
                     "WHERE b.first_amount = m1.money_id\n" +
                     "AND b.final_amount = m2.money_id\n"+
-                    "ORDER BY final_date DESC";
+                    "ORDER BY upload_time DESC";
 
             connection = getConnection();
             PreparedStatement st = connection.prepareStatement(query);

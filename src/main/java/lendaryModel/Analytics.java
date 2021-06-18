@@ -10,40 +10,40 @@ import java.util.Map;
 @XmlRootElement
 public class Analytics {
 
-	final private float[] MIN_REQUIRED = {10000, 50000};
+	final private float[] MIN_REQUIRED = {5000, 10000};
 
 	private String accountID;
 	private float savePersent;
-
-
-	
-
 	private float minAmount;
 	private float maxAmount;
 	private float avgAmount;
-	private List<AmountPerTime> amounts;
-
+	private List<Float> amounts;
+	private List<Date> dates;
 
 	public Analytics(String accountID) {
 		this.accountID = accountID;
-		this.amounts = new ArrayList<AmountPerTime>();
+		this.amounts = new ArrayList<Float>();
+		this.dates = new ArrayList<Date>();
 	}
 
 
 	public void AddAmount(float amount, String debitCredit, Date date) {
 
-		float previous = amounts.get(amounts.size() - 1).getAmount();
-		if (debitCredit.toLowerCase().contains("c")) {
-			amounts.add(new AmountPerTime(previous - amount, date));
+		float previous = amounts.get(amounts.size() - 1);
+		if (debitCredit.toLowerCase().contains("d")) {
+			amounts.add((previous - amount));
+			
 		} else {
-			amounts.add(new AmountPerTime(previous + amount, date));
+			amounts.add((previous + amount));
+			
 		}
+		dates.add(date);
 
-		if (minAmount > amounts.get(amounts.size() - 1).getAmount()) {
-			minAmount = amounts.get(amounts.size() - 1).getAmount();
+		if (minAmount > amounts.get(amounts.size() - 1)) {
+			minAmount = amounts.get(amounts.size() - 1);
 		}
-		if (maxAmount < amounts.get(amounts.size() - 1).getAmount()) {
-			maxAmount = amounts.get(amounts.size() - 1).getAmount();
+		if (maxAmount < amounts.get(amounts.size() - 1)) {
+			maxAmount = amounts.get(amounts.size() - 1);
 		}
 
 	}
@@ -56,7 +56,8 @@ public class Analytics {
 
 		maxAmount = amount;
 		minAmount = amount;
-		amounts.add(new AmountPerTime(amount, date));
+		amounts.add(amount);
+		dates.add(date);
 	}
 
 	public void setfinal() {
@@ -67,9 +68,9 @@ public class Analytics {
 	public void setAvg() {
 
 		float total = 0;
-		for (AmountPerTime a : amounts) {
+		for (float a : amounts) {
 
-			total += a.getAmount();
+			total += a;
 		}
 		avgAmount = (total / amounts.size());
 
@@ -77,18 +78,31 @@ public class Analytics {
 
 	public void setSave() {
 
-		float total = 0;
+		
 		float saveTotal = 0;
-		for (AmountPerTime a : amounts) {
-			total += a.getAmount();
-			if (a.getAmount() > MIN_REQUIRED[1]) {
-				saveTotal += a.getAmount();
-			} else if (a.getAmount() < MIN_REQUIRED[1] && a.getAmount() > MIN_REQUIRED[0]) {
-				saveTotal += (a.getAmount() / 2);
+		for (float a : amounts) {
+			
+			if (a > MIN_REQUIRED[1]) {
+				saveTotal += 1;
+			} else if (a < MIN_REQUIRED[1] && a > MIN_REQUIRED[0]) {
+				saveTotal += (0.5f);
 			}
 
 		}
-		savePersent = (saveTotal / total) * 100;
+		savePersent = (saveTotal / amounts.size()) * 100;
+		System.out.print(savePersent);
+//		float total = 0;
+//		float saveTotal = 0;
+//		for (float a : amounts) {
+//			total += a;
+//			if (a > MIN_REQUIRED[1]) {
+//				saveTotal += a;
+//			} else if (a < MIN_REQUIRED[1] && a > MIN_REQUIRED[0]) {
+//				saveTotal += (a / 2);
+//			}
+//
+//		}
+//		savePersent = (saveTotal / total) * 100;
 
 	}
 	public float[] getMIN_REQUIRED() {
@@ -111,37 +125,15 @@ public class Analytics {
 		return avgAmount;
 	}
 
-	public List<AmountPerTime> getAmounts() {
+	public List<Float> getAmounts() {
 		return amounts;
 	}
 
-
-	public class AmountPerTime {
-		public AmountPerTime(float amount, Date date) {
-			this.amount = amount;
-			this.date = date;
-		}
-
-		private float amount;
-		private Date date;
-
-		public float getAmount() {
-			return amount;
-		}
-
-		public Date getDate() {
-			return date;
-		}
-
-		public void setAmount(float amount) {
-			this.amount = amount;
-		}
-
-		public void setDate(Date date) {
-			this.date = date;
-		}
-
+	public List<Date> getDates() {
+		return dates;
 	}
+
+	
 
 }
 	

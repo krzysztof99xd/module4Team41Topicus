@@ -68,6 +68,12 @@ public class Parser {
         return  balance;
     }
 
+    /**
+     * 
+     * @param field64
+     * @param balance
+     * @return
+     */
     public  Balance parseField64 (String field64, Balance balance){
         //available funds
 

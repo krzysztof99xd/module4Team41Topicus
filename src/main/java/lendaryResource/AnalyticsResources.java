@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Path("/analytics")
 public class AnalyticsResources {
@@ -33,15 +34,19 @@ public class AnalyticsResources {
         System.out.println(accountID);
         an = c.analysis(accountID);
         System.out.println(an.getAccountID());
-        LendaryDAO.instance.setAccountID(accountID);
         LendaryDAO.instance.setAnalytics(an);
+        LendaryDAO.instance.setAccountID(accountID);
+        
     }
 
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public Analytics getAnalytics(){
-        System.out.println( "This is from Get " + LendaryDAO.instance.getAnalytics().getAccountID());
+    public Analytics getAnalytics() throws InterruptedException{
+        //System.out.println( "This is from Get " + LendaryDAO.instance.getAnalytics().getAccountID());
+        while(LendaryDAO.instance.getAnalytics() == null) {
+        	TimeUnit.SECONDS.sleep(1);
+        }
         return LendaryDAO.instance.getAnalytics();
     }
 
