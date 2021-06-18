@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Table - Brand</title>
+    <title>Lendary</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
@@ -22,7 +22,7 @@
                 <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
                     <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button><img style="background: url(https://cdn.bootstrapstudio.io/placeholders/1400x800.png&quot;);width: 69px;" src="assets/img/facebook_profile_image.png">
                         <nav class="navbar navbar-light navbar-expand-md navigation-clean-search" style="width: 528.5px;height: 71px;">
-                            <div class="container"><a class="navbar-brand" href="https://topicus.nl/">Topicus</a><a class="btn btn-primary" role="button" style="width: 140.4px;margin: 0px;padding: 7px 12px;" href="index.html">History</a><a class="btn btn-primary" role="button" style="width: 140.4px;" href="table.html">Analytics</a>
+                            <div class="container"><a class="navbar-brand" href="https://topicus.nl/">Topicus</a><a class="btn btn-primary" role="button" style="width: 140.4px;margin: 0px;padding: 7px 12px;" href="index.html">History</a><a class="btn btn-primary" role="button" style="width: 140.4px;" onclick = "addLastAnalysis()" >Analytics</a>
                                 <div class="btn-group" role="group"></div><button class="navbar-toggler" data-bs-toggle="collapse"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
                             </div>
                         </nav>
@@ -46,8 +46,8 @@
                     <div class="card shadow">
                         <div class="card-header py-3">
 
-                            <form action="./upload" target = "_blank"  method="POST" enctype="multipart/form-data">
-                                <input class="btn btn-primary active" type="file" name="file" style="margin: 0px;padding: 7px 26px;border-width: 1px;transform: rotate(0deg)";/>
+                            <form id = "formm" action="./upload" target = "_blank"  method="POST" enctype="multipart/form-data">
+                                <input id = "filee" class="btn btn-primary active" onchange="FileCheck()" type="file" name="file" style="margin: 0px;padding: 7px 26px;border-width: 1px;transform: rotate(0deg)";/>
                                 <input class="btn btn-primary active text-center d-inline-block" type="submit" id ="but_submit" onclick="delay()" onload="delay()" style="margin-right: 0px;margin-left: 21px;width: 106.6px";/>
                             </form>
 
@@ -122,15 +122,25 @@
     <script src="assets/js/bs-init.js"></script>
     <script src="assets/js/theme.js"></script>
     <script>
+    	var LastAcc;
+    	var link = 'http://localhost:8080/Module4Team41Topicus';
         function myFunction(){
+        	
+        	
             var txt = "";
             var myObj;
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
                     myObj = JSON.parse(this.responseText);
+                    var count = 0;
                     for(x in myObj){
-                        var acc = myObj[x].accountID;
+                    	
+                        acc = myObj[x].accountID;
+                        if(count == 0){
+                        	LastAcc = acc;
+                        	count++;
+                        }
                         txt +=  "<tr>"
                             + "<td>" + myObj[x].accountID + "</td>"
                             + "<td>" + myObj[x].first_balance.amount + " " +  myObj[x].first_balance.currency + "</td>"
@@ -143,13 +153,13 @@
                 }
                 document.getElementById("tcont").innerHTML = txt;
             };
-            xhr.open('GET', 'http://localhost:8080/Module4Team41Topicus_war_exploded/rest/files', true);
+            xhr.open('GET', link + '/rest/files', true);
             xhr.send();
             return;
         };
 
         function delay(){
-            setTimeout(() => {  myFunction(); }, 2000);
+            setTimeout(() => {  myFunction(); }, 1000);
         }
 
         function addToAnalysis(account){
@@ -158,11 +168,38 @@
                 if(this.readyState == 4 && this.status == 200){
                 }
             }
-            xmlhttp.open("POST", 'http://localhost:8080/Module4Team41Topicus_war_exploded/rest/analytics', true);
+            xmlhttp.open("POST", link + '/rest/analytics', true);
             xmlhttp.setRequestHeader("Content-type", "application/json");
             xmlhttp.send(JSON.stringify(account));
         };
+        
+        function addLastAnalysis(){
+        //	var files = document.getElementById('filee').files
+        //	if(files.length == 0){
+        //		alert("No file selected!");
+        //	}
+        //	else{
+        		addToAnalysis(LastAcc)
+        		location.replace("table.html")
+        //	}
+        	
+        }
 
+        function FileCheck(){
+        	var files = document.getElementById('filee').files
+        	var file = files[0];
+        	
+        	var parts = file.name.split('.');
+        	
+        	if(!parts[parts.length - 1].includes("940") || files.length == 0){
+        		document.getElementById('filee').files[0] = null;
+        		alert("File is not mt940 type!");
+        		document.getElementById("formm").innerHTML = document.getElementById("formm").innerHTML;
+     
+        	}
+        	
+        	
+        }
     </script>
 </body>
 

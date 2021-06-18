@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Dashboard - Brand</title>
+    <title>Lendary</title>
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
@@ -21,7 +21,7 @@
             <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
                 <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button><img style="background: url('https://cdn.bootstrapstudio.io/placeholders/1400x800.png');width: 69px;" src="assets/img/facebook_profile_image.png">
                     <nav class="navbar navbar-light navbar-expand-md navigation-clean-search" style="width: 528.5px;height: 71px;">
-                        <div class="container"><a class="navbar-brand" href="https://topicus.nl/">Topicus</a><a class="btn btn-primary" role="button" style="width: 140.4px;margin: 0px;padding: 7px 12px;" href="index.html">History</a><a class="btn btn-primary" role="button" style="width: 140.4px;" href="table.html">Dashboard</a>
+                        <div class="container"><a class="navbar-brand" href="https://topicus.nl/">Topicus</a><a class="btn btn-primary" role="button" style="width: 140.4px;margin: 0px;padding: 7px 12px;" href="index.html">History</a><a class="btn btn-primary" role="button" style="width: 140.4px;" href="table.html">Analytics</a>
                             <div class="btn-group" role="group"></div><button class="navbar-toggler" data-bs-toggle="collapse"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
                         </div>
                     </nav>
@@ -43,7 +43,7 @@
             </nav>
             <div class="container-fluid">
                 <div class="d-sm-flex justify-content-between align-items-center mb-4">
-                    <h3 class="text-dark mb-0">Dashboard</h3><a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="#"><i class="fas fa-download fa-sm text-white-50"></i>&nbsp;Generate Report</a>
+                    <h3 id = "iban" class="text-dark mb-0">Analysis</h3><a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="#"><i class="fas fa-download fa-sm text-white-50"></i>&nbsp;Generate Report</a>
                 </div>
                 <div class="row">
                     <div class="col-md-6 col-xl-3 mb-4">
@@ -51,8 +51,8 @@
                             <div class="card-body">
                                 <div class="row align-items-center no-gutters">
                                     <div class="col me-2">
-                                        <div class="fw-bold text-xs mb-1"><span  class="text-capitalize">Earnings (last 6 months Avg.)</span></div>
-                                        <div class="text-dark fw-bold h5 mb-0"><span id = "analysisID" style="color: var(--bs-green);">+$40,000</span></div>
+                                        <div class="fw-bold text-xs mb-1"><span class="text-capitalize">Max Amount</span></div>
+                                        <div class="text-dark fw-bold h5 mb-0"><span id = "box1" style="color: var(--bs-green);">+$40,000</span></div>
                                     </div>
                                     <div class="col-auto"><i class="far fa-money-bill-alt fa-2x text-gray-300"></i></div>
                                 </div>
@@ -64,8 +64,8 @@
                             <div class="card-body">
                                 <div class="row align-items-center no-gutters">
                                     <div class="col me-2">
-                                        <div class="text-uppercase text-success fw-bold text-xs mb-1"><span style="font-size: 12.2px;color: var(--bs-blue);">EBIT</span></div>
-                                        <div class="text-dark fw-bold h5 mb-0"><span>$2,150,000</span><span style="color: var(--bs-success);">(+2%)</span></div>
+                                        <div class="text-uppercase text-success fw-bold text-xs mb-1"><span style="font-size: 12.2px;color: var(--bs-blue);">Average amount</span></div>
+                                        <div class="text-dark fw-bold h5 mb-0"><span id = "box2" style="color: var(--bs-warning);">$2,150,000</span><!-- <span style="color: var(--bs-success);">(+2%)</span> --></div>
                                     </div>
                                     <div class="col-auto"><i class="fas fa-dollar-sign fa-2x text-gray-300"></i></div>
                                 </div>
@@ -77,12 +77,12 @@
                             <div class="card-body">
                                 <div class="row align-items-center no-gutters">
                                     <div class="col me-2">
-                                        <div class="text-uppercase text-info fw-bold text-xs mb-1"><span class="text-capitalize">Spendings (Last 6 Months Avg.)</span></div>
+                                        <div class="text-uppercase text-info fw-bold text-xs mb-1"><span class="text-capitalize">Minimum amount</span></div>
                                         <div class="row g-0 align-items-center">
                                             <div class="col-auto">
                                                 <div class="text-dark fw-bold h5 mb-0 me-3"></div>
                                             </div>
-                                            <div class="col"><span style="color: var(--bs-red);font-size: 20px;margin-left: -16px;">-$29,000</span></div>
+                                            <div class="col"><span id = "box3" style="color: var(--bs-red);font-size: 20px;margin-left: -16px;">-$29,000</span></div>
                                         </div>
                                     </div>
                                     <div class="col-auto"><i class="fas fa-money-bill-alt fa-2x text-gray-300"></i></div>
@@ -95,8 +95,8 @@
                             <div class="card-body">
                                 <div class="row align-items-center no-gutters">
                                     <div class="col me-2">
-                                        <div class="text-uppercase text-warning fw-bold text-xs mb-1"><span style="color: var(--bs-blue);">EBIT %</span></div>
-                                        <div class="text-dark fw-bold h5 mb-0"><span>35.9%</span><span style="color: var(--bs-success);">(+2%)</span></div>
+                                        <div class="text-uppercase text-warning fw-bold text-xs mb-1"><span  style="color: var(--bs-blue);">Safety</span></div>
+                                        <div class="text-dark fw-bold h5 mb-0" id = "4box"><span id = "box41">35.9%</span><span id = "box42" style="color: var(--bs-success);">(+2%)</span></div>
                                     </div>
                                     <div class="col-auto"><i class="fas fa-comments fa-2x text-gray-300"></i></div>
                                 </div>
@@ -117,14 +117,14 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <div class="chart-area"><canvas data-bss-chart="{&quot;type&quot;:&quot;line&quot;,&quot;data&quot;:{&quot;labels&quot;:[&quot;Jan&quot;,&quot;Feb&quot;,&quot;Mar&quot;,&quot;Apr&quot;,&quot;May&quot;,&quot;Jun&quot;,&quot;Jul&quot;,&quot;Aug&quot;],&quot;datasets&quot;:[{&quot;label&quot;:&quot;Earnings&quot;,&quot;fill&quot;:true,&quot;data&quot;:[&quot;0&quot;,&quot;10000&quot;,&quot;5000&quot;,&quot;15000&quot;,&quot;10000&quot;,&quot;20000&quot;,&quot;15000&quot;,&quot;25000&quot;],&quot;backgroundColor&quot;:&quot;rgba(78, 115, 223, 0.05)&quot;,&quot;borderColor&quot;:&quot;rgba(78, 115, 223, 1)&quot;}]},&quot;options&quot;:{&quot;maintainAspectRatio&quot;:false,&quot;legend&quot;:{&quot;display&quot;:false},&quot;title&quot;:{},&quot;scales&quot;:{&quot;xAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;],&quot;drawOnChartArea&quot;:false},&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#858796&quot;,&quot;padding&quot;:20}}],&quot;yAxes&quot;:[{&quot;gridLines&quot;:{&quot;color&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;zeroLineColor&quot;:&quot;rgb(234, 236, 244)&quot;,&quot;drawBorder&quot;:false,&quot;drawTicks&quot;:false,&quot;borderDash&quot;:[&quot;2&quot;],&quot;zeroLineBorderDash&quot;:[&quot;2&quot;]},&quot;ticks&quot;:{&quot;fontColor&quot;:&quot;#858796&quot;,&quot;padding&quot;:20}}]}}}"></canvas></div>
+                                <div class="chart-area"><canvas id = "weirdchart"></canvas></div>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-5 col-xl-4">
                         <div class="card shadow mb-4">
                             <div class="card-header d-flex justify-content-between align-items-center">
-                                <h6 class="text-primary fw-bold m-0">Revenue Sources</h6>
+                                <h6 class="text-primary fw-bold m-0">Risk</h6>
                                 <div class="dropdown no-arrow"><button class="btn btn-link btn-sm dropdown-toggle" aria-expanded="false" data-bs-toggle="dropdown" type="button"><i class="fas fa-ellipsis-v text-gray-400"></i></button>
                                     <div class="dropdown-menu shadow dropdown-menu-end animated--fade-in">
                                         <p class="text-center dropdown-header">dropdown header:</p><a class="dropdown-item" href="#">&nbsp;Action</a><a class="dropdown-item" href="#">&nbsp;Another action</a>
@@ -132,9 +132,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-body">
-                                <div class="chart-area"><canvas data-bss-chart="{&quot;type&quot;:&quot;doughnut&quot;,&quot;data&quot;:{&quot;labels&quot;:[&quot;Direct&quot;,&quot;Social&quot;,&quot;Referral&quot;],&quot;datasets&quot;:[{&quot;label&quot;:&quot;&quot;,&quot;backgroundColor&quot;:[&quot;#4e73df&quot;,&quot;#1cc88a&quot;,&quot;#36b9cc&quot;],&quot;borderColor&quot;:[&quot;#ffffff&quot;,&quot;#ffffff&quot;,&quot;#ffffff&quot;],&quot;data&quot;:[&quot;50&quot;,&quot;30&quot;,&quot;15&quot;]}]},&quot;options&quot;:{&quot;maintainAspectRatio&quot;:false,&quot;legend&quot;:{&quot;display&quot;:false},&quot;title&quot;:{}}}"></canvas></div>
-                                <div class="text-center small mt-4"><span class="me-2"><i class="fas fa-circle text-primary"></i>&nbsp;Direct</span><span class="me-2"><i class="fas fa-circle text-success"></i>&nbsp;Social</span><span class="me-2"><i class="fas fa-circle text-info"></i>&nbsp;Refferal</span></div>
+                            <div class="card-body" onload = "testt()">
+                                <div id = "piee" class="chart-area"><canvas id = "piec"  width="1030" height="480" style="display: block; height: 320px; width: 687px;" class="chartjs-render-monitor"></canvas></div>
+                                <div class="text-center small mt-4"><span class="me-2"><i class="fas fa-circle text-success"></i>&nbsp;Safe</span><span class="me-2"><i class="fas fa-circle text-danger"></i>&nbsp;Not safe</span></div>
                             </div>
                         </div>
                     </div>
@@ -263,7 +263,7 @@
         </div>
         <footer class="bg-white sticky-footer">
             <div class="container my-auto">
-                <div class="text-center my-auto copyright"><span>Copyright © Brand 2021</span></div>
+                <div class="text-center my-auto copyright"><span>Copyright © Team41 2021</span></div>
             </div>
         </footer>
     </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
@@ -272,26 +272,158 @@
 <script src="assets/js/chart.min.js"></script>
 <script src="assets/js/bs-init.js"></script>
 <script src="assets/js/theme.js"></script>
+<script type="text/javascript">
+	
+	
+</script>
 <script>
+	var link = 'http://localhost:8080/Module4Team41Topicus';
+	var str;
     window.onload = function displayAnalysis(){
+    	
+    	
         var txt = "", x;
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function(){
             if(this.readyState == 4 && this.status == 200){
-                myObj =  JSON.parse(this.responseText);
-                    txt= myObj.accountID;
-                document.getElementById("analysisID").innerHTML = txt ;
+                var myObj =  JSON.parse(this.responseText);
+                var accountID = myObj.accountID;
+                var savePersent = myObj.savePersent  
+                var minAmount = myObj.minAmount
+                var avgAmount = myObj.avgAmount
+                var maxAmount = myObj.maxAmount
+                var amounts = myObj.amounts
+               	var dates = myObj.dates
+                
+               	document.getElementById("box1").innerText = maxAmount
+               	document.getElementById("box2").innerText = avgAmount
+               	document.getElementById("box3").innerText = minAmount
+               	var colo = "warning"
+               	if(savePersent >= 60){
+               		colo = "success";
+               	}
+               	else if(savePersent <= 40){
+               		colo = "danger";
+               	}
+               	document.getElementById("4box").innerHTML = '<span id = "box42" style="color: var(--bs-'+colo+');">'+savePersent+'%</span>';
+                document.getElementById("iban").innerText = accountID;
+                pieChart(savePersent, (100 - savePersent));
+                weirdLookingChart(amounts,dates);
+              
+                //document.getElementById("piee").innerHTML = document.getElementById("piee").innerHTML;
             }
-            document.getElementById("analysisID").innerHTML = txt ;
+            
         };
-        xmlhttp.open("GET", 'http://localhost:8080/Module4Team41Topicus_war_exploded/rest/analytics', true);
+        xmlhttp.open("GET", link + '/rest/analytics', true);
         xmlhttp.send();
         return;
     };
+    
+   // function testt(){
+    //	document.getElementById("piee").innerHTML = document.getElementById("piee").innerHTML;
+    //}
 
+   function pieChart(good, bad){
+	   
+	   var ctx = document.getElementById('piec').getContext('2d');
+		var myChart = new Chart(ctx, {
+				type: "doughnut",
+				data: {
+					labels:[
+						"Not Safe",
+						"Safe"
+					],
+					datasets:[
+						{
+							label:"",
+							backgroundColor:["#e74a3b","#1cc88a"],
+							borderColor:["#ffffff","#ffffff"],
+							data :[bad, good]
+						}
+					]
+				},
+				options:{
+					maintainAspectRatio: false,
+					legend:{ display: false },
+					title:{}
+				}
+			}
+		)
+   }
+   
+   
+   function weirdLookingChart(amounts,dates){
+	   var ctx = document.getElementById('weirdchart').getContext('2d');
+	   var myChart = new Chart(ctx,{
+		   type:"line",
+		   data:{
+			   labels: dates,
+			   datasets:[
+				   {
+					   label:"Earnings",
+					   fill: true,
+					   data: amounts,
+					   backgroundColor: "rgba(78, 115, 223, 0.05)",
+					   borderColor: "rgba(78, 115, 223, 1)"
+					}
+				]
+	   		},
+	   		options:{
+	   			maintainAspectRatio: false, 
+	   			legend:{
+	   				display: false
+	   			},
+	   			title: {},
+	   			scales: {
+	   				xAxes:[
+	   					{
+	   						gridLines:{ 
+	   							color:"rgb(234, 236, 244)",
+	   							zeroLineColor:"rgb(234, 236, 244)",
+	   							drawBorder: false,
+	   							drawTicks: false,
+	   							borderDash: ["2"],
+	   							zeroLineBorderDash: ["2"],
+	   							drawOnChartArea: false
+	   						},
+	   						ticks:{
+	   							fontColor:"#858796",
+	   							padding:20
+	   						}
+	   					}
+	   				],
+	   				yAxes:[
+	   					{
+	   						gridLines:{
+	   							color:"rgb(234, 236, 244)",
+	   							zeroLineColor:"rgb(234, 236, 244)",
+	   							drawBorder: false,
+	   							drawTicks: false,
+	   							borderDash:["2"],
+	   							zeroLineBorderDash:["2"]
+	   						},
+	   						ticks:{
+	   							fontColor:"#858796",
+	   							padding:20
+	   						}
+	   					}
+	   				]
+	   			}
+	   		}
+	   	}
+	   )
+	   
+   }
+ 	
+    
 
 </script>
-<!--"acountid":"\"NL34RABO0327101691EUR\""-->
+<!--	private String accountID;
+	private float savePersent;
+	private float minAmount;
+	private float maxAmount;
+	private float avgAmount;
+	private List<AmountPerTime> amounts;-->
 
 </body>
 
