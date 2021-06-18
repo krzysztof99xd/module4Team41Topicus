@@ -17,6 +17,11 @@ public class ConnectionHandler {
     private Connection connection;
 
 
+    /**
+     * Tries to create a connection to the database
+     * @throws SQLException if there is an error in the database
+     */
+
     public ConnectionHandler () throws SQLException {
         this.dbName = "dab_di20212b_53";
         this.password = "gHr1FXvOd7ERdqHy";
@@ -31,6 +36,10 @@ public class ConnectionHandler {
         connection = DriverManager.getConnection(url, dbName, password);
     }
 
+    /**
+     * gets the connection
+     * @return the url, dbName and password || null
+     */
     public Connection getConnection() {
         try {
             return DriverManager.getConnection(url, dbName, password);
@@ -40,10 +49,19 @@ public class ConnectionHandler {
         return null;
     }
 
+    /**
+     * gets the host
+     * @return the session host
+     */
+
     public String getHost() {
         return host;
     }
 
+    /**
+     * inserts values into the money table
+     * @param balance
+     */
     public void insertBalance(Balance balance){
     	
     	
@@ -71,6 +89,12 @@ public class ConnectionHandler {
 
     }
 
+    /**
+     * inserts values into the transaction table
+     * @param t
+     * @param account_id
+     * @param i
+     */
     public void insertTransaction(Transaction t, String account_id, int i){
         try {
             String str = "t_a" + i;
@@ -88,6 +112,11 @@ public class ConnectionHandler {
             System.err.println("Error connecting: " + sqle);
         }
     }
+
+    /**
+     * gets all the balances
+     * @return list of the result of the query
+     */
     public List<Balance> getBalances(){
         List<Balance> result = new ArrayList<>();
         try{
@@ -113,11 +142,15 @@ public class ConnectionHandler {
         }catch (SQLException sqle){
             System.err.println("Error connecting: " + sqle);
         }
-        return  result;
+        return result;
     }
 
 
-    
+    /**
+     * XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+     * @param accountID
+     * @return
+     */
     public Analytics analysis(String accountID){
     	Analytics t = new Analytics(accountID);
         try {

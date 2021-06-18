@@ -19,6 +19,13 @@ public class LendaryResource extends HttpServlet {
     String id;
     LendaryDAO dao;
 
+    /**
+     * 
+     * @param uriInfo
+     * @param request
+     * @param id
+     * @param dao
+     */
     public LendaryResource(UriInfo uriInfo, Request request, String id, LendaryDAO dao){
         this.dao = dao;
         this.uriInfo = uriInfo;

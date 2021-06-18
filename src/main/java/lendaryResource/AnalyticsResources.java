@@ -16,6 +16,8 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+
+
 @Path("/analytics")
 public class AnalyticsResources {
     ConnectionHandler c = new ConnectionHandler();
