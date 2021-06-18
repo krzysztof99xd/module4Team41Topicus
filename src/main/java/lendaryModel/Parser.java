@@ -16,7 +16,7 @@ public class Parser {
      * Parses the MT490 file for the field 60F part
      * @param field60F
      * @param balance
-     * @return the balance after the transaction
+     * @return the balance after the transaction after field 60F is parsed
      */
     public Balance parseField60(String field60F, Balance balance) {
         //opening balance
@@ -36,7 +36,7 @@ public class Parser {
      * Parses the MT490 file for the field 61 part
      * @param field61
      * @param transaction
-     * @return all information about the transaction
+     * @return all information about the transaction 
      */
     public Transaction parseField61(String field61, Transaction transaction) {
         int index = 0;
@@ -76,7 +76,7 @@ public class Parser {
      * Parses the MT490 file for the field 62F part
      * @param field62F
      * @param balance
-     * @return
+     * @return the balance after the field 62F is parsed
      */
     public Balance parseField62F(String field62F, Balance balance) {
 //Booked funds
@@ -94,7 +94,7 @@ public class Parser {
      * parses the MT490 file for the field 64 part
      * @param field64
      * @param balance
-     * @return
+     * @return the balance after the field 64 is parsed
      */
     public Balance parseField64(String field64, Balance balance) {
         //available funds

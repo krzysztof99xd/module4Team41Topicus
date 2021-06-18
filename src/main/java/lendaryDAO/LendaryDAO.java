@@ -21,18 +21,34 @@ public enum LendaryDAO{
     private static Analytics analytics;
     private static String accountID;
 
+    /**
+     * sets the acoount id
+     * @param accountID
+     */
     public static void setAccountID(String accountID) {
         LendaryDAO.accountID = accountID;
     }
 
+    /**
+     * gets the analytics
+     * @return the analytics
+     */
     public static Analytics getAnalytics() {
         return analytics;
     }
 
+    /**
+     * sets the analytics
+     * @param analytics
+     */
     public static void setAnalytics(Analytics analytics) {
         LendaryDAO.analytics = analytics;
     }
 
+    /**
+     * gets the account id
+     * @return the account id
+     */
     public static String getAccountID() {
         return accountID;
     }
