@@ -147,9 +147,9 @@ public class ConnectionHandler {
 
 
     /**
-     * XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+     * Gets all the information that will be used in the analytics class
      * @param accountID
-     * @return
+     * @return the information needed for making the analytics
      */
     public Analytics analysis(String accountID){
     	Analytics t = new Analytics(accountID);
