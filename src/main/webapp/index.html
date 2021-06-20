@@ -22,7 +22,7 @@
                 <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
                     <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button><img style="background: url(https://cdn.bootstrapstudio.io/placeholders/1400x800.png&quot;);width: 69px;" src="assets/img/facebook_profile_image.png">
                         <nav class="navbar navbar-light navbar-expand-md navigation-clean-search" style="width: 528.5px;height: 71px;">
-                            <div class="container"><a class="navbar-brand" href="https://topicus.nl/">Topicus</a><a class="btn btn-primary" role="button" style="width: 140.4px;margin: 0px;padding: 7px 12px;" href="index.html">History</a><a class="btn btn-primary" role="button" style="width: 140.4px;" onclick = "addLastAnalysis()" >Analytics</a>
+                            <div class="container"><a class="navbar-brand" href="https://topicus.nl/">Topicus</a><a class="btn btn-primary" role="button" style="width: 140.4px;margin: 0px;padding: 7px 12px;" onclick="MyFunction()">History</a><a class="btn btn-primary" role="button" style="width: 140.4px;" onclick = "addLastAnalysis()" >Analytics</a>
                                 <div class="btn-group" role="group"></div><button class="navbar-toggler" data-bs-toggle="collapse"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
                             </div>
                         </nav>
@@ -57,15 +57,15 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6 text-nowrap">
-                                    <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"><label class="form-label">Show&nbsp;<select class="d-inline-block form-select form-select-sm">
+                                    <!--  <div id="dataTable_length" class="dataTables_length" aria-controls="dataTable"><label class="form-label">Show&nbsp;<select class="d-inline-block form-select form-select-sm">
                                                 <option value="10" selected="">10</option>
                                                 <option value="25">25</option>
                                                 <option value="50">50</option>
                                                 <option value="100">100</option>
-                                            </select>&nbsp;</label></div>
-                                </div>
+                                            </select>&nbsp;</label></div>-->
+                                </div> 
                                 <div class="col-md-6">
-                                    <div class="text-md-end dataTables_filter" id="dataTable_filter"><label class="form-label"><input type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search"></label></div>
+                                    <div class="text-md-end dataTables_filter" id="dataTable_filter"><label class="form-label"><input id="search1" onkeyup="search()" type="search" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Search"></label> &nbsp &nbsp &nbsp &nbsp &nbsp</div>
                                 </div>
                             </div>
                             <div class="table-responsive table mt-2" id="dataTable" role="grid" aria-describedby="dataTable_info">
@@ -81,11 +81,11 @@
                                     </thead>
                                     <tbody id = "tcont">
                                     <tr>
-                                        <td>Airi Satou</td>
-                                        <td>NL34 ABN0 1267 2147</td>
-                                        <td>02.06.2021</td>
-                                        <td>$11111111</td>
-                                        <td>$162,700</td>
+                                        <td>--</td>
+                                        <td>--</td>
+                                        <td>--</td>
+                                        <td>--</td>
+                                        <td>--</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -123,7 +123,7 @@
     <script src="assets/js/theme.js"></script>
     <script>
     	var LastAcc;
-    	var link = 'http://localhost:8080/Module4Team41Topicus';
+    	var link =  window.location;
         function myFunction(){
         	
         	
@@ -132,14 +132,27 @@
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
+                	
                     myObj = JSON.parse(this.responseText);
+                    
+                    
                     var count = 0;
+                    
                     for(x in myObj){
                     	
                         acc = myObj[x].accountID;
+                        
+                        
                         if(count == 0){
                         	LastAcc = acc;
+                        	if(LastAcc == "SQLError"){
+                            	alert("Couldn't connect to the dataBase\n Please check your connection!");
+                            	return;
+                            }
                         	count++;
+                        }
+                        if(!acc.toLowerCase().includes(document.getElementById("search1").value.toLowerCase())){
+                        	continue;
                         }
                         txt +=  "<tr>"
                             + "<td>" + myObj[x].accountID + "</td>"
@@ -147,19 +160,21 @@
                             + "<td>" + myObj[x].statement_date + "</td>"
                             + "<td>" + myObj[x].final_balance.amount + " " +  myObj[x].final_balance.currency +"</td>"
                             + "<td>" + myObj[x].closing_date + "</td>"
-                            + "<td><a class='btn btn-primary' role='button' onclick = 'addToAnalysis(\""+ acc +"\")' style='width: 90.4px;' href='table.html'>Analyse</a></td>"
+                            + "<td><a class='btn btn-primary' role='button' onclick = 'addToAnalysis(\""+ acc +"\")' style='width: 90.4px;' >Analyse</a></td>"
+                            + "<td><a class='btn btn-primary' role='button' onclick = 'remove(\""+ acc +"\")' style='width: 90.4px;'>Remove</a></td>"
                             + "</tr>";
                     }
                 }
                 document.getElementById("tcont").innerHTML = txt;
             };
-            xhr.open('GET', link + '/rest/files', true);
+            xhr.open('GET', link + 'rest/files', true);
             xhr.send();
             return;
         };
 
         function delay(){
             setTimeout(() => {  myFunction(); }, 1000);
+            
         }
 
         function addToAnalysis(account){
@@ -168,9 +183,13 @@
                 if(this.readyState == 4 && this.status == 200){
                 }
             }
-            xmlhttp.open("POST", link + '/rest/analytics', true);
+            xmlhttp.open("POST", link + 'rest/analytics', true);
             xmlhttp.setRequestHeader("Content-type", "application/json");
             xmlhttp.send(JSON.stringify(account));
+            
+            
+            
+            location.assign("table.html");
         };
         
         function addLastAnalysis(){
@@ -179,14 +198,15 @@
         //		alert("No file selected!");
         //	}
         //	else{
-        		addToAnalysis(LastAcc)
-        		location.replace("table.html")
+        		addToAnalysis(LastAcc);
+        		location.assign("table.html");
+        		
         //	}
         	
         }
 
         function FileCheck(){
-        	var files = document.getElementById('filee').files
+        	var files = document.getElementById('filee').files;
         	var file = files[0];
         	
         	var parts = file.name.split('.');
@@ -200,6 +220,25 @@
         	
         	
         }
+        
+        
+        function remove(id){
+        	var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function(){
+                if(this.readyState == 4 && this.status == 200){
+                }
+            }
+            xmlhttp.open("DELETE", link + 'rest/files/remove', true);
+            xmlhttp.setRequestHeader("Content-type", "application/json");
+            xmlhttp.send(JSON.stringify(id));
+            delay();
+            myFunction();
+        }
+        function search(){
+        	myFunction();
+        }
+        
+        
     </script>
 </body>
 
