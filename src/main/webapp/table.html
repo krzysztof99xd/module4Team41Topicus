@@ -21,7 +21,7 @@
             <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
                 <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button><img style="background: url('https://cdn.bootstrapstudio.io/placeholders/1400x800.png');width: 69px;" src="assets/img/facebook_profile_image.png">
                     <nav class="navbar navbar-light navbar-expand-md navigation-clean-search" style="width: 528.5px;height: 71px;">
-                        <div class="container"><a class="navbar-brand" href="https://topicus.nl/">Topicus</a><a class="btn btn-primary" role="button" style="width: 140.4px;margin: 0px;padding: 7px 12px;" href="index.html">History</a><a class="btn btn-primary" role="button" style="width: 140.4px;" href="table.html">Analytics</a>
+                        <div class="container"><a class="navbar-brand" href="https://topicus.nl/">Topicus</a><a class="btn btn-primary" role="button" style="width: 140.4px;margin: 0px;padding: 7px 12px;" onclick="history()">History</a><a class="btn btn-primary" role="button" style="width: 140.4px;" onclick="displayAnalysis()">Analytics</a>
                             <div class="btn-group" role="group"></div><button class="navbar-toggler" data-bs-toggle="collapse"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
                         </div>
                     </nav>
@@ -43,7 +43,13 @@
             </nav>
             <div class="container-fluid">
                 <div class="d-sm-flex justify-content-between align-items-center mb-4">
-                    <h3 id = "iban" class="text-dark mb-0">Analysis</h3><a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" href="#"><i class="fas fa-download fa-sm text-white-50"></i>&nbsp;Generate Report</a>
+                    <h3 id = "iban" class="text-dark mb-0">No account selected(Check your connection!)</h3>
+                    	 <div class="text-md-end dataTables_filter" id="dataTable_filter">
+         
+                            <label class="form-label"><input id="min" type="text" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Min safe amount" ></label> 
+                            <label class="form-label"><input id="max" type="text" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Max not very safe amount" ></label> 
+                            <a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" onclick = 'changeRisk()'>Change</a>
+                    	</div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 col-xl-3 mb-4">
@@ -52,7 +58,7 @@
                                 <div class="row align-items-center no-gutters">
                                     <div class="col me-2">
                                         <div class="fw-bold text-xs mb-1"><span class="text-capitalize">Max Amount</span></div>
-                                        <div class="text-dark fw-bold h5 mb-0"><span id = "box1" style="color: var(--bs-green);">+$40,000</span></div>
+                                        <div class="text-dark fw-bold h5 mb-0"><span id = "box1" style="color: var(--bs-green);">--</span></div>
                                     </div>
                                     <div class="col-auto"><i class="far fa-money-bill-alt fa-2x text-gray-300"></i></div>
                                 </div>
@@ -65,7 +71,7 @@
                                 <div class="row align-items-center no-gutters">
                                     <div class="col me-2">
                                         <div class="text-uppercase text-success fw-bold text-xs mb-1"><span style="font-size: 12.2px;color: var(--bs-blue);">Average amount</span></div>
-                                        <div class="text-dark fw-bold h5 mb-0"><span id = "box2" style="color: var(--bs-warning);">$2,150,000</span><!-- <span style="color: var(--bs-success);">(+2%)</span> --></div>
+                                        <div class="text-dark fw-bold h5 mb-0"><span id = "box2" style="color: var(--bs-warning);">--</span><!-- <span style="color: var(--bs-success);">(+2%)</span> --></div>
                                     </div>
                                     <div class="col-auto"><i class="fas fa-dollar-sign fa-2x text-gray-300"></i></div>
                                 </div>
@@ -82,7 +88,7 @@
                                             <div class="col-auto">
                                                 <div class="text-dark fw-bold h5 mb-0 me-3"></div>
                                             </div>
-                                            <div class="col"><span id = "box3" style="color: var(--bs-red);font-size: 20px;margin-left: -16px;">-$29,000</span></div>
+                                            <div class="col"><span id = "box3" style="color: var(--bs-red);font-size: 20px;margin-left: -16px;">--</span></div>
                                         </div>
                                     </div>
                                     <div class="col-auto"><i class="fas fa-money-bill-alt fa-2x text-gray-300"></i></div>
@@ -96,7 +102,7 @@
                                 <div class="row align-items-center no-gutters">
                                     <div class="col me-2">
                                         <div class="text-uppercase text-warning fw-bold text-xs mb-1"><span  style="color: var(--bs-blue);">Safety</span></div>
-                                        <div class="text-dark fw-bold h5 mb-0" id = "4box"><span id = "box41">35.9%</span><span id = "box42" style="color: var(--bs-success);">(+2%)</span></div>
+                                        <div class="text-dark fw-bold h5 mb-0" id = "4box"><span id = "box41">--</span><span id = "box42" style="color: var(--bs-success);"></span></div>
                                     </div>
                                     <div class="col-auto"><i class="fas fa-comments fa-2x text-gray-300"></i></div>
                                 </div>
@@ -281,7 +287,7 @@
 	var str;
     window.onload = function displayAnalysis(){
     	
-    	
+    	//setTimeout(() => {  myFunction(); }, 2000);
         var txt = "", x;
         var xmlhttp = new XMLHttpRequest();
         xmlhttp.onreadystatechange = function(){
@@ -294,10 +300,11 @@
                 var maxAmount = myObj.maxAmount
                 var amounts = myObj.amounts
                	var dates = myObj.dates
-                
-               	document.getElementById("box1").innerText = maxAmount
-               	document.getElementById("box2").innerText = avgAmount
-               	document.getElementById("box3").innerText = minAmount
+               	var currency = myObj.currency
+                if(currency== null){currency = "";}
+               	document.getElementById("box1").innerText = maxAmount+" "+currency;
+               	document.getElementById("box2").innerText = avgAmount+" "+currency;
+               	document.getElementById("box3").innerText = minAmount+" "+currency;
                	var colo = "warning"
                	if(savePersent >= 60){
                		colo = "success";
@@ -319,10 +326,12 @@
         return;
     };
     
-   // function testt(){
-    //	document.getElementById("piee").innerHTML = document.getElementById("piee").innerHTML;
-    //}
-
+    
+   function changeRisk(){
+	   document.getElementById("min").value;
+	   document.getElementById("max").value;
+   }
+   
    function pieChart(good, bad){
 	   
 	   var ctx = document.getElementById('piec').getContext('2d');
@@ -413,6 +422,13 @@
 	   	}
 	   )
 	   
+   }
+   
+   function history(){
+	   
+	   var hist = window.location + "";
+	   hist = (hist).slice(0,hist.lastIndexOf("/"));
+	   location.assign(hist);
    }
  	
     

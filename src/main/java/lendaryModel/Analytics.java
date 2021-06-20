@@ -20,6 +20,8 @@ public class Analytics {
 	private List<Float> amounts;
 	private List<Date> dates;
 
+	private String currency;
+
 	public Analytics(String accountID) {
 		this.accountID = accountID;
 		this.amounts = new ArrayList<Float>();
@@ -52,8 +54,14 @@ public class Analytics {
 	}
 
 
-	public void setfirst(float amount, Date date) {
+	public String getCurrency() {
+		return currency;
+	}
 
+
+	public void setfirst(float amount, Date date, String currency) {
+
+		this.currency = currency;
 		maxAmount = amount;
 		minAmount = amount;
 		amounts.add(amount);
@@ -131,6 +139,12 @@ public class Analytics {
 
 	public List<Date> getDates() {
 		return dates;
+	}
+
+
+	public void setCurrency(String currency) {
+		this.currency = currency;
+		
 	}
 
 	

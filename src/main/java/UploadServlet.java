@@ -34,62 +34,95 @@ public class UploadServlet extends HttpServlet {
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public UploadServlet() throws IOException, SQLException {
+    public UploadServlet() throws IOException {
         super();
-        connectionHandler = new ConnectionHandler();
+        try {
+			connectionHandler = new ConnectionHandler();
+		} catch (SQLException e) {
+			
+		}
         parser = new Parser();
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
+        String msg = "";
         Balance balance = new Balance();
-        if (filePart != null) {
+        
+        if (filePart.getSubmittedFileName() != "") {
             mt940 = new MT940(filePart.getInputStream());
+            
+            
             if (mt940 != null && mt940.isMT()) {
-                is_correct = true;
-                if(mt940.getField25() != null) {
-                    balance.setAccountID(mt940.getField25().getValue());
-                }
-                balance.setTransaction_number(mt940.getField20().getValue());
-                if (mt940.getField28C() != null) {
-                    balance.setSequence_number(mt940.getField28C().getValue());
-                }
-                if (mt940.getField60F() != null) {
-                    balance = parser.parseField60(mt940.getField60F().getValue(), balance);
-                } else {
-                    balance = parser.parseField60(mt940.getField60M().getValue(), balance);
-                }
-                balance = parser.parseField62F(mt940.getField62F().getValue(), balance);
-                if (mt940.getField64() != null) {
-                    balance = parser.parseField64(mt940.getField64().getValue(), balance);
-                }
-                for (Field61 f61 : mt940.getField61()) {
-                    Transaction transaction = new Transaction();
-                    transaction = parser.parseField61(f61.getValue(), transaction);
-                    balance.addTransaction(transaction);
-                }
-                connectionHandler.insertBalance(balance);
-                response.setContentType("text/html");
-                PrintWriter out = response.getWriter();
+            	try {
+	                is_correct = true;
+	                if(mt940.getField25() != null) {
+	                    balance.setAccountID(mt940.getField25().getValue());
+	                }
+	                balance.setTransaction_number(mt940.getField20().getValue());
+	                if (mt940.getField28C() != null) {
+	                    balance.setSequence_number(mt940.getField28C().getValue());
+	                }
+	                if (mt940.getField60F() != null) {
+	                    balance = parser.parseField60(mt940.getField60F().getValue(), balance);
+	                } else {
+	                    balance = parser.parseField60(mt940.getField60M().getValue(), balance);
+	                }
+	                balance = parser.parseField62F(mt940.getField62F().getValue(), balance);
+	                if (mt940.getField64() != null) {
+	                    balance = parser.parseField64(mt940.getField64().getValue(), balance);
+	                }
+	                for (Field61 f61 : mt940.getField61()) {
+	                    Transaction transaction = new Transaction();
+	                    transaction = parser.parseField61(f61.getValue(), transaction);
+	                    balance.addTransaction(transaction);
+	                }
+	                boolean inserted;
 
-                 out.println(
-                "<HTML     onload='lll()'>\n" +
+					try {
+						
+						inserted = connectionHandler.insertBalance(balance);
+						msg = "";
+		                if(!inserted) {
+		                	connectionHandler.removeBalance(balance.getAccountID());
+		                	inserted = connectionHandler.insertBalance(balance);
+		                	msg =  "alert('The file already exited and was replaced!');";
+			                	
+			                }
+					} catch (SQLException e) {
+						msg = "alert('Couldn't connect to the database!\n"
+	                                      + "Please check your internet connection');";
+					}
+            	}
+            	catch (Exception e){
+                	msg = "alert('The file content doesn't match MT940 formatting');";
+                } 
+                
+
+            }
+        }
+        else {
+        	msg = "alert('No file Has been inserted');";
+        }
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+
+        out.println("<HTML     onload='lll()'>\n" +
                 "<HEAD  onload='lll()'><TITLE></TITLE>" +
                 "</HEAD>\n" +
                 "<BODY onload='lll()'>\n" +
 
                 " <script> " +
-                         " function lll(){ " +
+                         " function lll(){\n" +
+                          	msg +"\n"+
                            "  window.close(); " +
                              "}"+
                          "</script>"+
 
                 "</BODY></HTML>");
-
-
-            }
-        }
+        
+        
     }
 
     /**
