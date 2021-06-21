@@ -35,9 +35,11 @@ public class Money {
     public void setMoney_id(int money_id) {
         this.money_id = money_id;
     }
+
     public char getDebit_or_credit() {
         return debit_or_credit;
     }
+
     public void setDebit_or_credit(char debit_or_credit) {
         this.debit_or_credit = debit_or_credit;
     }

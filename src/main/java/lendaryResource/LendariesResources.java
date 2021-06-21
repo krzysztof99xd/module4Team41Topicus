@@ -26,12 +26,10 @@ import java.util.concurrent.TimeUnit;
 public class LendariesResources extends HttpServlet  {
     @Context
     UriInfo uriInfo;
+
     @Context
     Request request;
-    
-   
 
-    
     ConnectionHandler con; 
 
     public LendariesResources() throws IOException {
@@ -64,16 +62,14 @@ public class LendariesResources extends HttpServlet  {
     @DELETE
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_FORM_URLENCODED})
     @Produces(MediaType.APPLICATION_JSON)
-    public  void createAnalytics(@Context HttpServletResponse response, @Context HttpServletRequest request, String json) {
+    public  void removeLendary(@Context HttpServletResponse response, @Context HttpServletRequest request, String json) {
     	String remove = json.substring(1, json.length()-1);
-        System.out.println("This is a new romove :"+ remove);
+        System.out.println("This is a new remove :"+ remove);
         try {
 			con.removeBalance(remove);
 		} catch (NullPointerException | SQLException e ) {
-	
 	        response.setContentType("text/html");
 	        PrintWriter out;
-		
 	        try {
 				out = response.getWriter();
 				out.println("<HTML     onload='lll()'>\n" +
@@ -95,14 +91,6 @@ public class LendariesResources extends HttpServlet  {
 			}
 	        
 		}
-        
-        
-
-        
     }
-    
-    
-    
-
 }
 

@@ -283,7 +283,9 @@
 	
 </script>
 <script>
-	var link = 'http://localhost:8080/Module4Team41Topicus';
+    var hist = window.location + "";
+    link = (hist).slice(0,hist.lastIndexOf("/"));
+
 	var str;
     window.onload = function displayAnalysis(){
     	
@@ -423,12 +425,9 @@
 	   )
 	   
    }
-   
+
    function history(){
-	   
-	   var hist = window.location + "";
-	   hist = (hist).slice(0,hist.lastIndexOf("/"));
-	   location.assign(hist);
+	   location.assign(link);
    }
  	
     

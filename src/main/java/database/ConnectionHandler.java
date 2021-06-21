@@ -32,10 +32,7 @@ public class ConnectionHandler {
     }
 
     public Connection getConnection() throws SQLException {
-       
          return DriverManager.getConnection(url, dbName, password);
-       
-        
     }
 
     public String getHost() {
@@ -84,6 +81,7 @@ public class ConnectionHandler {
 
         
     }
+
     public List<Balance> getBalances() throws SQLException{
         List<Balance> result = new ArrayList<>();
         String query = "SELECT account_id , statement_date, final_date,  m1.amount as sb ,m1.currency as sc,  m2.amount as fb, m1.currency as fc\n" +
@@ -105,12 +103,9 @@ public class ConnectionHandler {
             result.add(balance);
         }
         connection.close();
-        
         return  result;
     }
 
-
-    
     public Analytics analysis(String accountID) throws SQLException{
     	Analytics t = new Analytics(accountID);
         
@@ -172,8 +167,7 @@ public class ConnectionHandler {
 
         
 	}
-    
-    
+
     public boolean balanceExists(String check) throws SQLException{
         boolean accountIDexists = false;
         
@@ -193,11 +187,16 @@ public class ConnectionHandler {
         
         return  accountIDexists;
     }
-    
-    public static void main(String[] args) throws SQLException {
 
+    public String getPassword() {
+        return password;
     }
 
+    public String getUrl() {
+        return url;
+    }
 
-	
+    public String getDbName() {
+        return dbName;
+    }
 }

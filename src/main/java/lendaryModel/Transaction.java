@@ -15,6 +15,7 @@ public class Transaction {
     public Transaction(){
 
     }
+
     public Transaction(Date valueDate, String statement_number, String account_id,
                        String customer_reference,Date entry_date, Money amount ) {
         this.valueDate = valueDate;
@@ -39,7 +40,6 @@ public class Transaction {
     public void setAccount_id(String account_id) {
         this.accountID = accountID;
     }
-
 
     public String getCustomer_reference() {
         return customer_reference;

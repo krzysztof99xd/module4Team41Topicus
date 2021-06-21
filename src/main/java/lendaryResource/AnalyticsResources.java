@@ -41,7 +41,6 @@ public class AnalyticsResources {
         try {
         	c = new ConnectionHandler();
 			an = c.analysis(accountID);
-			//System.out.println(an.getAccountID());
 	        LendaryDAO.instance.setAnalytics(an);
 	        LendaryDAO.instance.setAccountID(accountID);
 			
@@ -69,16 +68,11 @@ public class AnalyticsResources {
 				System.out.print("can't comunnicate with UI");
 			}
 		}
-        
-        
     }
-
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Analytics getAnalytics() throws InterruptedException{
-        
-    	//System.out.println( "This is from Get " + LendaryDAO.instance.getAnalytics().getAccountID());
     	try {
 			c = new ConnectionHandler();
 			TimeUnit.MILLISECONDS.sleep(100);
