@@ -125,24 +125,16 @@
     	var LastAcc;
     	var link =  window.location;
         function myFunction(){
-        	
-        	
+
             var txt = "";
             var myObj;
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
                 if (this.readyState == 4 && this.status == 200) {
-                	
                     myObj = JSON.parse(this.responseText);
-                    
-                    
                     var count = 0;
-                    
                     for(x in myObj){
-                    	
                         acc = myObj[x].accountID;
-                        
-                        
                         if(count == 0){
                         	LastAcc = acc;
                         	if(LastAcc == "SQLError"){
@@ -174,7 +166,6 @@
 
         function delay(){
             setTimeout(() => {  myFunction(); }, 1000);
-            
         }
 
         function addToAnalysis(account){
@@ -186,9 +177,7 @@
             xmlhttp.open("POST", link + 'rest/analytics', true);
             xmlhttp.setRequestHeader("Content-type", "application/json");
             xmlhttp.send(JSON.stringify(account));
-            
-            
-            
+
             location.assign("table.html");
         };
         
@@ -200,25 +189,20 @@
         //	else{
         		addToAnalysis(LastAcc);
         		location.assign("table.html");
-        		
+
         //	}
-        	
+
         }
 
         function FileCheck(){
         	var files = document.getElementById('filee').files;
         	var file = files[0];
-        	
         	var parts = file.name.split('.');
-        	
         	if(!parts[parts.length - 1].includes("940") || files.length == 0){
         		document.getElementById('filee').files[0] = null;
         		alert("File is not mt940 type!");
         		document.getElementById("formm").innerHTML = document.getElementById("formm").innerHTML;
-     
         	}
-        	
-        	
         }
         
         

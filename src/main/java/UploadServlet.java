@@ -2,6 +2,7 @@ import com.prowidesoftware.swift.model.MtSwiftMessage;
 import com.prowidesoftware.swift.model.field.Field61;
 import com.prowidesoftware.swift.model.mt.mt9xx.MT940;
 import database.ConnectionHandler;
+import exceptions.WrongFileFormatException;
 import lendaryDAO.LendaryDAO;
 import lendaryModel.Balance;
 import lendaryModel.Parser;
@@ -52,8 +53,6 @@ public class UploadServlet extends HttpServlet {
         
         if (filePart.getSubmittedFileName() != "") {
             mt940 = new MT940(filePart.getInputStream());
-            
-            
             if (mt940 != null && mt940.isMT()) {
             	try {
 	                is_correct = true;
@@ -78,17 +77,15 @@ public class UploadServlet extends HttpServlet {
 	                    transaction = parser.parseField61(f61.getValue(), transaction);
 	                    balance.addTransaction(transaction);
 	                }
-	                boolean inserted;
 
+	                boolean inserted;
 					try {
-						
 						inserted = connectionHandler.insertBalance(balance);
 						msg = "";
 		                if(!inserted) {
 		                	connectionHandler.removeBalance(balance.getAccountID());
 		                	inserted = connectionHandler.insertBalance(balance);
 		                	msg =  "alert('The file already exited and was replaced!');";
-			                	
 			                }
 					} catch (SQLException e) {
 						msg = "alert('Couldn't connect to the database!\n"
@@ -96,10 +93,8 @@ public class UploadServlet extends HttpServlet {
 					}
             	}
             	catch (Exception e){
-                	msg = "alert('The file content doesn't match MT940 formatting');";
-                } 
-                
-
+					msg = "alert('The file content doesn't match MT940 formatting');";
+                }
             }
         }
         else {
@@ -121,8 +116,6 @@ public class UploadServlet extends HttpServlet {
                          "</script>"+
 
                 "</BODY></HTML>");
-        
-        
     }
 
     /**

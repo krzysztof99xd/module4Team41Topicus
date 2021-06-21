@@ -31,7 +31,7 @@ public class Analytics {
 
 	public void AddAmount(float amount, String debitCredit, Date date) {
 
-		float previous = amounts.get(amounts.size() - 1);
+		float previous = amounts.get(amounts.size() -1 );
 		if (debitCredit.toLowerCase().contains("d")) {
 			amounts.add((previous - amount));
 			
@@ -86,7 +86,6 @@ public class Analytics {
 
 	public void setSave() {
 
-		
 		float saveTotal = 0;
 		for (float a : amounts) {
 			
@@ -99,18 +98,6 @@ public class Analytics {
 		}
 		savePersent = (saveTotal / amounts.size()) * 100;
 		System.out.print(savePersent);
-//		float total = 0;
-//		float saveTotal = 0;
-//		for (float a : amounts) {
-//			total += a;
-//			if (a > MIN_REQUIRED[1]) {
-//				saveTotal += a;
-//			} else if (a < MIN_REQUIRED[1] && a > MIN_REQUIRED[0]) {
-//				saveTotal += (a / 2);
-//			}
-//
-//		}
-//		savePersent = (saveTotal / total) * 100;
 
 	}
 	public float[] getMIN_REQUIRED() {
@@ -140,7 +127,6 @@ public class Analytics {
 	public List<Date> getDates() {
 		return dates;
 	}
-
 
 	public void setCurrency(String currency) {
 		this.currency = currency;
