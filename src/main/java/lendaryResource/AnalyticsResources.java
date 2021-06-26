@@ -2,9 +2,9 @@ package lendaryResource;
 
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import database.ConnectionHandler;
-import lendaryDAO.LendaryDAO;
-import lendaryModel.Analytics;
 
+import lendaryModel.Analytics;
+import lendaryDAO.LendaryDAO2;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.*;
@@ -41,8 +41,8 @@ public class AnalyticsResources {
         try {
         	c = new ConnectionHandler();
 			an = c.analysis(accountID);
-	        LendaryDAO.instance.setAnalytics(an);
-	        LendaryDAO.instance.setAccountID(accountID);
+	        LendaryDAO2.instance.setAnalytics(an);
+	        LendaryDAO2.instance.setAccountID(accountID);
 			
 		} catch (NullPointerException | SQLException e) {
 			response.setContentType("text/html");
@@ -76,10 +76,10 @@ public class AnalyticsResources {
     	try {
 			c = new ConnectionHandler();
 			TimeUnit.MILLISECONDS.sleep(100);
-	        while(LendaryDAO.instance.getAnalytics() == null) {
+	        while(LendaryDAO2.instance.getAnalytics() == null) {
 	        	TimeUnit.MILLISECONDS.sleep(100);
 	        }
-	        return LendaryDAO.instance.getAnalytics();
+	        return LendaryDAO2.instance.getAnalytics();
 		} catch (SQLException e) {
 			return null;
 		}

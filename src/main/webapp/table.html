@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html onload="displayAnalysis()">
+<html >
 
 <head>
     <meta charset="utf-8">
@@ -14,19 +14,19 @@
     <link rel="stylesheet" href="assets/css/Navigation-with-Search.css">
 </head>
 
-<body id="page-top">
+<body id="page-top" onload="checkLogin()">
 <div id="wrapper">
     <div class="d-flex flex-column" id="content-wrapper">
         <div id="content" style="padding: 0px;">
             <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
                 <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button><img style="background: url('https://cdn.bootstrapstudio.io/placeholders/1400x800.png');width: 69px;" src="assets/img/facebook_profile_image.png">
                     <nav class="navbar navbar-light navbar-expand-md navigation-clean-search" style="width: 528.5px;height: 71px;">
-                        <div class="container"><a class="navbar-brand" href="https://topicus.nl/">Topicus</a><a class="btn btn-primary" role="button" style="width: 140.4px;margin: 0px;padding: 7px 12px;" onclick="history()">History</a><a class="btn btn-primary" role="button" style="width: 140.4px;" onclick="displayAnalysis()">Analytics</a>
+                        <div class="container"><a class="navbar-brand" href="https://topicus.nl/">Topicus</a><a class="btn btn-primary" role="button" style="width: 140.4px;margin: 0px;padding: 7px 12px;" onclick="history()">History</a><a class="btn btn-primary" role="button" style="width: 140.4px;" onclick="checkLogin()">Analytics</a>
                             <div class="btn-group" role="group"></div><button class="navbar-toggler" data-bs-toggle="collapse"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
                         </div>
                     </nav>
-                    <form class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Search for ..."><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
+                    <form class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search" style="padding: 0 0 0 40%">
+                        <div class="input-group"> <a class="btn btn-primary" role="button" style="width: 90.4px;margin: 0px;padding: 7px 12px;" onclick="logout()">Logout</a></div>
                     </form>
                     <ul class="navbar-nav flex-nowrap ms-auto">
                         <li class="nav-item dropdown d-sm-none no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><i class="fas fa-search"></i></a>
@@ -44,12 +44,12 @@
             <div class="container-fluid">
                 <div class="d-sm-flex justify-content-between align-items-center mb-4">
                     <h3 id = "iban" class="text-dark mb-0">No account selected(Check your connection!)</h3>
-                    	 <div class="text-md-end dataTables_filter" id="dataTable_filter">
-         
-                            <label class="form-label"><input id="min" type="text" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Min safe amount" ></label> 
-                            <label class="form-label"><input id="max" type="text" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Max not very safe amount" ></label> 
-                            <a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" onclick = 'changeRisk()'>Change</a>
-                    	</div>
+                    <!-- <div class="text-md-end dataTables_filter" id="dataTable_filter">
+
+                       <label class="form-label"><input id="min" type="text" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Min safe amount" ></label>
+                       <label class="form-label"><input id="max" type="text" class="form-control form-control-sm" aria-controls="dataTable" placeholder="Max not very safe amount" ></label>
+                       <a class="btn btn-primary btn-sm d-none d-sm-inline-block" role="button" onclick = 'changeRisk()'>Change</a>
+                   </div>-->
                 </div>
                 <div class="row">
                     <div class="col-md-6 col-xl-3 mb-4">
@@ -145,134 +145,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-lg-6 mb-4">
-                        <div class="card shadow mb-4">
-                            <div class="card-header py-3">
-                                <h6 class="text-primary fw-bold m-0">Projects</h6>
-                            </div>
-                            <div class="card-body">
-                                <h4 class="small fw-bold">Server migration<span class="float-end">20%</span></h4>
-                                <div class="progress mb-4">
-                                    <div class="progress-bar bg-danger" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%;"><span class="visually-hidden">20%</span></div>
-                                </div>
-                                <h4 class="small fw-bold">Sales tracking<span class="float-end">40%</span></h4>
-                                <div class="progress mb-4">
-                                    <div class="progress-bar bg-warning" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%;"><span class="visually-hidden">40%</span></div>
-                                </div>
-                                <h4 class="small fw-bold">Customer Database<span class="float-end">60%</span></h4>
-                                <div class="progress mb-4">
-                                    <div class="progress-bar bg-primary" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"><span class="visually-hidden">60%</span></div>
-                                </div>
-                                <h4 class="small fw-bold">Payout Details<span class="float-end">80%</span></h4>
-                                <div class="progress mb-4">
-                                    <div class="progress-bar bg-info" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%;"><span class="visually-hidden">80%</span></div>
-                                </div>
-                                <h4 class="small fw-bold">Account setup<span class="float-end">Complete!</span></h4>
-                                <div class="progress mb-4">
-                                    <div class="progress-bar bg-success" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;"><span class="visually-hidden">100%</span></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card shadow mb-4">
-                            <div class="card-header py-3">
-                                <h6 class="text-primary fw-bold m-0">Todo List</h6>
-                            </div>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">
-                                    <div class="row align-items-center no-gutters">
-                                        <div class="col me-2">
-                                            <h6 class="mb-0"><strong>Lunch meeting</strong></h6><span class="text-xs">10:30 AM</span>
-                                        </div>
-                                        <div class="col-auto">
-                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-1"><label class="form-check-label" for="formCheck-1"></label></div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item">
-                                    <div class="row align-items-center no-gutters">
-                                        <div class="col me-2">
-                                            <h6 class="mb-0"><strong>Lunch meeting</strong></h6><span class="text-xs">11:30 AM</span>
-                                        </div>
-                                        <div class="col-auto">
-                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-2"><label class="form-check-label" for="formCheck-2"></label></div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item">
-                                    <div class="row align-items-center no-gutters">
-                                        <div class="col me-2">
-                                            <h6 class="mb-0"><strong>Lunch meeting</strong></h6><span class="text-xs">12:30 AM</span>
-                                        </div>
-                                        <div class="col-auto">
-                                            <div class="form-check"><input class="form-check-input" type="checkbox" id="formCheck-3"><label class="form-check-label" for="formCheck-3"></label></div>
-                                        </div>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
+
+                <footer class="bg-white sticky-footer">
+                    <div class="container my-auto">
+                        <div class="text-center my-auto copyright"><span>Copyright © Team41 2021</span></div>
                     </div>
-                    <div class="col">
-                        <div class="row">
-                            <div class="col-lg-6 mb-4">
-                                <div class="card textwhite bg-primary text-white shadow">
-                                    <div class="card-body">
-                                        <p class="m-0">Primary</p>
-                                        <p class="text-white-50 small m-0">#4e73df</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-4">
-                                <div class="card textwhite bg-success text-white shadow">
-                                    <div class="card-body">
-                                        <p class="m-0">Success</p>
-                                        <p class="text-white-50 small m-0">#1cc88a</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-4">
-                                <div class="card textwhite bg-info text-white shadow">
-                                    <div class="card-body">
-                                        <p class="m-0">Info</p>
-                                        <p class="text-white-50 small m-0">#36b9cc</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-4">
-                                <div class="card textwhite bg-warning text-white shadow">
-                                    <div class="card-body">
-                                        <p class="m-0">Warning</p>
-                                        <p class="text-white-50 small m-0">#f6c23e</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-4">
-                                <div class="card textwhite bg-danger text-white shadow">
-                                    <div class="card-body">
-                                        <p class="m-0">Danger</p>
-                                        <p class="text-white-50 small m-0">#e74a3b</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-4">
-                                <div class="card textwhite bg-secondary text-white shadow">
-                                    <div class="card-body">
-                                        <p class="m-0">Secondary</p>
-                                        <p class="text-white-50 small m-0">#858796</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                </footer>
+            </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
         </div>
-        <footer class="bg-white sticky-footer">
-            <div class="container my-auto">
-                <div class="text-center my-auto copyright"><span>Copyright © Team41 2021</span></div>
-            </div>
-        </footer>
-    </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
+    </div>
 </div>
 <script src="assets/bootstrap/js/bootstrap.min.js"></script>
 <script src="assets/js/chart.min.js"></script>
@@ -287,7 +168,7 @@
     link = (hist).slice(0,hist.lastIndexOf("/"));
 
 	var str;
-    window.onload = function displayAnalysis(){
+    function displayAnalysis(){
     	
     	//setTimeout(() => {  myFunction(); }, 2000);
         var txt = "", x;
@@ -329,10 +210,7 @@
     };
     
     
-   function changeRisk(){
-	   document.getElementById("min").value;
-	   document.getElementById("max").value;
-   }
+
    
    function pieChart(good, bad){
 	   
@@ -427,8 +305,38 @@
    }
 
    function history(){
-	   location.assign(link);
+	   location.assign(link + "/index.html");
    }
+    function checkLogin(){
+        var myObj;
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function(){
+            if(this.readyState == 4 && this.status == 200){
+                myObj = this.responseText;
+                if (myObj == "false"){
+                    location.assign(link);
+
+                }
+                else{
+                    displayAnalysis();
+                }
+            }
+        }
+        xmlhttp.open("GET", link + '/rest/users', true);
+        xmlhttp.send();
+
+    }
+
+    function logout(){
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function(){
+            if(this.readyState == 4 && this.status == 200){
+            }
+        }
+        xmlhttp.open("PUT", link + '/rest/users', true);
+        xmlhttp.send();
+        location.assign(link);
+    }
  	
     
 

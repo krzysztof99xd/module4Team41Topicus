@@ -3,7 +3,7 @@ import com.prowidesoftware.swift.model.field.Field61;
 import com.prowidesoftware.swift.model.mt.mt9xx.MT940;
 import database.ConnectionHandler;
 import exceptions.WrongFileFormatException;
-import lendaryDAO.LendaryDAO;
+import lendaryDAO.LendaryDAO2;
 import lendaryModel.Balance;
 import lendaryModel.Parser;
 import lendaryModel.Transaction;
@@ -50,53 +50,55 @@ public class UploadServlet extends HttpServlet {
         Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
         String msg = "";
         Balance balance = new Balance();
-        
         if (filePart.getSubmittedFileName() != "") {
-            mt940 = new MT940(filePart.getInputStream());
-            if (mt940 != null && mt940.isMT()) {
-            	try {
-	                is_correct = true;
-	                if(mt940.getField25() != null) {
-	                    balance.setAccountID(mt940.getField25().getValue());
-	                }
-	                balance.setTransaction_number(mt940.getField20().getValue());
-	                if (mt940.getField28C() != null) {
-	                    balance.setSequence_number(mt940.getField28C().getValue());
-	                }
-	                if (mt940.getField60F() != null) {
-	                    balance = parser.parseField60(mt940.getField60F().getValue(), balance);
-	                } else {
-	                    balance = parser.parseField60(mt940.getField60M().getValue(), balance);
-	                }
-	                balance = parser.parseField62F(mt940.getField62F().getValue(), balance);
-	                if (mt940.getField64() != null) {
-	                    balance = parser.parseField64(mt940.getField64().getValue(), balance);
-	                }
-	                for (Field61 f61 : mt940.getField61()) {
-	                    Transaction transaction = new Transaction();
-	                    transaction = parser.parseField61(f61.getValue(), transaction);
-	                    balance.addTransaction(transaction);
-	                }
-
-	                boolean inserted;
+			mt940 = new MT940(filePart.getInputStream());
+			if (mt940 != null && mt940.isMT()) {
+				if (parser.isSafe(mt940.toString())) {
 					try {
-						inserted = connectionHandler.insertBalance(balance);
-						msg = "";
-		                if(!inserted) {
-		                	connectionHandler.removeBalance(balance.getAccountID());
-		                	inserted = connectionHandler.insertBalance(balance);
-		                	msg =  "alert('The file already exited and was replaced!');";
-			                }
-					} catch (SQLException e) {
-						msg = "alert('Couldn't connect to the database!\n"
-	                                      + "Please check your internet connection');";
+						is_correct = true;
+						if (mt940.getField25() != null) {
+							balance.setAccountID(mt940.getField25().getValue());
+						}
+						balance.setTransaction_number(mt940.getField20().getValue());
+						if (mt940.getField28C() != null) {
+							balance.setSequence_number(mt940.getField28C().getValue());
+						}
+						if (mt940.getField60F() != null) {
+							balance = parser.parseField60(mt940.getField60F().getValue(), balance);
+						} else {
+							balance = parser.parseField60(mt940.getField60M().getValue(), balance);
+						}
+						balance = parser.parseField62F(mt940.getField62F().getValue(), balance);
+						if (mt940.getField64() != null) {
+							balance = parser.parseField64(mt940.getField64().getValue(), balance);
+						}
+						for (Field61 f61 : mt940.getField61()) {
+							Transaction transaction = new Transaction();
+							transaction = parser.parseField61(f61.getValue(), transaction);
+							balance.addTransaction(transaction);
+						}
+
+						boolean inserted;
+						try {
+							inserted = connectionHandler.insertBalance(balance);
+							msg = "";
+							if (!inserted) {
+								connectionHandler.removeBalance(balance.getAccountID());
+								inserted = connectionHandler.insertBalance(balance);
+								msg = "alert('The file already exited and was replaced!');";
+							}
+						} catch (SQLException e) {
+							msg = "alert('Couldn't connect to the database!\n"
+									+ "Please check your internet connection');";
+						}
+					} catch (Exception e) {
+						msg = "alert('The file content doesn't match MT940 formatting');";
 					}
-            	}
-            	catch (Exception e){
-					msg = "alert('The file content doesn't match MT940 formatting');";
-                }
-            }
-        }
+				}else{
+					msg = "alert('The file is not safe');";
+				}
+			}
+		}
         else {
         	msg = "alert('No file Has been inserted');";
         }
@@ -116,13 +118,6 @@ public class UploadServlet extends HttpServlet {
                          "</script>"+
 
                 "</BODY></HTML>");
-    }
-
-    /**
-     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-     */
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     }
 }
 
