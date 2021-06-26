@@ -1,10 +1,10 @@
 package database;
 
-import lendaryModel.Analytics;
-import lendaryModel.Balance;
-import lendaryModel.Money;
-import lendaryModel.Transaction;
+import lendaryModel.*;
+import org.apache.commons.codec.binary.Hex;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -19,7 +19,9 @@ public class ConnectionHandler {
 
     public ConnectionHandler () throws SQLException {
         this.dbName = "dab_di20212b_53";
+//        this.dbName = "dab_di20212b_293";
         this.password = "gHr1FXvOd7ERdqHy";
+//        this.password = "avqsSVSDgiY3GMUl";
         this.host = "bronto.ewi.utwente.nl";
         this.url = "jdbc:postgresql://" + host + ":5432/" + dbName + "?currentSchema=database_project";
         try {
@@ -187,7 +189,33 @@ public class ConnectionHandler {
         
         return  accountIDexists;
     }
+    public User checkLogin(String email, String password) throws SQLException,
+            ClassNotFoundException, NoSuchAlgorithmException {
+       connection = getConnection();
+        String sql = "SELECT * FROM users WHERE email = ? and password = ?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, email);
+        statement.setString(2, getPasswordHash(password));
 
+        ResultSet result = statement.executeQuery();
+
+        User user = null;
+
+        if (result.next()) {
+            user = new User();
+            user.setEmail(email);
+            user.setPassword(password);
+        }
+
+        connection.close();
+
+        return user;
+    }
+    public static String getPasswordHash(String password) throws NoSuchAlgorithmException {
+        MessageDigest md = null;
+        md = MessageDigest.getInstance("SHA-256");
+        return Hex.encodeHexString((md.digest(password.getBytes())));
+    }
     public String getPassword() {
         return password;
     }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html onload="myFunction()">
+<html >
 
 <head>
     <meta charset="utf-8">
@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="assets/css/Navigation-with-Search.css">
 </head>
 
-<body id="page-top" onload="myFunction()">
+<body id="page-top" onload="checkLogin()">
 
     <div id="wrapper">
         <div class="d-flex flex-column" id="content-wrapper">
@@ -22,12 +22,12 @@
                 <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
                     <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle me-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button><img style="background: url(https://cdn.bootstrapstudio.io/placeholders/1400x800.png&quot;);width: 69px;" src="assets/img/facebook_profile_image.png">
                         <nav class="navbar navbar-light navbar-expand-md navigation-clean-search" style="width: 528.5px;height: 71px;">
-                            <div class="container"><a class="navbar-brand" href="https://topicus.nl/">Topicus</a><a class="btn btn-primary" role="button" style="width: 140.4px;margin: 0px;padding: 7px 12px;" onclick="MyFunction()">History</a><a class="btn btn-primary" role="button" style="width: 140.4px;" onclick = "addLastAnalysis()" >Analytics</a>
+                            <div class="container"><a class="navbar-brand" href="https://topicus.nl/">Topicus</a><a class="btn btn-primary" role="button" style="width: 140.4px;margin: 0px;padding: 7px 12px;" onclick="checkLogin()">History</a><a class="btn btn-primary" role="button" style="width: 140.4px;" onclick = "addLastAnalysis()" >Analytics</a>
                                 <div class="btn-group" role="group"></div><button class="navbar-toggler" data-bs-toggle="collapse"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
                             </div>
                         </nav>
-                        <form class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search">
-                            <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Search for ..."><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
+                        <form class="d-none d-sm-inline-block me-auto ms-md-3 my-2 my-md-0 mw-100 navbar-search" style="padding: 0 0 0 40%">
+                            <div class="input-group"> <a class="btn btn-primary" role="button" style="width: 90.4px;margin: 0px;padding: 7px 12px;" onclick="logout()">Logout</a></div>
                         </form>
                         <ul class="navbar-nav flex-nowrap ms-auto">
                             <li class="nav-item dropdown d-sm-none no-arrow"><a class="dropdown-toggle nav-link" aria-expanded="false" data-bs-toggle="dropdown" href="#"><i class="fas fa-search"></i></a>
@@ -90,29 +90,13 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="row">
-                                <div class="col-md-6 align-self-center">
-                                    <p id="dataTable_info" class="dataTables_info" role="status" aria-live="polite">Showing 1 to 10 of 27</p>
-                                </div>
-                                <div class="col-md-6">
-                                    <nav class="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
-                                        <ul class="pagination">
-                                            <li class="page-item disabled"><a class="page-link" href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
-                                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                            <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                            <li class="page-item"><a class="page-link" href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
-                                        </ul>
-                                    </nav>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             <footer class="bg-white sticky-footer">
                 <div class="container my-auto">
-                    <div class="text-center my-auto copyright"><span>Copyright © Brand 2021</span></div>
+                    <div class="text-center my-auto copyright"><span>Copyright © Topicus 2021</span></div>
                 </div>
             </footer>
         </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
@@ -123,7 +107,8 @@
     <script src="assets/js/theme.js"></script>
     <script>
     	var LastAcc;
-    	var link =  window.location;
+    	var hist =  window.location + "";
+        link = (hist).slice(0,hist.lastIndexOf("/"));
         function myFunction(){
 
             var txt = "";
@@ -159,7 +144,7 @@
                 }
                 document.getElementById("tcont").innerHTML = txt;
             };
-            xhr.open('GET', link + 'rest/files', true);
+            xhr.open('GET', link + '/rest/files', true);
             xhr.send();
             return;
         };
@@ -174,7 +159,7 @@
                 if(this.readyState == 4 && this.status == 200){
                 }
             }
-            xmlhttp.open("POST", link + 'rest/analytics', true);
+            xmlhttp.open("POST", link + '/rest/analytics', true);
             xmlhttp.setRequestHeader("Content-type", "application/json");
             xmlhttp.send(JSON.stringify(account));
 
@@ -182,16 +167,8 @@
         };
         
         function addLastAnalysis(){
-        //	var files = document.getElementById('filee').files
-        //	if(files.length == 0){
-        //		alert("No file selected!");
-        //	}
-        //	else{
         		addToAnalysis(LastAcc);
         		location.assign("table.html");
-
-        //	}
-
         }
 
         function FileCheck(){
@@ -212,7 +189,7 @@
                 if(this.readyState == 4 && this.status == 200){
                 }
             }
-            xmlhttp.open("DELETE", link + 'rest/files/remove', true);
+            xmlhttp.open("DELETE", link + '/rest/files/remove', true);
             xmlhttp.setRequestHeader("Content-type", "application/json");
             xmlhttp.send(JSON.stringify(id));
             delay();
@@ -221,6 +198,35 @@
         function search(){
         	myFunction();
         }
+        function checkLogin(){
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function(){
+                if(this.readyState == 4 && this.status == 200){
+                    myObj = this.responseText;
+                    if (myObj == "false"){
+                        location.assign(link);
+                    }
+                    else{
+                        myFunction();
+                    }
+                }
+            }
+            xmlhttp.open("GET", link + '/rest/users', true);
+            xmlhttp.send();
+
+        }
+
+        function logout(){
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function(){
+                if(this.readyState == 4 && this.status == 200){
+                }
+            }
+            xmlhttp.open("PUT", link + '/rest/users', true);
+            xmlhttp.send();
+            location.assign(link);
+        }
+
         
         
     </script>

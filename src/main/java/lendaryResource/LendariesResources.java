@@ -2,7 +2,7 @@ package lendaryResource;
 
 
 import database.ConnectionHandler;
-import lendaryDAO.LendaryDAO;
+import lendaryDAO.LendaryDAO2;
 import lendaryModel.Analytics;
 import lendaryModel.Balance;
 
