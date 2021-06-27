@@ -16,7 +16,10 @@ public class ConnectionHandler {
     private final String password;
     private Connection connection;
 
-
+    /**
+     * Creates a connection to the database
+     * @throws SQLException if there is an error in the database
+     */
     public ConnectionHandler () throws SQLException {
         this.dbName = "dab_di20212b_53";
 //        this.dbName = "dab_di20212b_293";
@@ -32,15 +35,26 @@ public class ConnectionHandler {
         }
         connection = DriverManager.getConnection(url, dbName, password);
     }
-
+    /**
+     * gets the connection
+     * @return the url, dbName and password || null
+     */
     public Connection getConnection() throws SQLException {
          return DriverManager.getConnection(url, dbName, password);
     }
 
+    /**
+     * gets the host
+     * @return the session host
+     */
     public String getHost() {
         return host;
     }
 
+    /**
+     * inserts values into the a balance table
+     * @param balance balance object
+     */
     public Boolean insertBalance(Balance balance) throws SQLException{
     	
     	if(balanceExists(balance.getAccountID())) {
@@ -67,7 +81,12 @@ public class ConnectionHandler {
 
         return true;
     }
-
+    /**
+     * inserts values into the transaction table
+     * @param t Transaction object
+     * @param account_id
+     * @param i addition number to the id
+     */
     public void insertTransaction(Transaction t, String account_id, int i) throws SQLException{
        
             String str = "t_a" + i;
@@ -84,6 +103,10 @@ public class ConnectionHandler {
         
     }
 
+    /**
+     * gets all the balances
+     * @return list of the result of the query
+     */
     public List<Balance> getBalances() throws SQLException{
         List<Balance> result = new ArrayList<>();
         String query = "SELECT account_id , statement_date, final_date,  m1.amount as sb ,m1.currency as sc,  m2.amount as fb, m1.currency as fc\n" +
@@ -108,6 +131,11 @@ public class ConnectionHandler {
         return  result;
     }
 
+    /**
+     * Gets all the information that will be used in the analytics class
+     * @param accountID account ID
+     * @return the information needed for making the analytics
+     */
     public Analytics analysis(String accountID) throws SQLException{
     	Analytics t = new Analytics(accountID);
         
@@ -136,7 +164,12 @@ public class ConnectionHandler {
         
         return t;
     }
-    
+
+    /**
+     * Removes the balance table from the database
+     * @param remove account id
+     * @throws SQLException
+     */
     public void removeBalance(String remove) throws SQLException {
 		
     	String query = "DELETE FROM balance \n"
@@ -170,11 +203,15 @@ public class ConnectionHandler {
         
 	}
 
+    /**
+     * checks if the balance already exists in the database
+     * @param check account id
+     * @return true when the account id is already in the database, false otherwise
+     * @throws SQLException
+     */
     public boolean balanceExists(String check) throws SQLException{
         boolean accountIDexists = false;
-        
-        
-        String query = "SELECT COUNT(*) as number_of_balances FROM database_project.balance WHERE account_id = '" +check+ "'  ;";
+        String query = "SELECT COUNT(*) as number_of_balances FROM database_project.balance WHERE account_id = '" +check+ "';";
         connection = getConnection();
         PreparedStatement st = connection.prepareStatement(query);
         ResultSet rs = st.executeQuery();
@@ -189,9 +226,19 @@ public class ConnectionHandler {
         
         return  accountIDexists;
     }
+
+    /**
+     * checks the credentials of the user that wants to login
+     * @param email email
+     * @param password password
+     * @return if the credentials are correct
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     * @throws NoSuchAlgorithmException
+     */
     public User checkLogin(String email, String password) throws SQLException,
             ClassNotFoundException, NoSuchAlgorithmException {
-       connection = getConnection();
+        connection = getConnection();
         String sql = "SELECT * FROM users WHERE email = ? and password = ?";
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, email);
@@ -211,19 +258,38 @@ public class ConnectionHandler {
 
         return user;
     }
+    /**
+     * hashes the users password
+     * @param password password
+     * @return the hashed password
+     * @throws NoSuchAlgorithmException
+     */
     public static String getPasswordHash(String password) throws NoSuchAlgorithmException {
         MessageDigest md = null;
         md = MessageDigest.getInstance("SHA-256");
         return Hex.encodeHexString((md.digest(password.getBytes())));
     }
+
+    /**
+     * gets the password to the database
+     * @return password
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     * gets the url
+     * @return url
+     */
     public String getUrl() {
         return url;
     }
 
+    /**
+     * gets the database name
+     * @return dbName
+     */
     public String getDbName() {
         return dbName;
     }

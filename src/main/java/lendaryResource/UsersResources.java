@@ -19,6 +19,9 @@ import java.io.IOException;
 public class UsersResources extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
+    /**
+     * sets the values of User logged in to false as well as sets the user to null
+     */
     public UsersResources() {
         super();
     }
@@ -31,6 +34,12 @@ public class UsersResources extends HttpServlet {
         UserDAO.setUser(null);
     }
 
+    /**
+     * 
+     * @param request
+     * @param response
+     * @return whether the user is logged in
+     */
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getLoggedIn(@Context HttpServletRequest request, @Context HttpServletResponse response){

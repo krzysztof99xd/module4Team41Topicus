@@ -45,6 +45,13 @@ public class UploadServlet extends HttpServlet {
         parser = new Parser();
     }
 
+	/**
+	 * Takes the inputStream from filePart and creates a new instance of MT940 file. Later the parsing is done and connectionHandler inserts the data into database
+	 * @param request from HTTPServlet
+	 * @param response from HTTPResponse
+	 * @throws ServletException
+	 * @throws IOException
+	 */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
