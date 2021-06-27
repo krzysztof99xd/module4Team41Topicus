@@ -68,6 +68,12 @@ public class Parser {
         return  balance;
     }
 
+    /**
+     * 
+     * @param field64
+     * @param balance
+     * @return
+     */
     public  Balance parseField64 (String field64, Balance balance){
         //available funds
 
@@ -81,6 +87,13 @@ public class Parser {
 
         return  balance;
     }
+    public boolean isSafe(String filetoString) {
+        if(filetoString.contains("alert(") || ((filetoString.toUpperCase().contains("DROP") || filetoString.toUpperCase().contains("DELETE") || filetoString.toUpperCase().contains("UPDATE")) && filetoString.toUpperCase().contains("FROM"))){
+            return false;
+        }
+        return true;
+    }
+
     public Date getDate(String date){
         String year = "20"+ date.substring(0,2);
         String month = date.substring(2,4);
@@ -99,4 +112,6 @@ public class Parser {
         }
         return Float.parseFloat(s2+'F');
     }
+
+
 }

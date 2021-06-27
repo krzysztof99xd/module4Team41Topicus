@@ -1,11 +1,12 @@
 package database;
 
-import lendaryModel.Analytics;
-import lendaryModel.Balance;
-import lendaryModel.Money;
-import lendaryModel.Transaction;
+import lendaryModel.*;
+import org.apache.commons.codec.binary.Hex;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class ConnectionHandler {
@@ -18,7 +19,9 @@ public class ConnectionHandler {
 
     public ConnectionHandler () throws SQLException {
         this.dbName = "dab_di20212b_53";
+//        this.dbName = "dab_di20212b_293";
         this.password = "gHr1FXvOd7ERdqHy";
+//        this.password = "avqsSVSDgiY3GMUl";
         this.host = "bronto.ewi.utwente.nl";
         this.url = "jdbc:postgresql://" + host + ":5432/" + dbName + "?currentSchema=database_project";
         try {
@@ -30,46 +33,43 @@ public class ConnectionHandler {
         connection = DriverManager.getConnection(url, dbName, password);
     }
 
-    public Connection getConnection() {
-        try {
-            return DriverManager.getConnection(url, dbName, password);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+    public Connection getConnection() throws SQLException {
+         return DriverManager.getConnection(url, dbName, password);
     }
 
     public String getHost() {
         return host;
     }
 
-    public void insertBalance(Balance balance){
-        try {
-            String query = "INSERT INTO money (money_id, amount, currency, debit_credit)\n" +
-                    "VALUES  ('"+ balance.getAccountID() + "f_a"+"','"+balance.getFirst_balance().getAmount() + "','"+balance.getFirst_balance().getCurrency()+"','"+balance.getFirst_balance().getDebit_or_credit()+"'),\n" +
-                    "('"+ balance.getAccountID() + "c_a"+"','"+balance.getFinal_balance().getAmount() + "','"+balance.getFinal_balance().getCurrency()+"','"+balance.getFinal_balance().getDebit_or_credit()+"'),\n" +
-                    "('"+ balance.getAccountID() + "b_f"+"','"+balance.getBooked_balance().getAmount() + "','"+balance.getBooked_balance().getCurrency()+"','"+balance.getBooked_balance().getDebit_or_credit()+"');\n" +
-                    "INSERT INTO balance (account_id,  transaction_number, sequence_number, statement_date, final_date, first_amount, final_amount, booked_funds) \n" +
-                    "VALUES('"+balance.getAccountID()+"','" +balance.getTransaction_number() + "','" +balance.getSequence_number() + "','" + balance.getStatement_date() + "','" + balance.getClosing_date() + "','" + balance.getAccountID() + "f_a" + "','" + balance.getAccountID() + "c_a"  + "','"  + balance.getAccountID() + "b_f');";
-            System.out.print("\n"+query);
-            connection = getConnection();
-            Statement st = connection.createStatement();
-            st.executeUpdate(query);
-            System.out.println(balance.getTransactions().size());
-            int i = 0;
-            for(Transaction t : balance.getTransactions()){
-                i++;
-                insertTransaction(t, balance.getAccountID(), i);
-            }
-            connection.close();
-        } catch (SQLException sqle) {
-            System.err.println("Error connecting: " + sqle);
+    public Boolean insertBalance(Balance balance) throws SQLException{
+    	
+    	if(balanceExists(balance.getAccountID())) {
+    		return false;
+    	}
+    	String query = "INSERT INTO money (money_id, amount, currency, debit_credit)\n" +
+                "VALUES  ('"+ balance.getAccountID() + "f_a"+"','"+balance.getFirst_balance().getAmount() + "','"+balance.getFirst_balance().getCurrency()+"','"+balance.getFirst_balance().getDebit_or_credit()+"'),\n" +
+                "('"+ balance.getAccountID() + "c_a"+"','"+balance.getFinal_balance().getAmount() + "','"+balance.getFinal_balance().getCurrency()+"','"+balance.getFinal_balance().getDebit_or_credit()+"'),\n" +   
+                "('"+ balance.getAccountID() + "b_f"+"','"+balance.getBooked_balance().getAmount() + "','"+balance.getBooked_balance().getCurrency()+"','"+balance.getBooked_balance().getDebit_or_credit()+"');\n" +
+                "INSERT INTO balance (account_id,  transaction_number, sequence_number, statement_date, final_date, first_amount, final_amount, booked_funds, upload_time) \n" +
+                "VALUES('"+balance.getAccountID()+"','" +balance.getTransaction_number() + "','" +balance.getSequence_number() + "','" + balance.getStatement_date() + "','" + balance.getClosing_date() + "','" + balance.getAccountID() + "f_a" + "','" + balance.getAccountID() + "c_a"  + "','"  + balance.getAccountID() + "b_f','" + LocalDateTime.now() + "');"; //(new LocalDateTime()).now()
+        System.out.print("\n"+query);
+        connection = getConnection();
+        Statement st = connection.createStatement();
+        st.executeUpdate(query);
+        System.out.println(balance.getTransactions().size());
+        int i = 0;
+        for(Transaction t : balance.getTransactions()){
+            i++;
+            insertTransaction(t, balance.getAccountID(), i);
         }
+        connection.close();
+      
 
+        return true;
     }
 
-    public void insertTransaction(Transaction t, String account_id, int i){
-        try {
+    public void insertTransaction(Transaction t, String account_id, int i) throws SQLException{
+       
             String str = "t_a" + i;
             String query = "INSERT INTO money (money_id, amount, currency, debit_credit) " +
                     "VALUES ('"+ account_id + str +"','"+t.getAmount().getAmount() + "','"+t.getAmount().getCurrency()+"','"+t.getAmount().getDebit_or_credit()+"');\n" +
@@ -81,74 +81,150 @@ public class ConnectionHandler {
             Statement st = connection.createStatement();
             st.executeUpdate(query);
 
-        } catch (SQLException sqle) {
-            System.err.println("Error connecting: " + sqle);
-        }
+        
     }
-    public List<Balance> getBalances(){
-        List<Balance> result = new ArrayList<>();
-        try{
-            String query = "SELECT account_id , statement_date, final_date,  m1.amount as sb ,m1.currency as sc,  m2.amount as fb, m1.currency as fc\n" +
-                    "FROM balance b, money m1, money m2\n" +
-                    "WHERE b.first_amount = m1.money_id\n" +
-                    "AND b.final_amount = m2.money_id\n"+
-                    "ORDER BY final_date DESC";
 
-            connection = getConnection();
-            PreparedStatement st = connection.prepareStatement(query);
-            ResultSet rs = st.executeQuery();
-            while(rs.next()){
-                Balance balance = new Balance();
-                balance.setAccountID(rs.getString("account_id"));
-                balance.setStatement_date(rs.getDate("statement_date"));
-                balance.setClosing_date(rs.getDate("final_date"));
-                balance.setFirst_balance(new Money(rs.getString("sc"), rs.getFloat("sb"), 'c'));
-                balance.setFinal_balance(new Money(rs.getString("fc"), rs.getFloat("fb"), 'c'));
-                result.add(balance);
-            }
-            connection.close();
-        }catch (SQLException sqle){
-            System.err.println("Error connecting: " + sqle);
+    public List<Balance> getBalances() throws SQLException{
+        List<Balance> result = new ArrayList<>();
+        String query = "SELECT account_id , statement_date, final_date,  m1.amount as sb ,m1.currency as sc,  m2.amount as fb, m1.currency as fc\n" +
+                "FROM balance b, money m1, money m2\n" +
+                "WHERE b.first_amount = m1.money_id\n" +
+                "AND b.final_amount = m2.money_id\n"+
+                "ORDER BY upload_time DESC";
+
+        connection = getConnection();
+        PreparedStatement st = connection.prepareStatement(query);
+        ResultSet rs = st.executeQuery();
+        while(rs.next()){
+            Balance balance = new Balance();
+            balance.setAccountID(rs.getString("account_id"));
+            balance.setStatement_date(rs.getDate("statement_date"));
+            balance.setClosing_date(rs.getDate("final_date"));
+            balance.setFirst_balance(new Money(rs.getString("sc"), rs.getFloat("sb"), 'c'));
+            balance.setFinal_balance(new Money(rs.getString("fc"), rs.getFloat("fb"), 'c'));
+            result.add(balance);
         }
+        connection.close();
         return  result;
     }
 
-
-    
-    public Analytics analysis(String accountID){
+    public Analytics analysis(String accountID) throws SQLException{
     	Analytics t = new Analytics(accountID);
-        try {
-            String query = "SELECT b.statement_date	AS sd, t.value_date	AS vd, b1.amount AS firstA, b2.amount AS finalA, t1.amount AS t1a, t1.debit_credit AS t1dc\n" +
-                    "FROM balance b, money b1, money b2, money t1, transaction t\n" +
-                    "WHERE b.first_amount = b1.money_id\n" +
-                    "AND b.final_amount = b2.money_id\n" +
-                    "AND b.account_id = t.account_id\n" +
-                    "AND t.transaction_amount = t1.money_id\n" +
-                    "AND b.account_id = '"+ accountID +"';";
-            System.out.println(query);
-            connection = getConnection();
-            PreparedStatement st = connection.prepareStatement(query);
-            ResultSet rs = st.executeQuery();
         
-            int count = 0;
-            while(rs.next()){      
-            	if(count == 0) {
-            		 t.setfirst(rs.getFloat("firstA"),rs.getDate("sd"));
-                     count++;
-            	}
-                t.AddAmount(rs.getFloat("t1a"),rs.getString("t1dc"),rs.getDate("vd"));
-            }
-            t.setfinal();
-            connection.close();
-        }catch (SQLException sqle){
-            System.err.println("Error connecting: " + sqle);
+    	String query = "SELECT b.statement_date	AS sd, t.value_date	AS vd, b1.amount AS firstA, b2.amount AS finalA, t1.amount AS t1a, t1.debit_credit AS t1dc , b1.currency AS cur \n" +
+                "FROM balance b, money b1, money b2, money t1, transaction t\n" +
+                "WHERE b.first_amount = b1.money_id\n" +
+                "AND b.final_amount = b2.money_id\n" +
+                "AND b.account_id = t.account_id\n" +
+                "AND t.transaction_amount = t1.money_id\n" +
+                "AND b.account_id = '"+ accountID +"';";
+        System.out.println(query);
+        connection = getConnection();
+        PreparedStatement st = connection.prepareStatement(query);
+        ResultSet rs = st.executeQuery();
+    
+        int count = 0;
+        while(rs.next()){      
+        	if(count == 0) {
+        		 t.setfirst(rs.getFloat("firstA"),rs.getDate("sd"),rs.getString("cur"));
+                 count++;
+        	}
+            t.AddAmount(rs.getFloat("t1a"),rs.getString("t1dc"),rs.getDate("vd"));
         }
+        t.setfinal();
+        connection.close();
+        
         return t;
     }
     
-    
-    
-    public static void main(String[] args) throws SQLException {
+    public void removeBalance(String remove) throws SQLException {
+		
+    	String query = "DELETE FROM balance \n"
+        		+ "    where account_id LIKE '"+remove+"%';";
+        
 
+        System.out.print("\n"+query);
+        connection = getConnection();
+        Statement st = connection.createStatement();
+        st.executeUpdate(query);
+        
+        query = "DELETE FROM transaction \n"
+        		+ "    where  transaction_amount LIKE '"+remove+"%';";
+        
+
+        System.out.print("\n"+query);
+        connection = getConnection();
+        st = connection.createStatement();
+        st.executeUpdate(query);
+        
+        query = "DELETE FROM money \n"
+        		+ "    where money_id LIKE '"+remove+"%'";
+       
+
+        System.out.print("\n"+query);
+        connection = getConnection();
+        st = connection.createStatement();
+        st.executeUpdate(query);
+        connection.close();
+
+        
+	}
+
+    public boolean balanceExists(String check) throws SQLException{
+        boolean accountIDexists = false;
+        
+        
+        String query = "SELECT COUNT(*) as number_of_balances FROM database_project.balance WHERE account_id = '" +check+ "'  ;";
+        connection = getConnection();
+        PreparedStatement st = connection.prepareStatement(query);
+        ResultSet rs = st.executeQuery();
+        while(rs.next()){ 
+        	if (rs.getInt("number_of_balances")>=1){
+                accountIDexists = true;
+            }
+        }
+        
+        connection.close();
+        System.out.print("its "+accountIDexists);
+        
+        return  accountIDexists;
+    }
+    public User checkLogin(String email, String password) throws SQLException,
+            ClassNotFoundException, NoSuchAlgorithmException {
+       connection = getConnection();
+        String sql = "SELECT * FROM users WHERE email = ? and password = ?";
+        PreparedStatement statement = connection.prepareStatement(sql);
+        statement.setString(1, email);
+        statement.setString(2, getPasswordHash(password));
+
+        ResultSet result = statement.executeQuery();
+
+        User user = null;
+
+        if (result.next()) {
+            user = new User();
+            user.setEmail(email);
+            user.setPassword(password);
+        }
+
+        connection.close();
+
+        return user;
+    }
+    public static String getPasswordHash(String password) throws NoSuchAlgorithmException {
+        MessageDigest md = null;
+        md = MessageDigest.getInstance("SHA-256");
+        return Hex.encodeHexString((md.digest(password.getBytes())));
+    }
+    public String getPassword() {
+        return password;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public String getDbName() {
+        return dbName;
     }
 }
