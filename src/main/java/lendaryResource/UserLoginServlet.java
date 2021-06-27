@@ -32,6 +32,13 @@ public class UserLoginServlet extends HttpServlet {
         super();
     }
 
+    /**
+     * checks whether inserted email and password are correct. If so, it redirects the user to index.html, if not it displays the message and stays on the log in page
+     * @param request
+     * @param response
+     * @throws ServletException
+     * @throws IOException
+     */
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String email = request.getParameter("email");

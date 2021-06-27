@@ -40,6 +40,11 @@ public class LendariesResources extends HttpServlet  {
 		}
     }
 
+	/**
+	 * produces the JSON representations of the balance
+	 * @return the list of Balances
+	 */
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public List<Balance> getLendaryBrowser()  {
@@ -57,7 +62,13 @@ public class LendariesResources extends HttpServlet  {
 		}
        
     }
-    
+
+	/**
+	 * Deletes the balance, performs the SQL query in order to delete the balance from the database
+	 * @param response
+	 * @param request
+	 * @param json
+	 */
     @Path("/remove")
     @DELETE
     @Consumes({MediaType.APPLICATION_JSON, MediaType.APPLICATION_FORM_URLENCODED})

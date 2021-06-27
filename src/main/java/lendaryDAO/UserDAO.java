@@ -22,18 +22,35 @@ public enum UserDAO {
     private static User user;
     private static boolean loggedIn = false;
 
-    public static User getUser() {
+
+     /**
+     * gets the user
+     * @return the user
+     */
+    public static User getUser(){
         return user;
     }
 
+    /**
+     * sets a user
+     * @param user user
+     */
     public static void setUser(User user) {
         UserDAO.user = user;
     }
 
+    /**
+     * checks if user is logged in
+     * @return true when user logged in
+     */
     public static boolean isLoggedIn() {
         return loggedIn;
     }
 
+    /**
+     * sets that user logged in
+     * @param loggedIn
+     */
     public static void setLoggedIn(boolean loggedIn) {
         UserDAO.loggedIn = loggedIn;
     }
