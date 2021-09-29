@@ -25,6 +25,7 @@ We made use of Bootstrap in order to efficiently build our front-end.
 
 
 List of developers:
+
 Krzysztof Wiesniakowski
 s2617722
 
@@ -50,14 +51,9 @@ This can be done by se-lecting File → New → Other. . .→ Server → Server 
 The wizard will ask for the Tomcat installation directory, choose the one where you saved your Tomcat directory.
 
 For intelij Ultimate the steps are a little bit different: 
-Go to run configuration
-Select local tomcat
-Then go down the window
-There is a button named fix
-Click it
-Choose your war
-And you can start the web app on tomcat server.
 
+Firstly, go to run configuration,  select local tomcat, then go down the window, there is a button named fix, click it, choose your war 
+Now you can start the web app on tomcat server.
 
 
 How to make use of our app:
