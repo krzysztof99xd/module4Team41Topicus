@@ -13,7 +13,7 @@ In order to use the file, the user first needs to log in.
 Afterwards, the user can make use of the application such as upoading the MT940 file, removing it from the table, making use of a search bar, performing the analysis of the account and logging out.
 
 Technologies which were used in the project:
-The back-end was written in Java, the following technologies were used:
+The back-end was written in Java,
 
 In the project we made use of REST principles which are aligned with HTTP, making HTTP a suitable protocol to implement REST.
 
@@ -21,7 +21,7 @@ Jersey was used to implement web services standars in Java. Tomcat server was us
 In our project we strongly make use of Java annotations in order to generate an additional code and files.
 
 For the front-end:
-We made use of Bootstrap in order to efficiently build our front-end.
+The front-end was built with HTML, CSS and JavaScript, we also made use of Bootstrap.
 
 
 List of developers:
